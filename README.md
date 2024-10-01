@@ -1,131 +1,354 @@
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+<h1 allign="center" id="title"> For Home Cooks </h1>
 
-Welcome USER_NAME,
+![for Home Cooks]()
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. It's perfectly ok to use this template as the basis for your project submissions.
+[Live Project can be viewed here.]()
+![Logo]()
 
-You can safely delete this README.md file or change it for your own project. Please do read it at least once, though! It contains some important information about Gitpod and the extensions we use. Some of this information has been updated since the video content was created. The last update to this file was: **June 18, 2024**
+For Home Cooks is a recipe application for homecooks who are looking to widen their recipe catelogue.
 
-## Gitpod Reminders
+## Table of Contents
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+### User Experience (UX)
 
-`python3 -m http.server`
+- [Project Goals](#project-goals)
+- [User Goals](#user-experience-ux)
+- [Developer Goals](#developers-goals)
+- [User Stories](#user-stories)
+- [Design Choices](#design-choices)
+- [Wireframes](#wireframes)
 
-A blue button should appear to click: _Make Public_,
+### Features
 
-Another blue button should appear to click: _Open Browser_.
+- [Future Features](#future-feautres)
 
-To run a backend Python file, type `python3 app.py` if your Python file is named `app.py`, of course.
+### Testing
 
-A blue button should appear to click: _Make Public_,
+- [Manual Testing](#manual-testing)
+- [Bugs](#bugs)
 
-Another blue button should appear to click: _Open Browser_.
+### Deployment
 
-By Default, Gitpod gives you superuser security privileges. Therefore, you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the lessons.
+- [How to Deploy Site](#deployments)
 
-To log into the Heroku toolbelt CLI:
+### Credits
 
-1. Log in to your Heroku account and go to *Account Settings* in the menu under your avatar.
-2. Scroll down to the *API Key* and click *Reveal*
-3. Copy the key
-4. In Gitpod, from the terminal, run `heroku_config`
-5. Paste in your API key when asked
+- [Credits](#credits)
+- [Code](#code)
+- [Acknowledgments](#acknowledgments)
 
-You can now use the `heroku` CLI program - try running `heroku apps` to confirm it works. This API key is unique and private to you, so do not share it. If you accidentally make it public, you can create a new one with _Regenerate API Key_.
+## User Experience (UX)
 
-### Connecting your Mongo database
+### Project Goals
 
-- **Connect to Mongo CLI on a IDE**
-- navigate to your MongoDB Clusters Sandbox
-- click **"Connect"** button
-- select **"Connect with the MongoDB shell"**
-- select **"I have the mongo shell installed"**
-- choose **mongosh (2.0 or later)** for : **"Select your mongo shell version"**
-- choose option: **"Run your connection string in your command line"**
-- in the terminal, paste the copied code `mongo "mongodb+srv://<CLUSTER-NAME>.mongodb.net/<DBname>" --apiVersion 1 --username <USERNAME>`
-  - replace all `<angle-bracket>` keys with your own data
-- enter password _(will not echo **\*\*\*\*** on screen)_
+This project's goal is to build a full-stack site that allows your users to manage a common dataset about a particular domain. That is appealing to the users of this site. As well as improve my own developer skills and move out my comfort zone.
 
-------
+#### Recruiters Goals
 
-## Release History
+The main audience for this site is anyone aged 8+ with parental guidance.
 
-We continually tweak and adjust this template to help give you the best experience. Here is the version history:
+#### User Goals:
 
-**June 18, 2024,** Add Mongo back into template
+- Find and share recipes
+- Enjoy cooked goods.
 
-**June 14, 2024,** Temporarily remove Mongo until the key issue is resolved
+#### Developers goals:
 
-**May 28 2024:** Fix Mongo and Links installs
+- Create an appealing, functional site.
+- Demonstrate the use of full-stack development.
+- Make site that allows users to find and share recipes.
 
-**April 26 2024:** Update node version to 16
+#### User Stories
 
-**September 20 2023:** Update Python version to 3.9.17.
+As a user I want:
 
-**September 1 2021:** Remove `PGHOSTADDR` environment variable.
+- Search for recipes.
+- To understand the instructions given.
+- Share recipes.
+- Consistent functionalities.
 
-**July 19 2021:** Remove `font_fix` script now that the terminal font issue is fixed.
+As the site owner I want:
 
-**July 2 2021:** Remove extensions that are not available in Open VSX.
+- A site that provides search and share functions.
+- A structured and PEP8 compliant.
+- Demonstrate what I have learnt with Python and external libiraries such as Flask and Materialise.
+- A site that functions and is consistent with handling data.
 
-**June 30 2021:** Combined the P4 and P5 templates into one file, added the uptime script. See the FAQ at the end of this file.
+## Design Choices
 
-**June 10 2021:** Added: `font_fix` script and alias to fix the Terminal font issue
+### Languages Used
 
-**May 10 2021:** Added `heroku_config` script to allow Heroku API key to be stored as an environment variable.
+- HTML
+- CSS
+- JavaScript
+- Python+Flask
+- PostgreSQL
 
-**April 7 2021:** Upgraded the template for VS Code instead of Theia.
+### Fonts
 
-**October 21 2020:** Versions of the HTMLHint, Prettier, Bootstrap4 CDN and Auto Close extensions updated. The Python extension needs to stay the same version for now.
+-
+-
 
-**October 08 2020:** Additional large Gitpod files (`core.mongo*` and `core.python*`) are now hidden in the Explorer, and have been added to the `.gitignore` by default.
+### Icons
 
-**September 22 2020:** Gitpod occasionally creates large `core.Microsoft` files. These are now hidden in the Explorer. A `.gitignore` file has been created to make sure these files will not be committed, along with other common files.
+-
+-
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+### Colours
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+-
+-
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+### Images
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+### Video Files
 
-------
+-
 
-## FAQ about the uptime script
+### Wireframes
 
-**Why have you added this script?**
+Wireframes were created using [Balsamiq](https://balsamiq.com/).
 
-It will help us to calculate how many running workspaces there are at any one time, which greatly helps us with cost and capacity planning. It will help us decide on the future direction of our cloud-based IDE strategy.
+- [Home](/wireframes/homepage.png)
+- [Recipe Page](/wireframes/recipe-page.png)
+- [Recipe Genre Display](/wireframes/recipe-genre-display%20.png)
+- [How To Make..](/wireframes/how-to-page.png)
+- [Gallery](/wireframes/gallery.png)
+- [Sign In](/wireframes/sign-in.png)
+- [Your Recipes](/wireframes/your-recipes.png)
+- [CRUD - Functionality](/wireframes/crud-creating-update-selete-section.png)
 
-**How will this affect me?**
+## Features
 
-For everyday usage of Gitpod, it doesn’t have any effect at all. The script only captures the following data:
+-
+-
+-
+-
 
-- An ID that is randomly generated each time the workspace is started.
-- The current date and time
-- The workspace status of “started” or “running”, which is sent every 5 minutes.
+### Loaded page:
 
-It is not possible for us or anyone else to trace the random ID back to an individual, and no personal data is being captured. It will not slow down the workspace or affect your work.
+When you first load on the page you are met with the homepage.
 
-**So….?**
+<details>
+<summary>User Interface</summary>
+<IMG src="assets/images/"  alt="User Interface"/>
+</details>
 
-We want to tell you this so that we are being completely transparent about the data we collect and what we do with it.
+### Navigation:
 
-**Can I opt out?**
+<details>
+<summary>Navigation</summary>
+<IMG src="assets/images/"  alt="Navigation"/>
+</details>
 
-Yes, you can. Since no personally identifiable information is being captured, we'd appreciate it if you let the script run; however if you are unhappy with the idea, simply run the following commands from the terminal window after creating the workspace, and this will remove the uptime script:
+### Recipe Page:
 
-```
-pkill uptime.sh
-rm .vscode/uptime.sh
-```
+<details>
+<summary>Recipe Page</summary>
+<IMG src="assets/images/"  alt=""/>
+</details>
 
-**Anything more?**
+### Gallery Page:
 
-Yes! We'd strongly encourage you to look at the source code of the `uptime.sh` file so that you know what it's doing. As future software developers, it will be great practice to see how these shell scripts work.
+### CRUD Functionality:
 
----
+If you match the sequence correctly an alert will display before the next round.
 
-Happy coding!
+<details>
+<summary>Create</summary>
+<IMG src="assets/images/"  alt="Create functionality"/>
+</details>
+
+<details>
+<summary>Read</summary>
+<IMG src="assets/images/"  alt="Read functionality"/>
+</details>
+
+<details>
+<summary>Update</summary>
+<IMG src="assets/images/"  alt="Update functionality"/>
+</details>
+
+<details>
+<summary>Delete</summary>
+<IMG src="assets/images/"  alt="Delete functionality"/>
+</details>
+
+## Future Features
+
+## Accessibility
+
+-
+-
+
+## Testing
+
+### Manual Testing
+
+| What to test       | Expected Results                          | Passed |
+| ------------------ | ----------------------------------------- | ------ |
+| Navigation Menu    | Navigate site and send to correct pages   |        |
+| Search for recipe  | Display recipe when searched for          |        |
+| Add recipe to site | User can add recipe to the site           |        |
+| Scroll Up Button   | Send user back to the top of the page.    |        |
+| Comments           | Allow user input within the recipe page.  |        |
+| Edit and Delete    | Edit or Delte recipes that users created. |        |
+
+### For this project I have had friends and family, test amongst various devices. Such as;
+
+-
+-
+-
+-
+-
+
+### Lighthouse - Developer Chrome Tools
+
+<details>
+<summary>Lighthouse Overview</summary>
+<IMG src="assets/images/lighthouse/"  alt="Lighthouse Overview Score"/>
+</details>
+<br>
+
+<details>
+<summary>Lighthouse Acessibility</summary>
+<IMG src="assets/images/lighthouse/"  alt="Lighthouse Accessibility Score"/>
+</details>
+<br>
+
+<details>
+<summary>Lighthouse Diagnostics</summary>
+<IMG src="assets/images/lighthouse/"  alt="Lighthouse Accessibility Score"/>
+</details>
+<br>
+
+<details>
+<summary>Lighthouse Overview - After changes</summary>
+<IMG src="assets/images/lighthouse/"  alt="Lighthouse Overview Score - After changes"/>
+</details>
+
+## Validators
+
+W3c was used to validate HTML, CSS and JavaScript code.
+
+### HTML Validator:
+
+<details>
+<summary>HTML Validator Overview Part 1</summary>
+<IMG src="assets/images/validators/"  alt="HTML Validator Overview Part 1"/>
+</details>
+<br>
+<details>
+<summary>HTML Validator </summary>
+<IMG src="assets/images/validators/"  alt="HTML Validator"/>
+</details>
+
+<br>
+
+### CSS Validator:
+
+<br>
+<details>
+<summary>CSS Validator </summary>
+<IMG src="assets/images/validators/"  alt="CSS Validator "/>
+</details>
+
+### JavaScript Validator:
+
+<details>
+<summary>JavaScript Validator</summary>
+<IMG src="assets/images/validators/"  alt="JavaScript Validator Results"/>
+</details>
+
+## Bugs
+
+### Current Bugs
+
+<br>
+  <details>
+  <summary>Console Message</summary>
+  <IMG src="assets/images/console/"  alt="Console message"/>
+
+</details>
+<br>
+<details>
+<summary>Console Message - After Change</summary>
+<IMG src="assets/images/console/"  alt="Console message - after changes"/>
+
+</details>
+
+### Fixed Bugs
+
+-
+-
+-
+-
+
+## Deployments
+
+This project was deployed to GitHub Pages using the steps below;
+
+### How to Deploy to GitHub Pages.
+
+1. Open the browser, search GitHub and log in. If you do not have an account, sign up [here](https://github.com/login).
+2. Locate and select the [For Home Cooks]().
+3. Once the repository is open, select settings.
+4. Select 'Pages', which is found on the left-hand side under the Code and Automation category.
+5. Underneath build and deployment, there are two sub-heading 'Source' and 'Branch'. Select the 'None' dropdown below the branch sub-heading.
+6. Change the 'None' option to 'Main', then press "Save".
+7. Wait a few moments whilst the pages refresh. (This could take up to 5 minutes.)
+8. You may need to refresh the page, to see the saved changes. You should have seen that the site and the link to the live site. An orange icon will display which will indicate that the save changes are still loading.
+9. You can also check your deployment by selecting 'Code'. On the right-hand side, you should see 'Deployments'. Select 'Deployments' to view the status of your deployments.
+
+### How to run this project locally.
+
+To clone this project to Gitpod use the following steps;
+
+1. Open the browser, search GitHub and log in. If you do not have an account, sign up [here](https://github.com/login).
+2. Open a new tab, search Gitpod and log in. If you don't have an account, you can sign in with GitHub.
+3. Open a new workspace.
+4. Go back to the GitHub tab and locate [For Home Cooks]().
+5. Click the green "<> Code" button.
+6. Under the HTTPS tab, copy the URL for the repository.
+7. Go back to your Gitpod Workspace and open the terminal.
+8. Change the location of your current working directory to where you want the cloned directory.
+9. Type "git clone", then paste the URL that you had copied earlier from GitHub.
+10. Press Enter to create your local clone.
+
+### How to Fork this project.
+
+To fork this project from Gitpod, please follow the steps below;
+
+1. Open the browser, search GitHub and log in. If you do not have an account, sign up [here](https://github.com/login).
+2. Locate the GitHub tab and locate the project you want to fork. [For Home Cooks]()
+3. At the top right-hand side of the page, you will see a "Fork" button. Click on the button and wait a few moments. You should see the new forked repository under your own GitHub account.
+4. By default the folk is named as their upstream repositories, you can rename the repositories by typing a name in the "Repository name" field.
+5. You can also add a description to your fork and/or copy the default branch only.
+6. To also access the files in the repository. Head over to your forked repository. Click the green "<> Code" button.
+7. Under the HTTPS tab, copy the URL for the repository.
+8. Go to the workspace you have created earlier.
+9. To change the current directory to the location where you want the cloned directory.
+10. Type "git clone" and paste the URL you copied from GitHub. Press "Enter" and your local clone will be created.
+
+## Credits
+
+### Frameworks, Libraries and Programs Used
+
+- [Balsamiq](https://balsamiq.com/) - For creating wireframes.
+- [GitHub](https://github.com/) - To store my repository and deploy site.
+- [Gitpod](https://www.gitpod.io/) - Used to write code for this project.
+- [HTML Validation](https://validator.w3.org/) - To validate my HTML Code.
+- [CSS Validation](https://jigsaw.w3.org/css-validator/) - To validate my CSS code.
+
+### Code
+
+### Acknowledgments
+
+- []() -
+- []() -
+- []() -
+- []() -
+- []() -
+-
+
+[Back to top](#title)
