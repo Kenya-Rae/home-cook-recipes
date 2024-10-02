@@ -1,25 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Home Cooks</title>
-</head>
-
-<body>
-
-
-    <nav>
-        <ul>
-            <li><a href="{{ url_for('index')}}">Home</a></li>
-            <li><a href="{{ url_for('recipes')}}">Recipes</a></li>
-            <li><a href="{{ url_for('create')}}">Create Recipe</a></li>
-        </ul>
-    </nav>
-
-    <h1> Recipe Page </h1>
-
-</body>
-
-</html>
+<h1>Recipe Page</h1>
+{% endblock %}

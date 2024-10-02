@@ -20,6 +20,11 @@ def create():
     return render_template("create-recipe.html")
 
 
+@app.route("/gallery")
+def gallery():
+    return render_template("gallery.html")
+
+
 if __name__ == "__main__":
     app.run(
         host=os.environ.get("IP", "0.0.0.0"),
