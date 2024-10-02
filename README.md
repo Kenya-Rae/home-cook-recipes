@@ -120,7 +120,7 @@ Wireframes were created using [Balsamiq](https://balsamiq.com/).
 
 ## Features
 
--
+- Navigation bar that alllows users to access different parts of the sites.
 -
 -
 -
@@ -279,7 +279,7 @@ W3c was used to validate HTML, CSS and JavaScript code.
 
 ### Fixed Bugs
 
--
+- Materialise mobile navbar wouldn't initialise, switched over to Bootstrap for functionality for navbar and footer functions.
 -
 -
 -
