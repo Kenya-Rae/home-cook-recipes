@@ -1,0 +1,45 @@
+/* Page */
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+/* Navbar */
+.navbar {
+  background-color: #9fa8da;
+}
+
+.nav-link {
+  color: black;
+  font-weight: 800;
+}
+
+/* Footer */
+.page-footer {
+  background-color: #5c6bc0;
+}
+
+.footer {
+  margin: 0%;
+}
+
+.footer-text,
+.copyright-text {
+  color: #fff;
+}
+
+.copyright-text {
+  padding-right: 10px;
+}
+
+/* Main Titles */
+.main-titles {
+  color: #212121;
+  text-align: center;
+  font-weight: 900;
+}
