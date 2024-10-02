@@ -12,8 +12,9 @@
 
     <nav>
         <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Recipes</a></li>
+            <li><a href="{{ url_for('index')}}">Home</a></li>
+            <li><a href="{{ url_for('recipes')}}">Recipes</a></li>
+            <li><a href="{{ url_for('create')}}">Create Recipe</a></li>
         </ul>
     </nav>
 
