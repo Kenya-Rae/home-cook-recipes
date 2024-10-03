@@ -43,3 +43,10 @@ main {
   text-align: center;
   font-weight: 900;
 }
+
+/* Homepage Content */
+
+/* Recipe Page */
+.d-block {
+  height: 400px;
+}
