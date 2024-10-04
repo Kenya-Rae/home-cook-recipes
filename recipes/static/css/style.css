@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+
 /* Page */
 body {
   display: flex;
@@ -43,12 +45,25 @@ main {
   color: #212121;
   text-align: center;
   font-weight: 900;
+  font-family: "Playfair Display", serif;
 }
 
+.title-description{
+  position: relative;
+  top: 35px;
+}
 /* Homepage Content */
-
+.card{
+  margin: 15px !important;
+}
 .img-card {
   height: 300px;
+}
+
+.homepage-recipe-deck{
+  background-color: #dee2e673;
+  position: relative;
+  top: 75px;
 }
 
 .homepage-description{
@@ -60,12 +75,51 @@ main {
   font-family: "Karla", sans-serif;
 }
 
+.lead{
+  text-align: center;
+}
+
 /* Recipe Page */
 .d-block {
   height: 400px;
 }
 
+/* Sign In/Up Page */
+.sign-in{
+  border: 1px solid #b2dfdbb4;
+  border-width: medium;
+  width: fit-content;
+  text-align: center;
+  background-color: #eeeeee;
+}
+
+.form {
+  margin-top: 10px;
+}
+
+.dropdown-item{
+  margin-bottom: 10px
+}
+
+.sign-in-btn{
+  background-color: #b2dfdb8c;
+}
+
+.dropdown-divider{
+  border-top: 1px solid #a0a1a3bf;
+}
+
 /* Gallery Page */
+
+.album-page{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    padding-top: 50px;
+}
 
 div.gallery {
   margin: 5px;
