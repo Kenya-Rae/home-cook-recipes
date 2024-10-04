@@ -64,3 +64,23 @@ main {
 .d-block {
   height: 400px;
 }
+
+/* Gallery Page */
+
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 180px;
+}
+
+div.gallery img {
+  width: 100%;
+  height: 250px;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+  background-color: #cfd8dc;
+}
