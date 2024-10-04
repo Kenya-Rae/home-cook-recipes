@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 /* Page */
 body {
   display: flex;
@@ -45,6 +46,19 @@ main {
 }
 
 /* Homepage Content */
+
+.img-card {
+  height: 300px;
+}
+
+.homepage-description{
+  text-align: center;
+}
+
+.card-title-home{
+  font-weight: 800;
+  font-family: "Karla", sans-serif;
+}
 
 /* Recipe Page */
 .d-block {
