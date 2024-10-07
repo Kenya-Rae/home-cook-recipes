@@ -13,9 +13,14 @@ def recipes():
     return render_template("recipes.html")
 
 
-@app.route("/create")
-def create():
-    return render_template("create-recipe.html")
+@app.route("/sign_up")
+def signup():
+    return render_template("sign_up.html")
+
+
+@app.route("/add_recipe")
+def create_recipe():
+    return render_template("add_recipe.html")
 
 
 @app.route("/gallery")
