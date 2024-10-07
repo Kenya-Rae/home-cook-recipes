@@ -17,6 +17,9 @@ def recipes():
 def signup():
     return render_template("sign_up.html")
 
+@app.route("/sign_in")
+def signin():
+    return render_template("sign_in.html")
 
 @app.route("/add_recipe")
 def create_recipe():
