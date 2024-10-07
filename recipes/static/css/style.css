@@ -80,8 +80,21 @@ main {
 }
 
 /* Recipe Page */
+.carousel-item{
+width: 100%;
+}
+
 .d-block {
   height: 400px;
+}
+
+.recipe-carousel{
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  padding-top: 50px;
 }
 
 /* Sign In/Up Page */

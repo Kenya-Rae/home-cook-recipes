@@ -1,6 +1,6 @@
 from flask import render_template
 from recipes import app, db
-from recipes.models import Users, Recipes
+from recipes.models import Users, Recipes, Ingredients, Category, Comments, RecipeIngredients, RecipeCategories
 
 
 @app.route("/")
