@@ -22,6 +22,7 @@ main {
   font-weight: 800;
 }
 
+
 /* Footer */
 .page-footer {
   background-color: #5c6bc0;
@@ -104,22 +105,56 @@ width: 100%;
   width: fit-content;
   text-align: center;
   background-color: #eeeeee;
+  padding-bottom: 20px;
 }
 
-.form {
-  margin-top: 10px;
+.form{
+  padding-top: 20px;
 }
 
-.dropdown-item{
-  margin-bottom: 10px
+.form > div {
+  padding: 10px;
 }
 
-.sign-in-btn{
-  background-color: #b2dfdb8c;
+.form input{
+  border: 2px solid #82c5c0b4;
+}
+
+.form input:hover{
+  border-color:#639692b4;
+}
+
+.signInBtn, .signUpBtn{
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  color: white;
+  background-color: #5ab4adb4;
+}
+.signInBtn:hover, .signUpBtn:hover {
+  background-color: rgba(68, 136, 130, 0.8);
 }
 
 .dropdown-divider{
   border-top: 1px solid #a0a1a3bf;
+}
+
+.forgot-password {
+  padding-top: 5px;
+}
+
+div > label > i {
+  padding-right: 10px;
+}
+
+form div.incorrect input{
+border-color: rgb(214, 24, 46);
+}
+
+#error-msg{
+  color: rgb(214, 24, 46);
+  margin-bottom: 0px;
+  font-weight: 700;
 }
 
 /* Gallery Page */
@@ -150,4 +185,30 @@ div.desc {
   padding: 15px;
   text-align: center;
   background-color: #cfd8dc;
+}
+
+/*--------Media Queries------ */
+/*-- Extra Small devices (portrait phones, 576px and less--*/
+@media only screen and (max-width: 375px){
+  .form > div {
+    padding-top: 5px;
+  }
+  .form-inline{
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  .sign-in{
+    padding: 5px;
+  }
+
+  .search{
+    max-width: 50%;
+  }
+
+  .searchBtn {
+    margin-left: 5px
+  }
 }
