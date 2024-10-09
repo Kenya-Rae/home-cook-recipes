@@ -109,14 +109,14 @@ As the site owner I want:
 
 Wireframes were created using [Balsamiq](https://balsamiq.com/).
 
-- [Home](/wireframes/homepage.png)
-- [Recipe Page](/wireframes/recipe-page.png)
+- [Home](/readme/wireframes/homepage.png)
+- [Recipe Page](/readme/wireframes/recipe-page.png)
 - [Recipe Genre Display](/wireframes/recipe-genre-display%20.png)
-- [How To Make..](/wireframes/how-to-page.png)
-- [Gallery](/wireframes/gallery.png)
-- [Sign In](/wireframes/sign-in.png)
-- [Your Recipes](/wireframes/your-recipes.png)
-- [CRUD - Functionality](/wireframes/crud-creating-update-selete-section.png)
+- [How To Make..](/readme/wireframes/how-to-page.png)
+- [Gallery](/readme/wireframes/gallery.png)
+- [Sign In](/readme/wireframes/sign-in.png)
+- [Your Recipes](/readme/wireframes/your-recipes.png)
+- [CRUD - Functionality](/readme/wireframes/crud-creating-update-selete-section.png)
 
 ## Features
 
@@ -342,9 +342,10 @@ To fork this project from Gitpod, please follow the steps below;
 
 ### Code
 
+- [Coding2go](https://www.youtube.com/watch?v=bVl5_UdcAy0&t=201s) - Used this walkthrough for form validation.
+
 ### Acknowledgments
 
-- []() -
 - []() -
 - []() -
 - []() -
