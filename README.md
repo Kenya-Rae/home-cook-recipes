@@ -190,7 +190,8 @@ If you match the sequence correctly an alert will display before the next round.
 | Navigation Menu    | Navigate site and send to correct pages   |        |
 | Search for recipe  | Display recipe when searched for          |        |
 | Add recipe to site | User can add recipe to the site           |        |
-| Scroll Up Button   | Send user back to the top of the page.    |        |
+| Sign Up Form       | Allow user to sign up to recipe site.     |        |
+| Login Form         | Allow user to login to recipe site.       |        |
 | Comments           | Allow user input within the recipe page.  |        |
 | Edit and Delete    | Edit or Delte recipes that users created. |        |
 

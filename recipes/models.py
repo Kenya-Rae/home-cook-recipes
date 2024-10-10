@@ -6,7 +6,7 @@ from datetime import datetime
 class Users(db.Model):
     # schema for Users Model
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
+    firstname = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(130), nullable=False)
     created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -17,7 +17,7 @@ class Users(db.Model):
 
     def __repr__(self):
         # __repr__ to represent itself
-        return f"<User {self.username}, (ID: {self.id})>"
+        return f"<User {self.email}, (ID: {self.id})>"
 
 
 class Recipes(db.Model):

@@ -5,7 +5,7 @@
 
 <div class="sign-in container">
     <p id="error-msg"></p>
-    <form id="form" class="form">
+    <form id="form" class="form" method="POST" action="{{ url_for('signup') }}">
         <div>
             <label for="firstname-input"><i class="fa-solid fa-user"></i></label>
             <input type="text" name="firstname" id="firstnameInput" placeholder="First Name">
@@ -20,7 +20,7 @@
         </div>
         <div>
             <label for="repeat-password-input"><i class="fa-solid fa-repeat"></i></label>
-            <input type="password" id="repeatPasswordInput" placeholder=" Repeat Password">
+            <input type="password" name="repeatPassword" id="repeatPasswordInput" placeholder=" Repeat Password">
         </div>
         <button type="submit" class="btn signUpBtn">Sign Up</button>
     </form>
