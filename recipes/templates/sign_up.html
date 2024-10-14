@@ -7,19 +7,19 @@
     <p id="error-msg"></p>
     <form id="form" class="form" method="POST" action="{{ url_for('signup') }}">
         <div>
-            <label for="firstname-input"><i class="fa-solid fa-user"></i></label>
-            <input type="text" name="firstname" id="firstnameInput" placeholder="First Name">
+            <label for="username"><i class="fa-solid fa-user"></i></label>
+            <input type="text" name="username" id="usernameInput" placeholder="User Name">
         </div>
         <div>
-            <label for="email-input"><i class="fa-solid fa-at"></i></label>
+            <label for="email"><i class="fa-solid fa-at"></i></label>
             <input type="email" name="email" id="emailInput" placeholder="email@example.com">
         </div>
         <div>
-            <label for="password-input"><i class="fa-solid fa-key"></i></label>
+            <label for="password"><i class="fa-solid fa-key"></i></label>
             <input type="password" name="password" id="passwordInput" placeholder="Password">
         </div>
         <div>
-            <label for="repeat-password-input"><i class="fa-solid fa-repeat"></i></label>
+            <label for="repeatPassword"><i class="fa-solid fa-repeat"></i></label>
             <input type="password" name="repeatPassword" id="repeatPasswordInput" placeholder=" Repeat Password">
         </div>
         <button type="submit" class="btn signUpBtn">Sign Up</button>

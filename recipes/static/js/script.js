@@ -1,5 +1,5 @@
 const form = document.getElementById('form');
-const firstnameInput = document.getElementById('firstnameInput');
+const usernameInput = document.getElementById('userInput');
 const emailInput = document.getElementById('emailInput');
 const passwordInput = document.getElementById('passwordInput');
 const repeatPasswordInput = document.getElementById('repeatPasswordInput');
@@ -8,10 +8,10 @@ const errorMsg = document.getElementById('error-msg');
 form.addEventListener('submit', (e) => {
     let errors = [];
 
-    if (firstnameInput) {
+    if (usernameInput) {
         // if first name input appears, sign up page is loaded
         errors = SignUpFormErrors(
-            firstnameInput.value,
+            usernameInput.value,
             emailInput.value,
             passwordInput.value,
             repeatPasswordInput.value)
@@ -28,12 +28,12 @@ form.addEventListener('submit', (e) => {
     }
 });
 
-function SignUpFormErrors(firstname, email, password, repeatPassword) {
+function SignUpFormErrors(username, email, password, repeatPassword) {
     let errors = [];
 
-    if (firstname === "" || firstname == null) {
+    if (username === "" || username == null) {
         errors.push('First name Required');
-        firstnameInput.parentElement.classList.add('incorrect');
+        usernameInput.parentElement.classList.add('incorrect');
     }
     if (email === "" || email == null) {
         errors.push('Email Required');
@@ -69,7 +69,7 @@ function SignInFormErrors(email, password) {
     return errors;
 }
 
-const allInputs = [firstnameInput, emailInput, passwordInput, repeatPasswordInput].filter(input => input != null);
+const allInputs = [usernameInput, emailInput, passwordInput, repeatPasswordInput].filter(input => input != null);
 
 allInputs.forEach(input => {
     input.addEventListener('input', () => {

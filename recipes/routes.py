@@ -20,10 +20,10 @@ def signup():
         # Getting all data from the form
         email = request.form.get("email")
         password = request.form.get("password")
-        firstname = request.form.get("firstname")
+        username = request.form.get("username")
 
         # Validate form
-        if not firstname or not email or not password:
+        if not username or not email or not password:
             flash("Please fill out all required fields.")
             return redirect(url_for('signup'))
 
@@ -38,7 +38,7 @@ def signup():
         # New users
         hashed_password = generate_password_hash(password)
         new_user = Users(
-            firstname=firstname,
+            username=username,
             email=email,
             password=generate_password_hash(password)
         )
@@ -50,7 +50,7 @@ def signup():
         # Adding new user to session cookie
         session["email"] = email
         flash("Registrattion Successful")
-        return redirect(url_for('your_recipes.html')) # Take user to their recipes page
+        return redirect(url_for('dashboard.html')) # Take user to their recipes page
 
     return render_template("sign_up.html")
 
@@ -59,7 +59,7 @@ def signup():
 def signin():
     if request.method == "POST":
         email = request.form.get("email")
-        password = requesr.form.get("password")
+        password = request.form.get("password")
 
         if not email or not password:
             flash("Please enter both email and password.")
@@ -68,14 +68,14 @@ def signin():
         email = email.lower()
 
         user = Users.query.filter_by(email=email).first()
-        if user and check_password_hash(user.password, passowrd):
+        if user and check_password_hash(user.password, password):
             session["email"] = user.email
             flash("Login Successful")
-            return redirect(url_for('your_recipes.html'))
+            return redirect(url_for('dashboard.html'))
         else:
             flash("Invalid email or password")
             return redirect(url_for('signup'))
-
+    
     return render_template("sign_in.html")
 
 

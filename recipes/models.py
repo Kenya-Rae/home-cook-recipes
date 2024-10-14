@@ -6,9 +6,9 @@ from datetime import datetime
 class Users(db.Model):
     # schema for Users Model
     id = db.Column(db.Integer, primary_key=True)
-    firstname = db.Column(db.String(80), unique=True, nullable=False)
+    username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(130), nullable=False)
+    password = db.Column(db.String(260), nullable=False)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

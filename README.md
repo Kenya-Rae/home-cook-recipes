@@ -265,6 +265,9 @@ W3c was used to validate HTML, CSS and JavaScript code.
 
 ### Current Bugs
 
+- Sign in/up form gave back an error - due to column name change. 
+- Sign in/up form not redirecting to pages.
+
 <br>
   <details>
   <summary>Console Message</summary>
