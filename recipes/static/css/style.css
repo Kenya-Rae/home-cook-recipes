@@ -158,12 +158,27 @@ border-color: rgb(214, 24, 46);
 }
 
 /* Dashboard */
-.dashboard {
+.dashmain-title{
+  margin-top: 20px;
+  margin-bottom: 30px;
   text-align: center;
+  font-size: 55px;
 }
 
-.dashmain-title{
+.dashboard-sub {
   text-align: center;
+  font-weight: 500;
+  text-decoration: underline;
+  margin-bottom: 25px;
+  color: #b388ff;
+}
+
+.your_recipes{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
 }
 
 
