@@ -167,10 +167,8 @@ border-color: rgb(214, 24, 46);
 
 .dashboard-sub {
   text-align: center;
-  font-weight: 500;
-  text-decoration: underline;
+  font-weight: 300;
   margin-bottom: 25px;
-  color: #b388ff;
 }
 
 .your_recipes{
@@ -181,9 +179,7 @@ border-color: rgb(214, 24, 46);
   align-items: center;
 }
 
-
 /* Gallery Page */
-
 .album-page{
     display: flex;
     align-items: center;
@@ -215,6 +211,7 @@ div.desc {
 /*--------Media Queries------ */
 /*-- Extra Small devices (portrait phones, 576px and less--*/
 @media only screen and (max-width: 375px){
+/* Sign in/Up form */
   .form > div {
     padding-top: 5px;
   }
@@ -236,4 +233,12 @@ div.desc {
   .searchBtn {
     margin-left: 5px
   }
+}
+/* Dashboard */
+.your_recipes{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }

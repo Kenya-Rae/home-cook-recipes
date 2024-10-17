@@ -90,7 +90,7 @@ def dashboard():
     
 
 @app.route("/add_recipe")
-def create_recipe():
+def add_recipe():
     return render_template("add_recipe.html")
 
 
