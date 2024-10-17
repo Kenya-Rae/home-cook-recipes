@@ -1,4 +1,4 @@
-from flask import render_template, request, flash, redirect, url_for, session
+from flask import Flask, render_template, request, flash, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from recipes import app, db
 from recipes.models import Users, Recipes, Ingredients, Category, Comments, RecipeIngredients, RecipeCategories
@@ -32,7 +32,7 @@ def signup():
         #check if user already exists in recipes database
         existing_user = Users.query.filter_by(email=email).first()
         if existing_user:
-            flash("Email Address already exists")
+            flash("Email Address already exists!")
             return redirect(url_for("signin"))
 
         # New users
@@ -40,7 +40,7 @@ def signup():
         new_user = Users(
             username=username,
             email=email,
-            password=generate_password_hash(password)
+            password=hashed_password
         )
 
         ## Putting new user in recipes database
@@ -49,8 +49,9 @@ def signup():
 
         # Adding new user to session cookie
         session["email"] = email
-        flash("Registrattion Successful")
-        return redirect(url_for('dashboard.html')) # Take user to their recipes page
+        flash("Sign Up Successful!")
+
+        return redirect(url_for('dashboard')) # Take user to their recipes page
 
     return render_template("sign_up.html")
 
@@ -63,7 +64,7 @@ def signin():
 
         if not email or not password:
             flash("Please enter both email and password.")
-            return redirect(url_for(signin))
+            return redirect(url_for('signin'))
 
         email = email.lower()
 
@@ -71,13 +72,22 @@ def signin():
         if user and check_password_hash(user.password, password):
             session["email"] = user.email
             flash("Login Successful")
-            return redirect(url_for('dashboard.html'))
+            return redirect(url_for('dashboard'))
         else:
             flash("Invalid email or password")
             return redirect(url_for('signup'))
     
     return render_template("sign_in.html")
 
+
+@app.route("/dashboard")
+def dashboard():
+    if 'email' not in session:
+        flash('Please sign in.')
+        return redirect(url_for('signin'))
+
+    return render_template('dashboard.html')
+    
 
 @app.route("/add_recipe")
 def create_recipe():

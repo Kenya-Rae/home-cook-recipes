@@ -5,7 +5,7 @@
 
 <div class="sign-in container">
     <p id="error-msg"></p>
-    <form id="form" class="form">
+    <form id="form" class="form" method="POST" action="{{ url_for('signin') }}">
         <div>
             <label for="email"><i class="fa-solid fa-at"></i></label>
             <input type="email" name="email" id="emailInput" placeholder="email@example.com">

@@ -157,6 +157,16 @@ border-color: rgb(214, 24, 46);
   font-weight: 700;
 }
 
+/* Dashboard */
+.dashboard {
+  text-align: center;
+}
+
+.dashmain-title{
+  text-align: center;
+}
+
+
 /* Gallery Page */
 
 .album-page{

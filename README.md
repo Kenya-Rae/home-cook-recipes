@@ -265,8 +265,7 @@ W3c was used to validate HTML, CSS and JavaScript code.
 
 ### Current Bugs
 
-- Sign in/up form gave back an error - due to column name change. 
-- Sign in/up form not redirecting to pages.
+- 
 
 <br>
   <details>
@@ -284,8 +283,8 @@ W3c was used to validate HTML, CSS and JavaScript code.
 ### Fixed Bugs
 
 - Materialise mobile navbar wouldn't initialise, switched over to Bootstrap for functionality for navbar and footer functions.
--
--
+- Sign in/sign up form would push back an error due to the column variable name changes this hadnt migrated over on the recipes database. Once I made the migrations this allowed me to submit a form.
+- Sign in/sign up form was refreshing the page instead of redirecting users to the correct URL links. This was due to some typo errors within my routes. Aswell as the incorrect use of url_for.
 -
 
 ## Deployments
