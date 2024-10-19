@@ -4,13 +4,13 @@
 <h1 class="main-titles">Create your own recipe</h1>
 
 <div class="container card-panel grey lighten-5">
-    <form class="col s12" method="POST" action="{{ url_for('add_recipe') }}">
+    <form class="col s12" method="POST" action="{{ url_for('edit_recipe', recipe_id=recipe.id) }}">
         <!-- recipe name -->
         <div class="row">
             <div class="input-field col s6">
                 <i class="fa-solid fa-utensils"></i>
-                <input id="recipe_name" name="recipe_name" minlength="3" maxlength="25" type="text" class="validate"
-                    required>
+                <input id="recipe_name" name="recipe_name" value="{{ recipe.title }}" minlength="3" maxlength="25"
+                    type="text" class="validate" required>
                 <label for="recipe_name">Recipe Name</label>
             </div>
             <!-- Recipe Category -->
@@ -26,36 +26,39 @@
             <!-- Recipe Description  -->
             <div class="input-field col s6">
                 <i class="fa-solid fa-comment"></i>
-                <input id="recipe_description" name="recipe_description" minlength="5" type="text" required>
+                <input id="recipe_description" name="recipe_description" value="{{ recipe.description }}" minlength="5"
+                    type="text" required>
                 <label for="recipe_description">Recipe Description</label>
             </div>
             <!-- Ingredients  -->
             <div class="input-field col s9">
                 <i class="fa-solid fa-list"></i>
-                <input id="ingredients" name="ingredients" minlength="2" type="text" required>
+                <input id="ingredients" name="ingredients" value="{{ recipe.ingredients }}" minlength="2" type="text"
+                    required>
                 <label for="ingredients">Ingredients</label>
             </div>
             <!--  Recipe Instructions  -->
             <div class="input-field col s9">
                 <i class="fa-regular fa-message"></i>
-                <input id="recipe_instructions" name="recipe_instructions" minlength="5" type="text" required>
+                <input id="recipe_instructions" name="recipe_instructions" value="{{ recipe.instructions }}"
+                    minlength="5" type="text" required>
                 <label for="recipe_instructions">Recipe Instructions</label>
             </div>
             <!-- Prep Time  -->
             <div class="input-field col s6">
                 <i class="fa-regular fa-clock"></i>
-                <input id="preptime" name="preptime" type="number">
+                <input id="preptime" name="preptime" value="{{ recipe.prep_time }}" type="number">
                 <label for="preptime">Prep Time</label>
             </div>
             <!-- Cooking time  -->
             <div class="input-field col s6">
                 <i class="fa-regular fa-clock"></i>
-                <input id="cooktime" name="cooktime" type="number" required>
+                <input id="cooktime" name="cooktime" value="{{ recipe.cook_time }}" type="number" required>
                 <label for="cooktime">Cook Time</label>
             </div>
             <!-- Servings  -->
             <div class="input-field col s6">
-                <input id="servings" name="servings" type="number">
+                <input id="servings" name="servings" value="{{ recipe.servings }}" type="number">
                 <label for="servings">Servings</label>
             </div>
             <!-- Upload image  -->
@@ -63,7 +66,7 @@
                 <div class="file-field input-field col s6">
                     <div class="btn">
                         <span>Upload Recipe Image</span>
-                        <input type="file" name="recipe_image">
+                        <input type="file" name="recipe_image" value="{{ recipe.image_url }}">
                         <i class="fa-solid fa-upload"></i>
                     </div>
                     <div class="file-path-wrapper">
@@ -76,7 +79,7 @@
         <div class="row">
             <div class="col s12 center-align">
                 <button type="submit" class="btn-light-large">
-                    Add Recipe <i class="fas fa-plus-square right"></i>
+                    Edit Recipe <i class="fas fa-edit right"></i>
                 </button>
                 <button type="delete" class="btn-danger">
                     Delete Recipe <i class="fa-solid fa-trash-can"></i>

@@ -110,6 +110,9 @@ def add_recipe():
         return redirect(url_for('signin'))
 
     user = Users.query.filter_by(email=session["email"]).first()
+    
+    # Load categories from the database for both GET and POST requests
+    categories = Category.query.all()
 
     if request.method == "POST":
         title = request.form.get("recipe_name")
@@ -118,7 +121,16 @@ def add_recipe():
         prep_time = request.form.get("preptime")
         cook_time = request.form.get("cooktime")
         servings = request.form.get("servings")
+        category_ids = request.form.getlist('category_ids')
+        image_url = request.files.get('recipe_image')  # handle the uploaded image
 
+        # Code to handle saving the image
+        # if image_url:
+            # Save image logic here, e.g., save the file to static directory
+            # image_url.save(os.path.join("static/uploads", image_url.filename))
+            # pass
+
+        # Create new recipe
         new_recipe = Recipes(
             title=title,
             description=description,
@@ -127,15 +139,25 @@ def add_recipe():
             cook_time=cook_time,
             total_time=int(prep_time) + int(cook_time),  # total time
             servings=servings,
+            image_url=image_url.filename if image_url else None,  # Save image if one is there
             user_id=user.id  # Link recipe to the logged-in user
         )
-
-        # Add the new recipe to the session and commit
+        
         db.session.add(new_recipe)
         db.session.commit()
-        return redirect(url_for("dashboard"))
 
-        categories = Category.query.all()
+        # Assigning recipe to categories
+        if category_ids:
+            for category_id in category_ids:
+                recipe_category = RecipeCategories(
+                    recipe_id=new_recipe.id,
+                    category_id=int(category_id)
+                )
+                db.session.add(recipe_category)
+
+        db.session.commit()
+        flash('Recipe added!')
+        return redirect(url_for('dashboard'))
 
     return render_template("add_recipe.html", categories=categories)
 
@@ -149,6 +171,24 @@ def view_recipe(recipe_id):
     category = recipe.categories
 
     return render_template("view_recipe.html", recipe=recipe, category=category)
+
+
+@app.route("/edit_recipe/<int:recipe_id>", methods=["GET", "POST"])
+def edit_recipe(recipe_id):
+    recipe = Recipes.query.get_or_404(recipe_id)
+    if request.method == "POST":
+        title = request.form.get("recipe_name")
+        description = request.form.get("recipe_description")
+        instructions = request.form.get("recipe_instructions")
+        prep_time = request.form.get("preptime")
+        cook_time = request.form.get("cooktime")
+        servings = request.form.get("servings")
+        category_ids = request.form.getlist('category_ids')
+        image_url = request.files.get('recipe_image')
+
+        db.session.commit()
+        return redirect(url_for("dashboard"))
+    return render_template("edit_recipe.html", recipe=recipe)
 
 
 @app.route("/gallery")
