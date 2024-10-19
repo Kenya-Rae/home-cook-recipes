@@ -189,6 +189,24 @@ border-color: rgb(214, 24, 46);
   align-items: center;
 }
 
+.add-recipe-btn{
+  text-align: center;
+}
+
+.addBtn{
+  background-color: #cfd8dc;
+  border-radius: 3px;
+  padding: 5px;
+  font-size: medium;
+  font-weight: 600;
+  border: 2px solid #bbc3c7;
+  
+}
+
+a.addBtn{
+  color: #01579b;
+}
+
 /* Gallery Page */
 .album-page{
     display: flex;

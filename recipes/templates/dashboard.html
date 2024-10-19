@@ -1,56 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="dashmain-title main-titles"> {{ username }}'s Dashboard</h1>
-
-<section>
-    {% with messages = get_flashed_messages() %}
-    {% if messages %}
-    {% for message in messages %}
-    <div class="row flashes">
-        <h4 class="flash-messages"></h4>
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
-</section>
+<h1 class="dashmain-title main-titles"> {{ user.username }}'s Dashboard</h1>
 
 <h2 class="dashboard-sub"> Your Recipes</h2>
 
-<div class="container your_recipes">
+<div class="row">
+    <div class="col s12 center-align add-recipe-btn">
+        <a href="{{ url_for('add_recipe')}}" class="addBtn">
+            Add Recipe <i class="fas fa-plus-square center"></i>
+        </a>
+    </div>
+</div>
 
+<div class="container your_recipes">
+    {% for recipe in recipes %}
     <div class="card users-recipes" style="width: 18rem;">
         <img class="card-img-top" src=".../100px180/" alt="Card image cap">
         <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="{{ url_for('add_recipe')}}" class="btn btn-info">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
+            <h5 class="card-title">{{ recipe.title }}</h5>
+            <p class="card-text">{{ recipe.description }}</p>
+            <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="btn btn-info">View Recipe</a>
         </div>
     </div>
-
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="{{ url_for('add_recipe')}}" class="btn btn-info">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
-        </div>
-    </div>
-
-    <div class="card" style="width: 18rem;">
-        <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-                content.</p>
-            <a href="{{ url_for('add_recipe')}}" class="btn btn-info">Edit</a>
-            <a href="#" class="btn btn-danger">Delete</a>
-        </div>
-    </div>
+    {% endfor %}
 </div>
+
 
 {% endblock %}

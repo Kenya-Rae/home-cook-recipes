@@ -7,21 +7,69 @@
     <form class="col s12" method="POST" action="{{ url_for('add_recipe') }}">
         <!-- recipe name -->
         <div class="row">
-            <div class="input-field col s12">
+            <div class="input-field col s6">
                 <i class="fa-solid fa-utensils"></i>
                 <input id="recipe_name" name="recipe_name" minlength="3" maxlength="25" type="text" class="validate"
                     required>
                 <label for="recipe_name">Recipe Name</label>
             </div>
-            <div class="input-field col s12">
+            <!-- Recipe Category -->
+            <div class="input-field col s6">
+                <select name="category_id" required>
+                    <option value="" disabled selected>Choose a category</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}">{{ category.name }}</option>
+                    {% endfor %}
+                </select>
+                <label for="category_id">Category</label>
+            </div>
+            <!-- Recipe Description  -->
+            <div class="input-field col s6">
                 <i class="fa-solid fa-comment"></i>
                 <input id="recipe_description" name="recipe_description" minlength="5" type="text" required>
-                <label for="recipe_drescription">Recipe Description</label>
+                <label for="recipe_description">Recipe Description</label>
             </div>
-            <div class="input-field col s12">
+            <!-- Ingredients  -->
+            <div class="input-field col s9">
+                <i class="fa-solid fa-list"></i>
+                <input id="ingredients" name="ingredients" minlength="2" type="text" required>
+                <label for="ingredients">Ingredients</label>
+            </div>
+            <!--  Recipe Instructions  -->
+            <div class="input-field col s9">
                 <i class="fa-solid fa-list"></i>
                 <input id="recipe_instructions" name="recipe_instructions" minlength="5" type="text" required>
                 <label for="recipe_instructions">Recipe Instructions</label>
+            </div>
+            <!-- Prep Time  -->
+            <div class="input-field col s6">
+                <i class="fa-solid fa-time"></i>
+                <input id="preptime" name="preptime" type="number">
+                <label for="preptime">Prep Time</label>
+            </div>
+            <!-- Cooking time  -->
+            <div class="input-field col s6">
+                <i class="fa-solid fa-time"></i>
+                <input id="cooktime" name="cooktime" type="number" required>
+                <label for="cooktime">Cook Time</label>
+            </div>
+            <!-- Servings  -->
+            <div class="input-field col s6">
+                <i class="fa-solid fa-"></i>
+                <input id="servings" name="servings" type="number">
+                <label for="servings">Servings</label>
+            </div>
+            <!-- Upload image  -->
+            <div action="#">
+                <div class="file-field input-field col s6">
+                    <div class="btn">
+                        <span>Upload Recipe Image</span>
+                        <input type="file" name="recipe_image">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
             </div>
         </div>
         <!-- submit button -->
