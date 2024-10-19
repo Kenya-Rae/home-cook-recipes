@@ -1,7 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="dashmain-title main-titles">Dashboard</h1>
+<h1 class="dashmain-title main-titles"> {{ username }}'s Dashboard</h1>
+
+<section>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="row flashes">
+        <h4 class="flash-messages"></h4>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</section>
 
 <h2 class="dashboard-sub"> Your Recipes</h2>
 

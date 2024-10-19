@@ -1,17 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
 
+<section>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="row flashes">
+        <h4 class="flash-messages"></h4>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</section>
+
 <h1 class="main-titles">Sign In</h1>
 
 <div class="sign-in container">
     <p id="error-msg"></p>
     <form id="form" class="form" method="POST" action="{{ url_for('signin') }}">
         <div>
-            <label for="email"><i class="fa-solid fa-at"></i></label>
+            <i class="fa-solid fa-at"></i>
+            <label for="email"></label>
             <input type="email" name="email" id="emailInput" placeholder="email@example.com">
         </div>
         <div>
-            <label for="password"><i class="fa-solid fa-key"></i></label>
+            <i class="fa-solid fa-key"></i>
+            <label for="password"></label>
             <input type="password" name="password" id="passwordInput" placeholder="Password">
         </div>
         <button type="submit" class="btn signInBtn">Sign in</button>

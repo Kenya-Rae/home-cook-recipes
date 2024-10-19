@@ -27,10 +27,13 @@
                     <a class="nav-item nav-link active" href="{{ url_for('index') }}">Home <span
                             class="sr-only">(current)</span></a>
                     <a class="nav-item nav-link" href="{{ url_for('recipes') }}">Recipes</a>
+                    <a class="nav-item nav-link" href="{{ url_for('gallery') }}">Gallery</a>
+                    {% if session.email %}
+                    <a class="nav-item nav-link" href="{{ url_for('dashboard')}}">Dashboard</a>
+                    <a class="nav-item nav-link disabled" href="{{ url_for('logout')}}">Log Out</a>
+                    {% else %}
                     <a class="nav-item nav-link" href="{{ url_for('signin') }}">Sign In</a>
-                    <a class="nav-item nav-link disabled" href="{{ url_for('gallery') }}">Gallery</a>
-                    <a class="nav-item nav-link disabled" href="{{ url_for('dashboard')}}">My Recipes</a>
-                    <a class="nav-item nav-link disabled" href="">Log Out</a>
+                    {% endif %}
                 </div>
             </div>
             <form class="form-inline">

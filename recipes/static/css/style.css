@@ -53,6 +53,16 @@ main {
   position: relative;
   top: 35px;
 }
+
+/* Flash Messages */
+.flashes h4{
+  line-height: 2;
+}
+
+.flash-messages{
+  background-color: #cfd8dcda;
+}
+
 /* Homepage Content */
 .card{
   margin: 15px !important;

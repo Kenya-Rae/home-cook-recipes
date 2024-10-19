@@ -43,7 +43,7 @@ def signup():
             password=hashed_password
         )
 
-        ## Putting new user in recipes database
+        ## Putting new user in recipes session
         db.session.add(new_user)
         db.session.commit()
 
@@ -71,7 +71,7 @@ def signin():
         user = Users.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
             session["email"] = user.email
-            flash("Login Successful")
+            flash("Login Successful  Welcome, {}".format(request.form.get("username")))
             return redirect(url_for('dashboard'))
         else:
             flash("Invalid email or password")
@@ -88,6 +88,14 @@ def dashboard():
 
     return render_template('dashboard.html')
     
+
+@app.route("/logout")
+def logout():
+    # removing user from session
+    flash('You have been logged out.')
+    session.pop("email")
+    return redirect(url_for("signin"))
+
 
 @app.route("/add_recipe")
 def add_recipe():
