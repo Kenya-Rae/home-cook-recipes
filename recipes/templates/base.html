@@ -30,6 +30,7 @@
                     <a class="nav-item nav-link" href="{{ url_for('gallery') }}">Gallery</a>
                     {% if session.email %}
                     <a class="nav-item nav-link" href="{{ url_for('dashboard')}}">Dashboard</a>
+                    <a class="nav-item nav-link" href="{{ url_for('add_category')}}">Add Category</a>
                     <a class="nav-item nav-link disabled" href="{{ url_for('logout')}}">Log Out</a>
                     {% else %}
                     <a class="nav-item nav-link" href="{{ url_for('signin') }}">Sign In</a>

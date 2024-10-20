@@ -11,6 +11,7 @@ class Users(db.Model):
     password = db.Column(db.String(260), nullable=False)
     created = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+    is_admin = db.Column(db.Boolean, default=False)
 
     recipes = db.relationship('Recipes', back_populates='author', lazy=True)
     comments = db.relationship('Comments', back_populates='author', lazy=True)
