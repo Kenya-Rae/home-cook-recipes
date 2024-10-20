@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from recipes import app, db
-from recipes.models import Users, Recipes, Ingredients, Category, Comments, RecipeIngredients, RecipeCategories
+from recipes.models import Users, Recipes, Instructions, Ingredients, Category, Comments, RecipeIngredients, RecipeCategories
+from werkzeug.utils import secure_filename
+import time
+import os
 
 
 @app.route("/")
@@ -112,65 +115,61 @@ def logout():
 @app.route("/add_recipe", methods=["GET", "POST"])
 def add_recipe():
     if 'email' not in session:
-        flash('Please sign in.', "error")
+        flash('Please sign in to add a recipe.', "error")
         return redirect(url_for('signin'))
 
-    user = Users.query.filter_by(email=session["email"]).first()
-
-    # check if the user exists
-    if not user:
-        flash('Please sign in.', "error")
-        return redirect(url_for('signin'))
-    
-    # Load categories from the database for both GET and POST requests
-    categories = Category.query.all()
-
+    user = Users.query.filter_by(email=session["email"]).first()  # Get the current user
     if request.method == "POST":
-        title = request.form.get("recipe_name")
-        description = request.form.get("recipe_description")
-        instructions = request.form.get("recipe_instructions")
+        title = request.form.get("name")  # Ensure this matches your form input
+        description = request.form.get("description")
         prep_time = request.form.get("preptime")
         cook_time = request.form.get("cooktime")
         servings = request.form.get("servings")
-        category_ids = request.form.getlist('category_ids')
-        image_url = request.files.get('recipe_image')  # handle the uploaded image
+        
+      # Image handling
+        image_file = request.files.get('recipe_image')
+        image_filename = None
+        
+        # Create the images directory if it doesn't exist
+        image_dir = 'static/images'
+        if not os.path.exists(image_dir):
+            os.makedirs(image_dir)  # Create the directory
 
-        # Code to handle saving the image
-        # if image_url:
-            # Save image logic here, e.g., save the file to static directory
-            # image_url.save(os.path.join("static/uploads", image_url.filename))
-            # pass
+        if image_file:
+            image_filename = secure_filename(image_file.filename)
+            image_path = os.path.join(image_dir, image_filename)  # Define your path accordingly
+            image_file.save(image_path)  # Save the uploaded file
 
         # Create new recipe
         new_recipe = Recipes(
             title=title,
             description=description,
-            instructions=instructions,
             prep_time=prep_time,
             cook_time=cook_time,
-            total_time=int(prep_time) + int(cook_time),  # total time
+            total_time=int(prep_time) + int(cook_time),  # Calculate total time
             servings=servings,
-            image_url=image_url.filename if image_url else None,  # Save image if one is there
-            user_id=user.id  # Link recipe to the logged-in user
+            image_url=image_filename,  # Set the image_url field here
+            user_id=user.id  # Associate the recipe with the current user
         )
         
+        # Add the new recipe to the session
         db.session.add(new_recipe)
         db.session.commit()
 
-        # Assigning recipe to categories
-        if category_ids:
-            for category_id in category_ids:
-                recipe_category = RecipeCategories(
-                    recipe_id=new_recipe.id,
-                    category_id=int(category_id)
-                )
-                db.session.add(recipe_category)
+        # Now handle categories
+        category_ids = request.form.getlist('category_id')  # Assuming the input name is 'category_id'
+        for category_id in category_ids:
+            # Create a new association in the RecipeCategories model
+            new_category = RecipeCategories(recipe_id=new_recipe.id, category_id=category_id)
+            db.session.add(new_category)
 
-        db.session.commit()
-        flash('Recipe added!', "success")
-        return redirect(url_for('dashboard'))
+        db.session.commit()  # Commit all changes (new recipe and categories)
+        flash('Recipe Added!', "success")
+        return redirect(url_for("dashboard"))
 
-    return render_template("add_recipe.html", categories=categories)
+    # Fetch all categories for the dropdown
+    all_categories = Category.query.all()
+    return render_template("add_recipe.html", categories=all_categories)
 
 
 @app.route("/recipe/<int:recipe_id>")
@@ -219,20 +218,25 @@ def add_category():
 @app.route("/edit_recipe/<int:recipe_id>", methods=["GET", "POST"])
 def edit_recipe(recipe_id):
     recipe = Recipes.query.get_or_404(recipe_id)
-    if request.method == "POST":
-        title = request.form.get("recipe_name")
-        description = request.form.get("recipe_description")
-        instructions = request.form.get("recipe_instructions")
-        prep_time = request.form.get("preptime")
-        cook_time = request.form.get("cooktime")
-        servings = request.form.get("servings")
-        category_ids = request.form.getlist('category_ids')
-        image_url = request.files.get('recipe_image')
 
+    if request.method == "POST":
+        # Your existing logic for updating the recipe
+        ...
+        
+        # Handle categories
+        category_ids = request.form.getlist('category_id')
+        recipe.categories.clear()  # Clear current categories
+        for category_id in category_ids:
+            new_category = RecipeCategories(recipe_id=recipe.id, category_id=category_id)
+            db.session.add(new_category)
+        
         db.session.commit()
         flash('Recipe Updated!', "success")
         return redirect(url_for("dashboard"))
-    return render_template("edit_recipe.html", recipe=recipe)
+
+    # Fetch all categories for the dropdown
+    all_categories = Category.query.all()
+    return render_template("edit_recipe.html", recipe=recipe, categories=all_categories)
 
 
 @app.route("/delete_recipe/<int:recipe_id>")
@@ -259,7 +263,7 @@ def make_me_admin():
     current_user = Users.query.filter_by(email=session["email"]).first()
 
     # Make me an admin initially
-    owner_email = ''
+    owner_email = 'kenyarae99@gmail.com'
 
     if current_user:
         # Ensure that only the site owner (me) can promote to admin

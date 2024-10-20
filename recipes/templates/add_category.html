@@ -2,16 +2,16 @@
 {% block content %}
 
 <h1 class="main-titles">Add a New Category</h1>
-<p> Missing a category?</p>
+<p class="categoryTxt"> Missing a category?</p>
 
 <div class="container">
     <form method="POST" action="{{ url_for('add_category') }}">
-        <div class="input-field col s6">
+        <div class="input-field addCategory col s6">
             <i class="fa-solid fa-table-list"></i>
-            <label for="category_name">Category Name</label>
+            <label for="category_name">Category Name:</label>
             <input id="category_name" name="category_name" type="text" required>
+            <button type="submit" class="btn btn-success">Add Category</button>
         </div>
-        <button type="submit" class="btn">Add Category</button>
     </form>
 </div>
 

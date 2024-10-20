@@ -265,7 +265,7 @@ W3c was used to validate HTML, CSS and JavaScript code.
 
 ### Current Bugs
 
-- Admin role not assigning to me(devloper)
+-
 
 <br>
   <details>
@@ -287,6 +287,7 @@ W3c was used to validate HTML, CSS and JavaScript code.
 - Sign in/sign up form was refreshing the page instead of redirecting users to the correct URL links. This was due to some typo errors within my routes. Aswell as the incorrect use of url_for.
 - Flask flash messages, was not displaying amongst pages. Due to the my template literals loops were not implemented correctly.
 - Unable to add recipes due to no categories being added to the database/no admin user at the time to create these. Creating admin role as well as added categories manually.
+- Unable to add categories due to no admin role access. All code for admin was implemented correctly. Though I hadnt acccessed the make_me_admin route to actually make changes.
 
 ## Deployments
 

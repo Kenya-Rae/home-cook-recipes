@@ -17,7 +17,6 @@ class Users(db.Model):
     comments = db.relationship('Comments', back_populates='author', lazy=True)
 
     def __repr__(self):
-        # __repr__ to represent itself
         return f"<User {self.email}, (ID: {self.id})>"
 
 
@@ -26,7 +25,6 @@ class Recipes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    instructions = db.Column(db.Text, nullable=False)
     prep_time = db.Column(db.Integer, nullable=True)
     cook_time = db.Column(db.Integer, nullable=True)
     total_time = db.Column(db.Integer, nullable=True)
@@ -41,12 +39,24 @@ class Recipes(db.Model):
     comments = db.relationship('Comments', back_populates='recipe', lazy=True)
     ingredients = db.relationship('RecipeIngredients', back_populates='recipe')
     categories = db.relationship('RecipeCategories', back_populates='recipe')
+    instructions = db.relationship('Instructions', back_populates='recipe', lazy=True)  # New relationship
 
     author = db.relationship('Users', back_populates="recipes")
 
     def __repr__(self):
-        # __repr__ to represent itself
         return f"<Recipe {self.title}(ID:{self.id})>"
+
+
+class Instructions(db.Model):
+    # schema for Instructions Model
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text, nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
+
+    recipe = db.relationship('Recipes', back_populates='instructions')
+
+    def __repr__(self):
+        return f"<Instruction {self.content} (ID: {self.id})>"
 
 
 class Ingredients(db.Model):
@@ -68,7 +78,6 @@ class Category(db.Model):
     recipes = db.relationship('RecipeCategories', back_populates='category', lazy=True)
 
     def __repr__(self):
-        # __repr__ to represent itself
         return f"<Category {self.name} (ID: {self.id})>"
 
 
@@ -89,6 +98,7 @@ class Comments(db.Model):
 
 
 class RecipeIngredients(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), primary_key=True)
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'), primary_key=True)
     quantity = db.Column(db.String(60), nullable=False)

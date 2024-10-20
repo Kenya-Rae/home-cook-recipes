@@ -5,11 +5,10 @@
 
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
-<div>
+<div class="container">
     {% for category, message in messages %}
-    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-        <strong>{{ message }}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
     </div>
     {% endfor %}
 </div>
@@ -18,10 +17,15 @@
 
 <h2 class="dashboard-sub"> Your Recipes</h2>
 
-<div class="row">
-    <div class="col s12 center-align add-recipe-btn">
+<div class="container dashBtns">
+    <div class="center-align add-recipe-btn">
         <a href="{{ url_for('add_recipe')}}" class="addBtn">
             Add Recipe <i class="fas fa-plus-square center"></i>
+        </a>
+    </div>
+    <div class="center-align addCatBtn">
+        <a href="{{ url_for('add_category')}}" class="addBtn">
+            Add Category <i class="fas fa-plus-square center"></i>
         </a>
     </div>
 </div>
@@ -34,7 +38,7 @@
             <h5 class="card-title">{{ recipe.title }}</h5>
             <p class="card-text">{{ recipe.description }}</p>
             <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="btn btn-info">View</a>
-            <a href="{{ url_for('edit_recipe', recipe_id=recipe.id) }}" class="btn btn-green">Edit</a>
+            <a href="{{ url_for('edit_recipe', recipe_id=recipe.id) }}" class="btn btn-success">Edit</a>
             <a href="{{ url_for('delete_recipe', recipe_id=recipe.id) }}" class="btn btn-danger">Delete</a>
         </div>
     </div>

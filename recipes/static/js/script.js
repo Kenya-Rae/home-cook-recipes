@@ -79,3 +79,22 @@ allInputs.forEach(input => {
         }
     });
 });
+
+document.getElementById('add-ingredient').addEventListener('click', function () {
+    var newIngredient = document.createElement('div');
+    newIngredient.className = 'ingredient-item mb-2';
+    newIngredient.innerHTML = `
+        <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-50" />
+        <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25" />
+    `;
+    document.getElementById('ingredients-list').appendChild(newIngredient);
+});
+
+document.getElementById('add-instruction').addEventListener('click', function () {
+    var newInstruction = document.createElement('textarea');
+    newInstruction.className = 'form-control mb-2';
+    newInstruction.name = 'instruction[]';
+    newInstruction.placeholder = 'Step';
+    newInstruction.required = true;
+    document.getElementById('instructions-list').appendChild(newInstruction);
+});

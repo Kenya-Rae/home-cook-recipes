@@ -4,13 +4,13 @@
 <h1 class="main-titles">Create your own recipe</h1>
 
 <div class="container card-panel">
-    <form class="recipeForm" method="POST" action="{{ url_for('add_recipe') }}">
-        <!-- recipe name -->
+    <form class="recipeForm" method="POST" action="{{ url_for('add_recipe') }}" enctype="multipart/form-data">
+        <!-- Recipe Name -->
         <div class="input-group mb-3 w-50 p-1">
             <span class="input-group-text"><i class="fa-solid fa-pen"></i> Recipe Name</span>
-            <input type="text" class="form-control validate" minlength="3" maxlength="25" fdprocessedid="knersh"
-                required>
+            <input type="text" class="form-control validate" name="name" minlength="3" maxlength="25" required>
         </div>
+
         <!-- Recipe Category -->
         <div class="input-field mb-3 w-25 p-1">
             <label for="category_id">Category</label>
@@ -21,67 +21,75 @@
                 {% endfor %}
             </select>
         </div>
-        <!-- Recipe Description  -->
+
+        <!-- Recipe Description -->
         <div class="input-group mb-3 w-75 p-1">
             <span class="input-group-text"><i class="fa-solid fa-circle-info"></i> Recipe Description</span>
-            <textarea class="form-control" aria-label="With textarea" id="recipe_description" name="recipe_description"
-                minlength="5" type="text" required></textarea>
+            <textarea class="form-control" name="description" minlength="5" required></textarea>
         </div>
-        <!-- Ingredients  -->
-        <div class="input-group mb-3 w-75 p-1">
+
+        <!-- Ingredients (with Quantity) -->
+        <div class="mb-3 w-75 p-1">
             <span class="input-group-text"><i class="fa-solid fa-list-check"></i> Ingredients</span>
-            <textarea class="form-control" aria-label="With textarea" id="recipe_description" name="recipe_description"
-                minlength="5" type="text" required></textarea>
+            <div id="ingredients-list">
+                <div class="ingredient-item mb-2">
+                    <input type="text" name="ingredient_name[]" placeholder="Ingredient" required
+                        class="form-control w-50" />
+                    <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required
+                        class="form-control w-25" />
+                </div>
+            </div>
+            <button type="button" id="add-ingredient" class="btn btn-outline-primary mt-2">Add More Ingredients</button>
         </div>
-        <!--  Recipe Instructions  -->
-        <div class="input-group mb-3 w-75 p-1">
-            <span class="input-group-text"><i class="fa-solid fa-list-ol"></i> Recipe Instructions</span>
-            <textarea class="form-control" aria-label="With textarea" id="recipe_instructions"
-                name="recipe_instructions" minlength="5" type="text" required></textarea>
+
+        <!-- Recipe Instructions as List -->
+        <div class="mb-3 w-75 p-1">
+            <span class="input-group-text"><i class="fa-solid fa-list-ol"></i> Instructions</span>
+            <div id="instructions-list">
+                <textarea class="form-control mb-2" name="instruction[]" placeholder="Step 1" required></textarea>
+            </div>
+            <button type="button" id="add-instruction" class="btn btn-outline-primary mt-2">Add More Steps</button>
         </div>
-        <!-- Prep Time  -->
+
+        <!-- Prep Time -->
         <div class="input-field mb-3 w-25 p-1">
             <i class="fa-regular fa-clock"></i>
-            <label for="preptime">Prep Time:</label>
-            <input id="preptime" name="preptime" type="number">
+            <label for="preptime">Prep Time (minutes):</label>
+            <input id="preptime" name="preptime" type="number" required>
         </div>
-        <!-- Cooking time  -->
+
+        <!-- Cooking Time -->
         <div class="input-field mb-3 w-25 p-1">
             <i class="fa-regular fa-clock"></i>
-            <label for="cooktime">Cook Time:</label>
+            <label for="cooktime">Cook Time (minutes):</label>
             <input id="cooktime" name="cooktime" type="number" required>
         </div>
-        <!-- Servings  -->
+
+        <!-- Servings -->
         <div class="input-field mb-3 w-25 p-1">
             <label for="servings">Servings:</label>
             <input id="servings" name="servings" type="number">
         </div>
 
-        <!-- Upload image  -->
-        <div action="#">
-            <div class="file-field input-field ">
-                <div class="btn">
-                    <i class="fa-solid fa-upload"></i>
-                    <span>Upload Recipe Image:</span>
-                    <input type="file" name="recipe_image" class="form-control" id="inputGroupFile04"
-                        aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                </div>
-                <div class="form-text mb-3 p-1" id="basic-addon4">Upload an image of your recipe!</div>
+        <!-- Image Upload -->
+        <div class="file-field input-field mb-3">
+            <div class="btn">
+                <i class="fa-solid fa-upload"></i>
+                <span>Upload Recipe Image:</span>
+                <input type="file" name="recipe_image" class="form-control">
             </div>
         </div>
-        <!-- submit button -->
+
+        <!-- Submit -->
         <div class="row">
             <div class="center-align w-100 mb-3 p-1">
-                <button type="submit" class="btn btn-success">
-                    Add Recipe <i class="fas fa-plus-square right"></i>
-                </button>
-                <button type="reset" value="Reset" class="btn btn-outline-danger">
-                    Delete Recipe <i class="fa-solid fa-trash-can"></i>
-                </button>
+                <button type="submit" class="btn btn-success">Add Recipe <i
+                        class="fas fa-plus-square right"></i></button>
+                <button type="reset" class="btn btn-outline-danger">Delete Recipe <i
+                        class="fa-solid fa-trash-can"></i></button>
             </div>
         </div>
     </form>
 </div>
-
 
 {% endblock %}
