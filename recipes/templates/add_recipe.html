@@ -3,82 +3,79 @@
 
 <h1 class="main-titles">Create your own recipe</h1>
 
-<div class="container card-panel grey lighten-5">
-    <form class="col s12" method="POST" action="{{ url_for('add_recipe') }}">
+<div class="container card-panel">
+    <form class="recipeForm" method="POST" action="{{ url_for('add_recipe') }}">
         <!-- recipe name -->
-        <div class="row">
-            <div class="input-field col s6">
-                <i class="fa-solid fa-utensils"></i>
-                <input id="recipe_name" name="recipe_name" minlength="3" maxlength="25" type="text" class="validate"
-                    required>
-                <label for="recipe_name">Recipe Name</label>
-            </div>
-            <!-- Recipe Category -->
-            <div class="input-field col s6">
-                <select name="category_id" required>
-                    <option value="" disabled selected>Choose a category</option>
-                    {% for category in categories %}
-                    <option value="{{ category.id }}">{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-                <label for="category_id">Category</label>
-            </div>
-            <!-- Recipe Description  -->
-            <div class="input-field col s6">
-                <i class="fa-solid fa-comment"></i>
-                <input id="recipe_description" name="recipe_description" minlength="5" type="text" required>
-                <label for="recipe_description">Recipe Description</label>
-            </div>
-            <!-- Ingredients  -->
-            <div class="input-field col s9">
-                <i class="fa-solid fa-list"></i>
-                <input id="ingredients" name="ingredients" minlength="2" type="text" required>
-                <label for="ingredients">Ingredients</label>
-            </div>
-            <!--  Recipe Instructions  -->
-            <div class="input-field col s9">
-                <i class="fa-regular fa-message"></i>
-                <input id="recipe_instructions" name="recipe_instructions" minlength="5" type="text" required>
-                <label for="recipe_instructions">Recipe Instructions</label>
-            </div>
-            <!-- Prep Time  -->
-            <div class="input-field col s6">
-                <i class="fa-regular fa-clock"></i>
-                <input id="preptime" name="preptime" type="number">
-                <label for="preptime">Prep Time</label>
-            </div>
-            <!-- Cooking time  -->
-            <div class="input-field col s6">
-                <i class="fa-regular fa-clock"></i>
-                <input id="cooktime" name="cooktime" type="number" required>
-                <label for="cooktime">Cook Time</label>
-            </div>
-            <!-- Servings  -->
-            <div class="input-field col s6">
-                <input id="servings" name="servings" type="number">
-                <label for="servings">Servings</label>
-            </div>
-            <!-- Upload image  -->
-            <div action="#">
-                <div class="file-field input-field col s6">
-                    <div class="btn">
-                        <span>Upload Recipe Image</span>
-                        <input type="file" name="recipe_image">
-                        <i class="fa-solid fa-upload"></i>
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
-                    </div>
+        <div class="input-group mb-3 w-50 p-1">
+            <span class="input-group-text"><i class="fa-solid fa-pen"></i> Recipe Name</span>
+            <input type="text" class="form-control validate" minlength="3" maxlength="25" fdprocessedid="knersh"
+                required>
+        </div>
+        <!-- Recipe Category -->
+        <div class="input-field mb-3 w-25 p-1">
+            <label for="category_id">Category</label>
+            <select name="category_id" required>
+                <option value="" disabled selected>Choose a category:</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <!-- Recipe Description  -->
+        <div class="input-group mb-3 w-75 p-1">
+            <span class="input-group-text"><i class="fa-solid fa-circle-info"></i> Recipe Description</span>
+            <textarea class="form-control" aria-label="With textarea" id="recipe_description" name="recipe_description"
+                minlength="5" type="text" required></textarea>
+        </div>
+        <!-- Ingredients  -->
+        <div class="input-group mb-3 w-75 p-1">
+            <span class="input-group-text"><i class="fa-solid fa-list-check"></i> Ingredients</span>
+            <textarea class="form-control" aria-label="With textarea" id="recipe_description" name="recipe_description"
+                minlength="5" type="text" required></textarea>
+        </div>
+        <!--  Recipe Instructions  -->
+        <div class="input-group mb-3 w-75 p-1">
+            <span class="input-group-text"><i class="fa-solid fa-list-ol"></i> Recipe Instructions</span>
+            <textarea class="form-control" aria-label="With textarea" id="recipe_instructions"
+                name="recipe_instructions" minlength="5" type="text" required></textarea>
+        </div>
+        <!-- Prep Time  -->
+        <div class="input-field mb-3 w-25 p-1">
+            <i class="fa-regular fa-clock"></i>
+            <label for="preptime">Prep Time:</label>
+            <input id="preptime" name="preptime" type="number">
+        </div>
+        <!-- Cooking time  -->
+        <div class="input-field mb-3 w-25 p-1">
+            <i class="fa-regular fa-clock"></i>
+            <label for="cooktime">Cook Time:</label>
+            <input id="cooktime" name="cooktime" type="number" required>
+        </div>
+        <!-- Servings  -->
+        <div class="input-field mb-3 w-25 p-1">
+            <label for="servings">Servings:</label>
+            <input id="servings" name="servings" type="number">
+        </div>
+
+        <!-- Upload image  -->
+        <div action="#">
+            <div class="file-field input-field ">
+                <div class="btn">
+                    <i class="fa-solid fa-upload"></i>
+                    <span>Upload Recipe Image:</span>
+                    <input type="file" name="recipe_image" class="form-control" id="inputGroupFile04"
+                        aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                 </div>
+                <div class="form-text mb-3 p-1" id="basic-addon4">Upload an image of your recipe!</div>
             </div>
         </div>
         <!-- submit button -->
         <div class="row">
-            <div class="col s12 center-align">
-                <button type="submit" class="btn-light-large">
+            <div class="center-align w-100 mb-3 p-1">
+                <button type="submit" class="btn btn-success">
                     Add Recipe <i class="fas fa-plus-square right"></i>
                 </button>
-                <button type="delete" class="btn-danger">
+                <button type="reset" value="Reset" class="btn btn-outline-danger">
                     Delete Recipe <i class="fa-solid fa-trash-can"></i>
                 </button>
             </div>

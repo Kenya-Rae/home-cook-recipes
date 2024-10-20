@@ -19,9 +19,28 @@ main {
 
 .nav-link {
   color: black;
-  font-weight: 800;
+  font-weight: 600;
 }
 
+.searchBox{
+  max-width: 50%;
+  margin-right: 5px;
+}
+
+.search{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.searchBtn{
+  width: 50%;
+  margin-right: 10px;
+}
+
+.alert-dismissible .btn-close {
+  position: relative;
+}
 
 /* Footer */
 .page-footer {
@@ -61,6 +80,11 @@ main {
 
 .flash-messages{
   background-color: #cfd8dcda;
+}
+
+.alert{
+  text-align: center;
+  padding-right: 16px;
 }
 
 /* Homepage Content */
@@ -206,6 +230,24 @@ border-color: rgb(214, 24, 46);
 a.addBtn{
   color: #01579b;
 }
+/* Create Recipe Page */
+.recipeForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.times{
+  justify-content: center;
+}
+
+div > span i{
+  padding-right: 5px;
+}
+
+#basic-addon4{
+  text-align: center;
+}
 
 /* Gallery Page */
 .album-page{
@@ -254,12 +296,15 @@ div.desc {
     padding: 5px;
   }
 
-  .search{
-    max-width: 50%;
+  .searchBox{
+    max-width: 25%;
+    margin-right: 5px;
   }
 
-  .searchBtn {
-    margin-left: 5px
+
+  .searchBtn{
+    width: 35%;
+    margin-right: 10px;
   }
 }
 /* Dashboard */
