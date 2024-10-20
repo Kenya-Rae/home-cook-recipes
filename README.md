@@ -265,7 +265,7 @@ W3c was used to validate HTML, CSS and JavaScript code.
 
 ### Current Bugs
 
-- 
+- Admin role not assigning to me(devloper)
 
 <br>
   <details>
@@ -285,7 +285,8 @@ W3c was used to validate HTML, CSS and JavaScript code.
 - Materialise mobile navbar wouldn't initialise, switched over to Bootstrap for functionality for navbar and footer functions.
 - Sign in/sign up form would push back an error due to the column variable name changes this hadnt migrated over on the recipes database. Once I made the migrations this allowed me to submit a form.
 - Sign in/sign up form was refreshing the page instead of redirecting users to the correct URL links. This was due to some typo errors within my routes. Aswell as the incorrect use of url_for.
--
+- Flask flash messages, was not displaying amongst pages. Due to the my template literals loops were not implemented correctly.
+- Unable to add recipes due to no categories being added to the database/no admin user at the time to create these. Creating admin role as well as added categories manually.
 
 ## Deployments
 

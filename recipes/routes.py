@@ -259,7 +259,7 @@ def make_me_admin():
     current_user = Users.query.filter_by(email=session["email"]).first()
 
     # Make me an admin initially
-    owner_email = 'kenyarae99@gmail.com'
+    owner_email = ''
 
     if current_user:
         # Ensure that only the site owner (me) can promote to admin
