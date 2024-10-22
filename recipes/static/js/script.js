@@ -80,21 +80,25 @@ allInputs.forEach(input => {
     });
 });
 
-document.getElementById('add-ingredient').addEventListener('click', function () {
-    var newIngredient = document.createElement('div');
-    newIngredient.className = 'ingredient-item mb-2';
-    newIngredient.innerHTML = `
-        <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-50" />
-        <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25" />
-    `;
-    document.getElementById('ingredients-list').appendChild(newIngredient);
-});
+document.addEventListener("DOMContentLoaded", function () {
+    // Add more ingredients
+    document.getElementById('add-ingredient').addEventListener('click', function () {
+        const ingredientDiv = document.createElement('div');
+        ingredientDiv.classList.add('ingredient-item', 'mb-2');
+        ingredientDiv.innerHTML = `
+            <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-50" />
+            <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25" />
+        `;
+        document.getElementById('ingredients-list').appendChild(ingredientDiv);
+    });
 
-document.getElementById('add-instruction').addEventListener('click', function () {
-    var newInstruction = document.createElement('textarea');
-    newInstruction.className = 'form-control mb-2';
-    newInstruction.name = 'instruction[]';
-    newInstruction.placeholder = 'Step';
-    newInstruction.required = true;
-    document.getElementById('instructions-list').appendChild(newInstruction);
+    // Add instructions
+    document.getElementById('add-instruction').addEventListener('click', function () {
+        const instructionTextarea = document.createElement('textarea');
+        instructionTextarea.classList.add('form-control', 'mb-2');
+        instructionTextarea.name = "instruction[]";
+        instructionTextarea.placeholder = "Step " + (document.getElementById('instructions-list').children.length + 1);
+        instructionTextarea.required = true;
+        document.getElementById('instructions-list').appendChild(instructionTextarea);
+    });
 });

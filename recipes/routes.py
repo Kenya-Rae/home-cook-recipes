@@ -76,7 +76,7 @@ def signin():
 
         if user and check_password_hash(user.password, password):
             session["email"] = user.email
-            flash("Login Successful! Welcome, {}", "successful")
+            flash("Login Successful! Welcome!", "successful")
             return redirect(url_for('dashboard'))
         else:
             flash("Invalid email or password", "error")
@@ -120,25 +120,25 @@ def add_recipe():
 
     user = Users.query.filter_by(email=session["email"]).first()  # Get the current user
     if request.method == "POST":
-        title = request.form.get("name")  # Ensure this matches your form input
+        title = request.form.get("name")
         description = request.form.get("description")
         prep_time = request.form.get("preptime")
         cook_time = request.form.get("cooktime")
         servings = request.form.get("servings")
-        
-      # Image handling
+
+        # Image handling
         image_file = request.files.get('recipe_image')
         image_filename = None
-        
+
         # Create the images directory if it doesn't exist
         image_dir = 'static/images'
         if not os.path.exists(image_dir):
-            os.makedirs(image_dir)  # Create the directory
+            os.makedirs(image_dir)
 
         if image_file:
             image_filename = secure_filename(image_file.filename)
-            image_path = os.path.join(image_dir, image_filename)  # Define your path accordingly
-            image_file.save(image_path)  # Save the uploaded file
+            image_path = os.path.join(image_dir, image_filename)
+            image_file.save(image_path)
 
         # Create new recipe
         new_recipe = Recipes(
@@ -146,24 +146,44 @@ def add_recipe():
             description=description,
             prep_time=prep_time,
             cook_time=cook_time,
-            total_time=int(prep_time) + int(cook_time),  # Calculate total time
+            total_time=int(prep_time) + int(cook_time),
             servings=servings,
-            image_url=image_filename,  # Set the image_url field here
-            user_id=user.id  # Associate the recipe with the current user
+            image_url=image_filename,
+            user_id=user.id
         )
         
-        # Add the new recipe to the session
         db.session.add(new_recipe)
-        db.session.commit()
+        db.session.commit()  # Commit the new recipe to get its ID
 
-        # Now handle categories
-        category_ids = request.form.getlist('category_id')  # Assuming the input name is 'category_id'
+        # Handle ingredients
+        ingredient_names = request.form.getlist("ingredient_name[]")
+        ingredient_quantities = request.form.getlist("ingredient_quantity[]")
+
+        for name, quantity in zip(ingredient_names, ingredient_quantities):
+            ingredient = Ingredients.query.filter_by(name=name).first()
+            if ingredient:
+                recipe_ingredient = RecipeIngredients(
+                    recipe_id=new_recipe.id,
+                    ingredient_id=ingredient.id,
+                    quantity=quantity
+                )
+                db.session.add(recipe_ingredient)
+            else:
+                flash(f"Ingredient {name} not found in the database.", "error")
+
+        # Handle instructions
+        instructions = request.form.getlist("instruction[]")
+        for step in instructions:
+            instruction = Instructions(content=step, recipe_id=new_recipe.id)
+            db.session.add(instruction)
+
+        # Handle categories
+        category_ids = request.form.getlist('category_id')
         for category_id in category_ids:
-            # Create a new association in the RecipeCategories model
             new_category = RecipeCategories(recipe_id=new_recipe.id, category_id=category_id)
             db.session.add(new_category)
 
-        db.session.commit()  # Commit all changes (new recipe and categories)
+        db.session.commit()  # Commit all changes
         flash('Recipe Added!', "success")
         return redirect(url_for("dashboard"))
 
@@ -219,10 +239,7 @@ def add_category():
 def edit_recipe(recipe_id):
     recipe = Recipes.query.get_or_404(recipe_id)
 
-    if request.method == "POST":
-        # Your existing logic for updating the recipe
-        ...
-        
+    if request.method == "POST":        
         # Handle categories
         category_ids = request.form.getlist('category_id')
         recipe.categories.clear()  # Clear current categories

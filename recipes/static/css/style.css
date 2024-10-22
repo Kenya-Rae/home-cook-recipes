@@ -284,6 +284,14 @@ div > span i{
   margin-left: 5px;
 }
 
+div.input-field.mb-3.w-25.p-1 {
+  text-align: center;
+}
+
+.servingLbl {
+  display: block;
+}
+
 
 /* Gallery Page */
 .album-page{

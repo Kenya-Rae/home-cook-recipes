@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="main-titles">{{ recipe.tite }}</h1>
+<h1 class="main-titles">{{ recipe.title }}</h1>
 
 <!-- Recipe details -->
 <h1>{{ recipe.title }}</h1>
 
 <!-- Display the category (or categories) associated with the recipe -->
 <p><strong>Category:</strong>
-    {% if category %}
-    {% for cat in category %}
-    {{ cat.name }}
+    {% if recipe.categories %}
+    {% for cat in recipe.categories %}
+    {{ cat.category.name }}
     {% if not loop.last %}, {% endif %}
     {% endfor %}
     {% else %}
@@ -30,8 +30,12 @@
 </ul>
 
 <!-- Recipe instructions -->
-<h3>Instructions:</h3>
-<p>{{ recipe.instructions }}</p>
+<h3>Instructions</h3>
+<ol>
+    {% for instruction in recipe.instructions %}
+    <li>{{ instruction.content }}</li>
+    {% endfor %}
+</ol>
 
 <!-- Other recipe details -->
 <p><strong>Prep Time:</strong> {{ recipe.prep_time }} mins</p>
