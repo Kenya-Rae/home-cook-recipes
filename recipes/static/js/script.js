@@ -1,58 +1,116 @@
-const form = document.getElementById('form');
-const usernameInput = document.getElementById('userInput');
-const emailInput = document.getElementById('emailInput');
-const passwordInput = document.getElementById('passwordInput');
-const repeatPasswordInput = document.getElementById('repeatPasswordInput');
-const errorMsg = document.getElementById('error-msg');
+document.addEventListener('DOMContentLoaded', function () {
+    // Form elements
+    const form = document.getElementById('form');
+    const usernameInput = document.getElementById('userInput');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+    const repeatPasswordInput = document.getElementById('repeatPasswordInput');
+    const errorMsg = document.getElementById('error-msg');
 
-form.addEventListener('submit', (e) => {
-    let errors = [];
+    // Check if form exists to avoid TypeError
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            let errors = [];
 
-    if (usernameInput) {
-        // if first name input appears, sign up page is loaded
-        errors = SignUpFormErrors(
-            usernameInput.value,
-            emailInput.value,
-            passwordInput.value,
-            repeatPasswordInput.value)
+            // Check if usernameInput exists (only for sign-up)
+            if (usernameInput) {
+                errors = SignUpFormErrors(
+                    usernameInput.value,
+                    emailInput.value,
+                    passwordInput.value,
+                    repeatPasswordInput.value
+                );
+            } else {
+                // If usernameInput is not present, it's a sign-in page
+                errors = SignInFormErrors(emailInput.value, passwordInput.value);
+            }
+
+            // Handle errors
+            if (errors.length > 0) {
+                e.preventDefault();
+                errorMsg.innerText = errors.join(". \n");
+            }
+        });
+
+        // Attach input event listeners to handle real-time validation
+        const allInputs = [usernameInput, emailInput, passwordInput, repeatPasswordInput].filter(input => input != null);
+        allInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                if (input.parentElement.classList.contains('incorrect')) {
+                    input.parentElement.classList.remove('incorrect');
+                    errorMsg.innerHTML = '';
+                }
+            });
+        });
     }
-    else {
-        // if first name input is not present, sign in page is loaded
-        errors = SignInFormErrors(emailInput.value, passwordInput.value)
+
+    // Ingredient and instruction functionality
+    let ingredientCounter = 1;
+    let instructionCounter = 1;
+
+    const addIngredientButton = document.getElementById('add-ingredient');
+    const ingredientsList = document.getElementById('ingredients-list');
+    const addInstructionButton = document.getElementById('add-instruction');
+    const instructionsList = document.getElementById('instructions-list');
+
+    if (addIngredientButton && ingredientsList) {
+        addIngredientButton.addEventListener('click', function () {
+            ingredientCounter++;
+            let newIngredient = document.createElement('div');
+            newIngredient.classList.add('ingredient-item', 'mb-2', 'd-flex');
+            newIngredient.innerHTML = `
+                <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-25 me-2" />
+                <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25 me-2" />
+                <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
+            `;
+            ingredientsList.appendChild(newIngredient);
+        });
+
+        ingredientsList.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('remove-ingredient')) {
+                e.target.parentElement.remove();
+            }
+        });
     }
 
-    if (errors.length > 0) {
-        // prevent submission
-        e.preventDefault()
-        errorMsg.innerText = errors.join(". \n")
+    if (addInstructionButton && instructionsList) {
+        addInstructionButton.addEventListener('click', function () {
+            instructionCounter++;
+            let newInstruction = document.createElement('div');
+            newInstruction.classList.add('instruction-item', 'mb-2', 'd-flex');
+            newInstruction.innerHTML = `
+                <textarea class="form-control me-2" name="instruction[]" placeholder="Step ${instructionCounter}" required></textarea>
+                <button type="button" class="btn btn-danger remove-instruction">Remove</button>
+            `;
+            instructionsList.appendChild(newInstruction);
+        });
+
+        instructionsList.addEventListener('click', function (e) {
+            if (e.target && e.target.classList.contains('remove-instruction')) {
+                e.target.parentElement.remove();
+            }
+        });
     }
 });
 
+// Form validation functions
 function SignUpFormErrors(username, email, password, repeatPassword) {
     let errors = [];
-
     if (username === "" || username == null) {
         errors.push('First name Required');
-        usernameInput.parentElement.classList.add('incorrect');
     }
     if (email === "" || email == null) {
         errors.push('Email Required');
-        emailInput.parentElement.classList.add('incorrect');
     }
     if (password === "" || password == null) {
         errors.push('Password Required');
-        passwordInput.parentElement.classList.add('incorrect');
     }
     if (password.length < 8) {
         errors.push('Password MUST be 8 characters long.');
-        passwordInput.parentElement.classList.add('incorrect');
     }
     if (password !== repeatPassword) {
-        errors.push('Repeated password dont match');
-        passwordInput.parentElement.classList.add('incorrect');
-        repeatPasswordInput.parentElement.classList.add('incorrect');
+        errors.push('Repeated password don’t match');
     }
-
     return errors;
 }
 
@@ -60,45 +118,9 @@ function SignInFormErrors(email, password) {
     let errors = [];
     if (email === "" || email == null) {
         errors.push('Email Required');
-        emailInput.parentElement.classList.add('incorrect');
     }
     if (password === "" || password == null) {
         errors.push('Password Required');
-        passwordInput.parentElement.classList.add('incorrect');
     }
     return errors;
 }
-
-const allInputs = [usernameInput, emailInput, passwordInput, repeatPasswordInput].filter(input => input != null);
-
-allInputs.forEach(input => {
-    input.addEventListener('input', () => {
-        if (input.parentElement.classList.contains('incorrect')) {
-            input.parentElement.classList.remove('incorrect');
-            errorMsg.innerHTML = '';
-        }
-    });
-});
-
-document.addEventListener("DOMContentLoaded", function () {
-    // Add more ingredients
-    document.getElementById('add-ingredient').addEventListener('click', function () {
-        const ingredientDiv = document.createElement('div');
-        ingredientDiv.classList.add('ingredient-item', 'mb-2');
-        ingredientDiv.innerHTML = `
-            <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-50" />
-            <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25" />
-        `;
-        document.getElementById('ingredients-list').appendChild(ingredientDiv);
-    });
-
-    // Add instructions
-    document.getElementById('add-instruction').addEventListener('click', function () {
-        const instructionTextarea = document.createElement('textarea');
-        instructionTextarea.classList.add('form-control', 'mb-2');
-        instructionTextarea.name = "instruction[]";
-        instructionTextarea.placeholder = "Step " + (document.getElementById('instructions-list').children.length + 1);
-        instructionTextarea.required = true;
-        document.getElementById('instructions-list').appendChild(instructionTextarea);
-    });
-});

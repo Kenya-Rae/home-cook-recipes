@@ -161,24 +161,32 @@ def add_recipe():
 
         for name, quantity in zip(ingredient_names, ingredient_quantities):
             ingredient = Ingredients.query.filter_by(name=name).first()
-            if ingredient:
-                recipe_ingredient = RecipeIngredients(
-                    recipe_id=new_recipe.id,
-                    ingredient_id=ingredient.id,
-                    quantity=quantity
-                )
-                db.session.add(recipe_ingredient)
-            else:
-                flash(f"Ingredient {name} not found in the database.", "error")
+
+        if not ingredient:
+        # If ingredient doesn't exist, add it
+            ingredient = Ingredients(name=name)
+            db.session.add(ingredient)
+            db.session.flush()  # Puts ID to ingredient
+            print(f"Ingredient {name}, NOT found, adding new")
+        else:
+            print(f"Found ingredient {name}, ID: {ingredient.id}")
+
+        # RecipeIngredients with the ingredient_id
+        recipe_ingredient = RecipeIngredients(
+            recipe_id=new_recipe.id,
+            ingredient_id=ingredient.id,
+            quantity=quantity
+        )
+        db.session.add(recipe_ingredient)
 
         # Handle instructions
         instructions = request.form.getlist("instruction[]")
-        for step in instructions:
-            instruction = Instructions(content=step, recipe_id=new_recipe.id)
+        for idx, step in enumerate(instructions, start=1):
+            instruction = Instructions(step_number=idx, content=step, recipe_id=new_recipe.id)
             db.session.add(instruction)
 
         # Handle categories
-        category_ids = request.form.getlist('category_id')
+        category_ids = request.form.getlist('category_id[]')
         for category_id in category_ids:
             new_category = RecipeCategories(recipe_id=new_recipe.id, category_id=category_id)
             db.session.add(new_category)
@@ -229,7 +237,7 @@ def add_category():
         db.session.add(new_category)
         db.session.commit()
 
-        flash(f'Category "{category_name}" added successfully!', "sucess")
+        flash(f'Category "{category_name}" added successfully!', "success")
         return redirect(url_for('dashboard'))  # Go back to Dashboard
 
     return render_template("add_category.html")
@@ -258,9 +266,18 @@ def edit_recipe(recipe_id):
 
 @app.route("/delete_recipe/<int:recipe_id>")
 def delete_recipe(recipe_id):
+    # Find recipe
     recipe = Recipes.query.get_or_404(recipe_id)
+
+    # Delete any related instructions 
+    Instructions.query.filter_by(recipe_id=recipe_id).delete()
+
+    # Delete the recipe
     db.session.delete(recipe)
     db.session.commit()
+
+    # Confirmation of deletion
+    flash('Recipes has been deleted successfully.', 'success')
     return redirect(url_for("dashboard"))
 
 

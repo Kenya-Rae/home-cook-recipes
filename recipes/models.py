@@ -39,7 +39,7 @@ class Recipes(db.Model):
     comments = db.relationship('Comments', back_populates='recipe', lazy=True)
     ingredients = db.relationship('RecipeIngredients', back_populates='recipe')
     categories = db.relationship('RecipeCategories', back_populates='recipe')
-    instructions = db.relationship('Instructions', back_populates='recipe', lazy=True)  # New relationship
+    instructions = db.relationship('Instructions', back_populates='recipe', cascade='all, delete-orphan', passive_deletes=True)
 
     author = db.relationship('Users', back_populates="recipes")
 
@@ -50,8 +50,9 @@ class Recipes(db.Model):
 class Instructions(db.Model):
     # schema for Instructions Model
     id = db.Column(db.Integer, primary_key=True)
+    step_number = db.Column(db.Integer, nullable=False) # Ensuring order of instructions
     content = db.Column(db.Text, nullable=False)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), nullable=False)
 
     recipe = db.relationship('Recipes', back_populates='instructions')
 
@@ -99,7 +100,7 @@ class Comments(db.Model):
 
 class RecipeIngredients(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), primary_key=True)
     ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'), primary_key=True)
     quantity = db.Column(db.String(60), nullable=False)
 
@@ -111,8 +112,8 @@ class RecipeIngredients(db.Model):
 
 
 class RecipeCategories(db.Model):
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), primary_key=True)
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'), primary_key=True)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), primary_key=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id', ondelete='CASCADE'), primary_key=True)
 
     recipe = db.relationship('Recipes', back_populates='categories')
     category = db.relationship('Category', back_populates='recipes')

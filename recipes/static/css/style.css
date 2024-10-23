@@ -284,6 +284,10 @@ div > span i{
   margin-left: 5px;
 }
 
+div span.input-group-text{
+  width: fit-content;
+}
+
 div.input-field.mb-3.w-25.p-1 {
   text-align: center;
 }

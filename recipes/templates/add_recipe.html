@@ -28,27 +28,27 @@
             <textarea class="form-control" name="description" minlength="5" required></textarea>
         </div>
 
-        <!-- Ingredients (with Quantity) -->
-        <div class="mb-3 w-75 p-1">
-            <span class="input-group-text"><i class="fa-solid fa-list-check"></i> Ingredients</span>
+        <div id="ingredients-section">
+            <h4>Ingredients</h4>
             <div id="ingredients-list">
-                <div class="ingredient-item mb-2">
+                <div class="ingredient-item mb-2 d-flex">
                     <input type="text" name="ingredient_name[]" placeholder="Ingredient" required
-                        class="form-control w-50" />
+                        class="form-control w-25 me-2" />
                     <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required
-                        class="form-control w-25" />
+                        class="form-control w-25 me-2" />
                 </div>
             </div>
-            <button type="button" id="add-ingredient" class="btn btn-outline-primary mt-2">Add More Ingredients</button>
+            <button type="button" class="btn btn-primary mt-3" id="add-ingredient">Add More Ingredients</button>
         </div>
 
-        <!-- Recipe Instructions as List -->
-        <div class="mb-3 w-75 p-1">
-            <span class="input-group-text"><i class="fa-solid fa-list-ol"></i> Instructions</span>
+        <div id="instructions-section" class="mt-4">
+            <h4>Instructions</h4>
             <div id="instructions-list">
-                <textarea class="form-control mb-2" name="instruction[]" placeholder="Step 1" required></textarea>
+                <div class="instruction-item mb-2 d-flex">
+                    <textarea class="form-control me-2" name="instruction[]" placeholder="Step 1" required></textarea>
+                </div>
             </div>
-            <button type="button" id="add-instruction" class="btn btn-outline-primary mt-2">Add More Steps</button>
+            <button type="button" class="btn btn-primary mt-3" id="add-instruction">Add More Steps</button>
         </div>
 
         <!-- Prep Time -->

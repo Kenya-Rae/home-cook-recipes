@@ -288,6 +288,7 @@ W3c was used to validate HTML, CSS and JavaScript code.
 - Flask flash messages, was not displaying amongst pages. Due to the my template literals loops were not implemented correctly.
 - Unable to add recipes due to no categories being added to the database/no admin user at the time to create these. Creating admin role as well as added categories manually.
 - Unable to add categories due to no admin role access. All code for admin was implemented correctly. Though I hadnt acccessed the make_me_admin route to actually make changes.
+- Add more buttons hadnt done anything within create recipe page, as I had not structured my scipt.js effectively.
 
 ## Deployments
 
