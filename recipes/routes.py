@@ -200,15 +200,12 @@ def add_recipe():
     return render_template("add_recipe.html", categories=all_categories)
 
 
-@app.route("/recipe/<int:recipe_id>")
+@app.route('/recipe/<int:recipe_id>')
 def view_recipe(recipe_id):
-    # Get the recipe by ID
-    recipe = Recipes.query.get_or_404(recipe_id)
-
-    # Query category
-    category = recipe.categories
-
-    return render_template("view_recipe.html", recipe=recipe, category=category)
+    recipe = Recipes.query.get_or_404(recipe_id)  # Get the recipe or 404 if not found
+    comments = Comments.query.filter_by(recipe_id=recipe.id).all()  # Fetch comments for this recipe
+    
+    return render_template('view_recipe.html', recipe=recipe, comments=comments)
 
 
 @app.route("/add_category", methods=["GET", "POST"])
@@ -264,26 +261,48 @@ def edit_recipe(recipe_id):
     return render_template("edit_recipe.html", recipe=recipe, categories=all_categories)
 
 
-@app.route("/delete_recipe/<int:recipe_id>")
+@app.route("/delete_recipe/<int:recipe_id>", methods=['GET', 'POST'])
 def delete_recipe(recipe_id):
-    # Find recipe
+    # Find the recipe
     recipe = Recipes.query.get_or_404(recipe_id)
-
-    # Delete any related instructions 
-    Instructions.query.filter_by(recipe_id=recipe_id).delete()
-
+    
     # Delete the recipe
-    db.session.delete(recipe)
-    db.session.commit()
-
-    # Confirmation of deletion
-    flash('Recipes has been deleted successfully.', 'success')
+    try:
+        db.session.delete(recipe)
+        db.session.commit()
+        flash('Recipe has been deleted successfully.', 'success')
+    except Exception as e:
+        db.session.rollback()  # in case of any error
+        flash(f'Error deleting recipe: {str(e)}', 'danger')
+    
     return redirect(url_for("dashboard"))
 
 
 @app.route("/gallery")
 def gallery():
+    recipes = Recipes.query.all()
     return render_template("gallery.html")
+
+
+@app.route('/recipe/<int:recipe_id>/add_comment', methods=['POST'])
+def add_comment(recipe_id):
+    content = request.form.get('content')
+
+    if content:
+        # Create a new comment
+        new_comment = Comments(content=content, recipe_id=recipe_id)
+        db.session.add(new_comment)
+
+        try:
+            db.session.commit()  # Try to commit the session
+            flash('Your comment has been added!', 'success')
+        except Exception as e:
+            db.session.rollback()  # Roll back in case of an error
+            flash('Error adding comment. Please try again.', 'danger')
+    else:
+        flash('Comment cannot be empty.', 'danger')
+
+    return redirect(url_for('view_recipe', recipe_id=recipe_id))
 
 
 @app.route("/make_me_admin")

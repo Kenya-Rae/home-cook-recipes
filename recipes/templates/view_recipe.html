@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
+<button onclick="history.back()">Go Back</button>
+
 <!-- Recipe details -->
 <h1 class="main-titles">{{ recipe.title }}</h1>
 
@@ -19,14 +21,19 @@
 <!-- Recipe Image -->
 {% if recipe.image_url %}
 <div>
-    <i class="fa-solid fa-upload"></i>
-    <img src="{{ url_for('static', filename='images/recipes/' + recipe.image_url) }}" alt="{{ recipe.title }}"
-        class="img-fluid">
+    <img src="{{ url_for('static', filename='images/' + recipe.image_url) }}" alt="{{ recipe.title }}"
+        class="rounded mx-auto d-block">
 </div>
 {% endif %}
 
 <!-- Recipe description -->
-<p><i class="fa-solid fa-circle-info"></i>{{ recipe.description }}</p>
+<p class="view-desc"><i class="fa-solid fa-circle-info"></i>{{ recipe.description }}</p>
+
+<!-- Other recipe details -->
+<p><i class="fa-regular fa-clock"></i><strong>Prep Time:</strong> {{ recipe.prep_time }} mins</p>
+<p><i class="fa-regular fa-clock"></i><strong>Cook Time:</strong> {{ recipe.cook_time }} mins</p>
+<p><i class="fa-regular fa-clock"></i><strong>Total Time:</strong> {{ recipe.total_time }} mins</p>
+<p><strong>Servings:</strong> {{ recipe.servings }}</p>
 
 <!-- Recipe ingredients -->
 <h3>Ingredients:</h3>
@@ -44,10 +51,26 @@
     {% endfor %}
 </ol>
 
-<!-- Other recipe details -->
-<p><i class="fa-regular fa-clock"></i><strong>Prep Time:</strong> {{ recipe.prep_time }} mins</p>
-<p><i class="fa-regular fa-clock"></i><strong>Cook Time:</strong> {{ recipe.cook_time }} mins</p>
-<p><i class="fa-regular fa-clock"></i><strong>Total Time:</strong> {{ recipe.total_time }} mins</p>
-<p><strong>Servings:</strong> {{ recipe.servings }}</p>
+<!-- Comments Section -->
+<h3>Comments:</h3>
+{% if comments %}
+<ul>
+    {% for comment in comments %}
+    <li>{{ comment.content }} - <small>{{ comment.created.strftime('%Y-%m-%d %H:%M') }}</small></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No comments yet.</p>
+{% endif %}
+
+<!-- Comment Form -->
+<h3>Add a Comment:</h3>
+<form action="{{ url_for('add_comment', recipe_id=recipe.id) }}" method="POST">
+    <div class="form-group">
+        <label for="comment">Your Comment:</label>
+        <textarea name="content" id="comment" class="form-control" required></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit Comment</button>
+</form>
 
 {% endblock %}

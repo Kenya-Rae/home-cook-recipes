@@ -1,19 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 <h1 class="main-titles">Recipe Page</h1>
+<button onclick="history.back()">Go Back</button>
 
 <div class="row">
     {% for recipe in recipes %}
-    <div class="col s12 m6">
+    <div style="width: 18rem" ;>
         <div class="card">
             <div class="card-image">
-                <img src="{{ recipe.image_url }}">
+                <img src="{{ url_for('static', filename='images/' + recipe.image_url) }}" alt="{{ recipe.title }}"
+                    class="img-fluid">
             </div>
             <div class="card-content">
                 <h5>{{ recipe.title }}</h5>
                 <p>{{ recipe.description }}</p>
             </div>
-            <div class="card-action">
+            <div class="card-action viewBtn">
                 <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}">View Recipe</a>
             </div>
         </div>

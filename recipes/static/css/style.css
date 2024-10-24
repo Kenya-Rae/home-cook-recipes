@@ -115,23 +115,18 @@ main {
 }
 
 /* Recipe Page */
-.carousel-item{
-width: 100%;
-}
-
 .d-block {
   height: 400px;
 }
 
-.recipe-carousel{
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  padding-top: 50px;
+.card-body h5 , .card-content h5{
+  text-align: center;
 }
 
+.dashbuttons{
+  display: flex;
+  justify-content: space-around;
+}
 /* Sign In/Up Page */
 .sign-in{
   border: 1px solid #b2dfdbb4;
@@ -296,6 +291,22 @@ div.input-field.mb-3.w-25.p-1 {
   display: block;
 }
 
+/* View Recipe Template */
+.view-desc{
+margin-top: 16px;
+text-align: center;
+}
+
+.viewBtn{
+    text-align: center;
+    border: 1px solid #757575 ;
+    background: #757575 ;
+}
+
+.viewBtn > a {
+  color: white;
+
+}
 
 /* Gallery Page */
 .album-page{
@@ -355,6 +366,10 @@ div.desc {
     margin-right: 10px;
   }
 }
+
+/* View Recipe */
+
+
 /* Dashboard */
 .your_recipes{
   display: flex;

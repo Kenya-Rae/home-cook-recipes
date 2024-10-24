@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
+<button onclick="history.back()">Go Back</button>
 <div class="container card-panel">
     <form class="col s12" method="POST" action="{{ url_for('edit_recipe', recipe_id=recipe.id) }}"
         enctype="multipart/form-data">
@@ -93,8 +94,8 @@
         <div class="mb-3">
             <strong>Current Image:</strong>
             <div>
-                <img src="{{ url_for('static', filename='images/recipes/' + recipe.image_url) }}"
-                    alt="{{ recipe.title }}" class="img-fluid" style="max-width: 200px; max-height: 200px;">
+                <img src="{{ url_for('static', filename='images/' + recipe.image_url) }}" alt="{{ recipe.title }}"
+                    class="img-fluid" style="max-width: 200px; max-height: 200px;">
             </div>
         </div>
         {% endif %}

@@ -37,8 +37,8 @@ class Recipes(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
     comments = db.relationship('Comments', back_populates='recipe', lazy=True)
-    ingredients = db.relationship('RecipeIngredients', back_populates='recipe')
-    categories = db.relationship('RecipeCategories', back_populates='recipe')
+    ingredients = db.relationship('RecipeIngredients', back_populates='recipe', cascade='all, delete-orphan')
+    categories = db.relationship('RecipeCategories', back_populates='recipe', cascade='all, delete-orphan')
     instructions = db.relationship('Instructions', back_populates='recipe', cascade='all, delete-orphan', passive_deletes=True)
 
     author = db.relationship('Users', back_populates="recipes")
@@ -89,7 +89,7 @@ class Comments(db.Model):
     created = db.Column(db.DateTime, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), nullable=False)
 
     author = db.relationship('Users', back_populates='comments')
     recipe = db.relationship('Recipes', back_populates='comments')

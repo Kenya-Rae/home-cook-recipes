@@ -2,6 +2,7 @@
 {% block content %}
 
 <h1 class="main-titles">Create your own recipe</h1>
+<button onclick="history.back()">Go Back</button>
 
 <div class="container card-panel">
     <form class="recipeForm" method="POST" action="{{ url_for('add_recipe') }}" enctype="multipart/form-data">
