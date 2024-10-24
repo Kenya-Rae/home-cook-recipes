@@ -1,10 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1 class="main-titles">{{ recipe.title }}</h1>
-
 <!-- Recipe details -->
-<h1>{{ recipe.title }}</h1>
+<h1 class="main-titles">{{ recipe.title }}</h1>
 
 <!-- Display the category (or categories) associated with the recipe -->
 <p><strong>Category:</strong>
@@ -18,8 +16,17 @@
     {% endif %}
 </p>
 
+<!-- Recipe Image -->
+{% if recipe.image_url %}
+<div>
+    <i class="fa-solid fa-upload"></i>
+    <img src="{{ url_for('static', filename='images/recipes/' + recipe.image_url) }}" alt="{{ recipe.title }}"
+        class="img-fluid">
+</div>
+{% endif %}
+
 <!-- Recipe description -->
-<p>{{ recipe.description }}</p>
+<p><i class="fa-solid fa-circle-info"></i>{{ recipe.description }}</p>
 
 <!-- Recipe ingredients -->
 <h3>Ingredients:</h3>
@@ -38,9 +45,9 @@
 </ol>
 
 <!-- Other recipe details -->
-<p><strong>Prep Time:</strong> {{ recipe.prep_time }} mins</p>
-<p><strong>Cook Time:</strong> {{ recipe.cook_time }} mins</p>
-<p><strong>Total Time:</strong> {{ recipe.total_time }} mins</p>
+<p><i class="fa-regular fa-clock"></i><strong>Prep Time:</strong> {{ recipe.prep_time }} mins</p>
+<p><i class="fa-regular fa-clock"></i><strong>Cook Time:</strong> {{ recipe.cook_time }} mins</p>
+<p><i class="fa-regular fa-clock"></i><strong>Total Time:</strong> {{ recipe.total_time }} mins</p>
 <p><strong>Servings:</strong> {{ recipe.servings }}</p>
 
 {% endblock %}

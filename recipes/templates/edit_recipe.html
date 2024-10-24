@@ -88,6 +88,17 @@
             <input id="servings" name="servings" type="number" value="{{ recipe.servings }}">
         </div>
 
+        <!-- Display Current Recipe Image -->
+        {% if recipe.image_url %}
+        <div class="mb-3">
+            <strong>Current Image:</strong>
+            <div>
+                <img src="{{ url_for('static', filename='images/recipes/' + recipe.image_url) }}"
+                    alt="{{ recipe.title }}" class="img-fluid" style="max-width: 200px; max-height: 200px;">
+            </div>
+        </div>
+        {% endif %}
+
         <!-- Image Upload -->
         <div class="file-field input-field mb-3">
             <div class="btn">
