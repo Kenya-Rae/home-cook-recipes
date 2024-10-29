@@ -203,7 +203,7 @@ def add_recipe():
 @app.route('/recipe/<int:recipe_id>')
 def view_recipe(recipe_id):
     recipe = Recipes.query.get_or_404(recipe_id)  # Get the recipe or 404 if not found
-    comments = Comments.query.filter_by(recipe_id=recipe.id).all()  # Fetch comments for this recipe
+    comments = Comments.query.filter_by(recipe_id=recipe.id).order_by(Comments.created.desc()).all()  # Fetch comments for this recipe
     
     return render_template('view_recipe.html', recipe=recipe, comments=comments)
 
@@ -217,7 +217,7 @@ def add_category():
     user = Users.query.filter_by(email=session["email"]).first()
 
     if not user.is_admin:
-        flash("You do not have the permissions to do this.", "error")
+        flash('You do not have the permissions to do this.', "error")
         return redirect(url_for("dashboard"))
     
     if request.method == "POST":
@@ -281,7 +281,7 @@ def delete_recipe(recipe_id):
 @app.route("/gallery")
 def gallery():
     recipes = Recipes.query.all()
-    return render_template("gallery.html")
+    return render_template('gallery.html', recipes=recipes)
 
 
 @app.route('/recipe/<int:recipe_id>/add_comment', methods=['POST'])

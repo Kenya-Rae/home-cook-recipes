@@ -47,6 +47,13 @@ main {
   background-color: #5c6bc0;
 }
 
+.footer-copyright{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
 .footer {
   margin: 0%;
 }
@@ -73,9 +80,6 @@ main {
   top: 10px;
 }
 
-/* Home Page */
-
-
 /* Flash Messages */
 .flashes h4{
   line-height: 2;
@@ -88,6 +92,14 @@ main {
 .alert{
   text-align: center;
   padding-right: 16px;
+}
+
+/* Go Back Button */
+.backBtn{
+ margin: 10px;
+border-radius: 16px;
+color: white;
+background: #000000; 
 }
 
 /* Homepage Content */
@@ -117,6 +129,7 @@ main {
   text-align: center;
   background-color: #eeeeee;
   padding-bottom: 20px;
+  margin-top: 20px;
 }
 
 .form{
@@ -141,6 +154,7 @@ main {
   font-weight: 600;
   color: white;
   background-color: #5ab4adb4;
+  margin-bottom: 5px;
 }
 .signInBtn:hover, .signUpBtn:hover {
   background-color: rgba(68, 136, 130, 0.8);
@@ -180,6 +194,10 @@ border-color: rgb(214, 24, 46);
   text-align: center;
   font-weight: 300;
   margin-bottom: 25px;
+}
+
+.users-recipes{
+  margin-top: 20px;
 }
 
 .your_recipes{
@@ -290,14 +308,45 @@ text-align: center;
 
 }
 
-/* Gallery Page */
+.view-times {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
 
+.view-times > p {
+  margin-right: 15px;
+}
+
+.commentForm {
+  margin-bottom: 40px;
+}
+
+/* Gallery Page */
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.recipe-card {
+  width: 200px;
+  text-align: center;
+}
+.recipe-image {
+  width: 100%;
+  height: auto;
+}
 
 /*--------Media Queries------ */
 /*-- Extra Small devices (portrait phones, 576px and less--*/
 @media only screen and (max-width: 375px){
-  /* Home page */
-  
+  .footer-copyright > a {
+    padding-right: 0px;
+    margin-left: 20px;
+  }
+
 /* Sign in/Up form */
   .form > div {
     padding-top: 5px;

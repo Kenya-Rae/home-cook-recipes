@@ -2,7 +2,21 @@
 {% block content %}
 
 <h1 class="main-titles">Create your own recipe</h1>
-<button onclick="history.back()">Go Back</button>
+<button class="backBtn" onclick="history.back()">Go Back</button>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="container">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
 
 <div class="container card-panel">
     <form class="recipeForm" method="POST" action="{{ url_for('add_recipe') }}" enctype="multipart/form-data">
@@ -29,6 +43,7 @@
             <textarea class="form-control" name="description" minlength="5" required></textarea>
         </div>
 
+        <!-- Ingredients Description -->
         <div id="ingredients-section">
             <h4>Ingredients</h4>
             <div id="ingredients-list">
@@ -42,6 +57,7 @@
             <button type="button" class="btn btn-primary mt-3" id="add-ingredient">Add More Ingredients</button>
         </div>
 
+        <!-- Instructions Description -->
         <div id="instructions-section" class="mt-4">
             <h4>Instructions</h4>
             <div id="instructions-list">

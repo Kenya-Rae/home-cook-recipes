@@ -3,7 +3,7 @@
 
 <h1 class="dashmain-title main-titles"> {{ user.username }}'s Dashboard</h1>
 
-<button onclick="history.back()">Go Back</button>
+<button class="backBtn" onclick="history.back()">Go Back</button>
 
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
@@ -11,6 +11,8 @@
     {% for category, message in messages %}
     <div class="alert alert-{{ category }}" role="alert">
         {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
     </div>
     {% endfor %}
 </div>

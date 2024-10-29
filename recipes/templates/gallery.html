@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<button onclick="history.back()">Go Back</button>
+<button class="backBtn" onclick="history.back()">Go Back</button>
 
 <div class="container-fluid title-description">
     <div class="container">
@@ -9,22 +9,15 @@
     </div>
 </div>
 
-<div class="container your_recipes">
-    <div class="row">
-        {% for recipe in recipes %}
-        <div class="col-md-4">
-            <div class="mb-4">
-                {% if recipe.image_url %}
-                <img src="{{ url_for('static', filename='images/' + recipe.image_url) }}"
-                    alt="Image of {{ recipe.title }}" class="img-fluid">
-                {% else %}
-                <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Placeholder Image"
-                    class="img-fluid">
-                {% endif %}
-            </div>
-        </div>
-        {% endfor %}
+<div class="gallery">
+    {% for recipe in recipes %}
+    <div class="recipe-card">
+        <img src="{{ url_for('static', filename='images/' + recipe.image_url) }}" alt="{{ recipe.title }}"
+            class="recipe-image img-fluid ">
+        <h3>{{ recipe.title }}</h3>
     </div>
+    {% endfor %}
 </div>
+
 
 {% endblock %}

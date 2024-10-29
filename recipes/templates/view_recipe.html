@@ -1,10 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
 
-<button onclick="history.back()">Go Back</button>
+<button class="backBtn" onclick="history.back()">Go Back</button>
 
 <!-- Recipe details -->
 <h1 class="main-titles">{{ recipe.title }}</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+<div class="container">
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                aria-hidden="true">&times;</span></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
 
 <!-- Display the category (or categories) associated with the recipe -->
 <p><strong>Category:</strong>
@@ -29,11 +43,13 @@
 <!-- Recipe description -->
 <p class="view-desc"><i class="fa-solid fa-circle-info"></i>{{ recipe.description }}</p>
 
-<!-- Other recipe details -->
-<p><i class="fa-regular fa-clock"></i><strong>Prep Time:</strong> {{ recipe.prep_time }} mins</p>
-<p><i class="fa-regular fa-clock"></i><strong>Cook Time:</strong> {{ recipe.cook_time }} mins</p>
-<p><i class="fa-regular fa-clock"></i><strong>Total Time:</strong> {{ recipe.total_time }} mins</p>
-<p><strong>Servings:</strong> {{ recipe.servings }}</p>
+<!-- Times descriptions -->
+<div class="view-times container-fluid">
+    <p><i class="fa-regular fa-clock"></i><strong>Prep Time:</strong> {{ recipe.prep_time }} mins</p>
+    <p><i class="fa-regular fa-clock"></i><strong>Cook Time:</strong> {{ recipe.cook_time }} mins</p>
+    <p><i class="fa-regular fa-clock"></i><strong>Total Time:</strong> {{ recipe.total_time }} mins</p>
+    <p><strong>Servings:</strong> {{ recipe.servings }}</p>
+</div>
 
 <!-- Recipe ingredients -->
 <h3>Ingredients:</h3>
@@ -63,14 +79,15 @@
 <p>No comments yet.</p>
 {% endif %}
 
+
 <!-- Comment Form -->
 <h3>Add a Comment:</h3>
-<form action="{{ url_for('add_comment', recipe_id=recipe.id) }}" method="POST">
+<form class="commentForm" action="{{ url_for('add_comment', recipe_id=recipe.id) }}" method="POST">
     <div class="form-group">
         <label for="comment">Your Comment:</label>
-        <textarea name="content" id="comment" class="form-control" required></textarea>
+        <textarea name="content" id="newComment" class="form-control" required></textarea>
     </div>
-    <button type="submit" class="btn btn-primary">Submit Comment</button>
+    <button type="submit" class="commentBtn btn btn-primary">Submit Comment</button>
 </form>
 
 {% endblock %}

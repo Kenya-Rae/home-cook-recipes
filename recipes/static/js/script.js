@@ -45,24 +45,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Ingredient and instruction functionality
+    // Ingredient and instruction functionality
     let ingredientCounter = 1;
     let instructionCounter = 1;
 
-    const addIngredientButton = document.getElementById('add-ingredient');
-    const ingredientsList = document.getElementById('ingredients-list');
-    const addInstructionButton = document.getElementById('add-instruction');
-    const instructionsList = document.getElementById('instructions-list');
-
-    if (addIngredientButton && ingredientsList) {
+    function setupIngredientButtons(addIngredientButton, ingredientsList) {
         addIngredientButton.addEventListener('click', function () {
             ingredientCounter++;
             let newIngredient = document.createElement('div');
             newIngredient.classList.add('ingredient-item', 'mb-2', 'd-flex');
             newIngredient.innerHTML = `
-                <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-25 me-2" />
-                <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25 me-2" />
-                <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
-            `;
+            <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-25 me-2" />
+            <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25 me-2" />
+            <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
+        `;
             ingredientsList.appendChild(newIngredient);
         });
 
@@ -73,15 +69,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if (addInstructionButton && instructionsList) {
+    function setupInstructionButtons(addInstructionButton, instructionsList) {
         addInstructionButton.addEventListener('click', function () {
             instructionCounter++;
             let newInstruction = document.createElement('div');
             newInstruction.classList.add('instruction-item', 'mb-2', 'd-flex');
             newInstruction.innerHTML = `
-                <textarea class="form-control me-2" name="instruction[]" placeholder="Step ${instructionCounter}" required></textarea>
-                <button type="button" class="btn btn-danger remove-instruction">Remove</button>
-            `;
+            <textarea class="form-control me-2" name="instruction[]" placeholder="Step ${instructionCounter}" required></textarea>
+            <button type="button" class="btn btn-danger remove-instruction">Remove</button>
+        `;
             instructionsList.appendChild(newInstruction);
         });
 
@@ -90,6 +86,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.target.parentElement.remove();
             }
         });
+    }
+
+    // Setting up ingredient and instruction functionalities for add recipes
+    const addIngredientButton = document.getElementById('add-ingredient');
+    const ingredientsList = document.getElementById('ingredients-list');
+    if (addIngredientButton && ingredientsList) {
+        setupIngredientButtons(addIngredientButton, ingredientsList);
+    }
+
+    // Setting up ingredient and instruction functionalities for edit recipes
+    const addInstructionButton = document.getElementById('add-instruction');
+    const instructionsList = document.getElementById('instructions-list');
+    if (addInstructionButton && instructionsList) {
+        setupInstructionButtons(addInstructionButton, instructionsList);
     }
 });
 
