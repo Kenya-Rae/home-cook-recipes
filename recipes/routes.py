@@ -289,15 +289,15 @@ def add_comment(recipe_id):
     content = request.form.get('content')
 
     if content:
-        # Create a new comment
-        new_comment = Comments(content=content, recipe_id=recipe_id)
-        db.session.add(new_comment)
+        new_comment = Comments(content=content, recipe_id=recipe_id)  # Make sure to add user_id if needed
 
         try:
-            db.session.commit()  # Try to commit the session
+            db.session.add(new_comment)
+            db.session.commit()
             flash('Your comment has been added!', 'success')
         except Exception as e:
-            db.session.rollback()  # Roll back in case of an error
+            db.session.rollback()
+            print(f"Error: {e}")  # Log the error to the console
             flash('Error adding comment. Please try again.', 'danger')
     else:
         flash('Comment cannot be empty.', 'danger')

@@ -95,7 +95,7 @@ class Comments(db.Model):
     recipe = db.relationship('Recipes', back_populates='comments')
 
     def __repr__(self):
-        return f"Comment {self.id} made by User {self.user.id} on Recipe {self.recipe_id}"
+        return f"Comment {self.id} on Recipe {self.recipe_id}"
 
 
 class RecipeIngredients(db.Model):
