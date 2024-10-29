@@ -70,8 +70,11 @@ main {
 
 .title-description{
   position: relative;
-  top: 35px;
+  top: 10px;
 }
+
+/* Home Page */
+
 
 /* Flash Messages */
 .flashes h4{
@@ -293,6 +296,8 @@ text-align: center;
 /*--------Media Queries------ */
 /*-- Extra Small devices (portrait phones, 576px and less--*/
 @media only screen and (max-width: 375px){
+  /* Home page */
+  
 /* Sign in/Up form */
   .form > div {
     padding-top: 5px;

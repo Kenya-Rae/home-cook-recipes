@@ -22,7 +22,7 @@
 {% if recipe.image_url %}
 <div>
     <img src="{{ url_for('static', filename='images/' + recipe.image_url) }}" alt="{{ recipe.title }}"
-        class="rounded mx-auto d-block">
+        class="img-fluid rounded mx-auto d-block">
 </div>
 {% endif %}
 
