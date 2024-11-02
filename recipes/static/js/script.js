@@ -45,9 +45,8 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // Ingredient and instruction functionality
-    // Ingredient and instruction functionality
-    let ingredientCounter = 1;
-    let instructionCounter = 1;
+    let ingredientCounter = 1; // Initialize counter for ingredients
+    let instructionCounter = 1; // Initialize counter for instructions
 
     function setupIngredientButtons(addIngredientButton, ingredientsList) {
         addIngredientButton.addEventListener('click', function () {
@@ -55,10 +54,10 @@ document.addEventListener('DOMContentLoaded', function () {
             let newIngredient = document.createElement('div');
             newIngredient.classList.add('ingredient-item', 'mb-2', 'd-flex');
             newIngredient.innerHTML = `
-            <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-25 me-2" />
-            <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25 me-2" />
-            <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
-        `;
+                <input type="text" name="ingredient_name[]" placeholder="Ingredient" required class="form-control w-25 me-2" />
+                <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required class="form-control w-25 me-2" />
+                <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
+            `;
             ingredientsList.appendChild(newIngredient);
         });
 
@@ -75,9 +74,9 @@ document.addEventListener('DOMContentLoaded', function () {
             let newInstruction = document.createElement('div');
             newInstruction.classList.add('instruction-item', 'mb-2', 'd-flex');
             newInstruction.innerHTML = `
-            <textarea class="form-control me-2" name="instruction[]" placeholder="Step ${instructionCounter}" required></textarea>
-            <button type="button" class="btn btn-danger remove-instruction">Remove</button>
-        `;
+                <textarea class="form-control me-2" name="instruction[]" placeholder="Step" required></textarea>
+                <button type="button" class="btn btn-danger remove-instruction">Remove</button>
+            `;
             instructionsList.appendChild(newInstruction);
         });
 
@@ -101,6 +100,46 @@ document.addEventListener('DOMContentLoaded', function () {
     if (addInstructionButton && instructionsList) {
         setupInstructionButtons(addInstructionButton, instructionsList);
     }
+
+    // Validate the form before submission
+    form.addEventListener('submit', function (e) {
+        let valid = true;
+
+        // Check all ingredient fields
+        document.querySelectorAll("input[name='ingredient_name[]']").forEach(function (input) {
+            if (input.value.trim() === "") {
+                valid = false;
+                input.classList.add("is-invalid"); // Bootstrap invalid class
+            } else {
+                input.classList.remove("is-invalid");
+            }
+        });
+
+        // Check all ingredient quantity fields
+        document.querySelectorAll("input[name='ingredient_quantity[]']").forEach(function (input) {
+            if (input.value.trim() === "") {
+                valid = false;
+                input.classList.add("is-invalid");
+            } else {
+                input.classList.remove("is-invalid");
+            }
+        });
+
+        // Check all instruction fields
+        document.querySelectorAll("textarea[name='instruction[]']").forEach(function (input) {
+            if (input.value.trim() === "") {
+                valid = false;
+                input.classList.add("is-invalid");
+            } else {
+                input.classList.remove("is-invalid");
+            }
+        });
+
+        if (!valid) {
+            e.preventDefault(); // Prevent form submission
+            alert("Please fill in all required fields."); // Alert user
+        }
+    });
 });
 
 // Form validation functions

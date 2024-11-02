@@ -44,7 +44,7 @@ class Recipes(db.Model):
     author = db.relationship('Users', back_populates="recipes")
 
     def __repr__(self):
-        return f"<Recipe {self.title}(ID:{self.id})>"
+        return f"<Recipe {self.title} (ID:{self.id})>"
 
 
 class Instructions(db.Model):
@@ -57,18 +57,20 @@ class Instructions(db.Model):
     recipe = db.relationship('Recipes', back_populates='instructions')
 
     def __repr__(self):
-        return f"<Instruction {self.content} (ID: {self.id})>"
+        return f"<Instruction {self.content} (ID: {self.id if not None else "Instructions don't exist yet..."})>"
 
 
 class Ingredients(db.Model):
     # schema for Ingredients Model
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True, nullable=False)
+    quantity = db.Column(db.String, nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id'))
 
     recipes = db.relationship('RecipeIngredients', back_populates='ingredient', lazy=True)
 
     def __repr__(self):
-        return f"<Ingredient {self.name} (ID: {self.id})>"
+        return f"<Ingredient {self.name} (ID: {self.id if not None else "Ingredients don't exist yet..."})>"
 
 
 class Category(db.Model):
@@ -79,7 +81,7 @@ class Category(db.Model):
     recipes = db.relationship('RecipeCategories', back_populates='category', lazy=True)
 
     def __repr__(self):
-        return f"<Category {self.name} (ID: {self.id})>"
+        return f"<Category {self.name} (ID: {self.id if self.id is not None else "No category selected"})>"
 
 
 class Comments(db.Model):
@@ -95,14 +97,14 @@ class Comments(db.Model):
     recipe = db.relationship('Recipes', back_populates='comments')
 
     def __repr__(self):
-        return f"Comment {self.id} on Recipe {self.recipe_id}"
+        return f"<Comment {self.id} on Recipe {self.recipe_id if self.recipe_id is not None else 'Unknown'}>"
 
 
 class RecipeIngredients(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), primary_key=True)
-    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'), primary_key=True)
-    quantity = db.Column(db.String(60), nullable=False)
+    recipe_id = db.Column(db.Integer, db.ForeignKey('recipes.id', ondelete='CASCADE'), primary_key=True, nullable=False)
+    ingredient_id = db.Column(db.Integer, db.ForeignKey('ingredients.id'), primary_key=True, nullable=False)
+    quantity = db.Column(db.String, nullable=False)
 
     recipe = db.relationship('Recipes', back_populates='ingredients')
     ingredient = db.relationship('Ingredients', back_populates='recipes')

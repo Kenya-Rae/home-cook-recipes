@@ -95,7 +95,7 @@
             <div id="ingredients-section">
                 <h4 class="form-title">Ingredients</h4>
                 <div id="ingredients-list">
-                    {% for ingredient in recipe.ingredients %}
+                    {% for ingredient in ingredients %}
                     <div class="ingredient-item mb-2 d-flex">
                         <input type="text" name="ingredient_name[]" placeholder="Ingredient"
                             value="{{ ingredient.name }}" required class="form-control w-25 me-2" />
@@ -104,7 +104,8 @@
                         <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
                     </div>
                     {% endfor %}
-                    <!-- Empty fields for adding new ingredients -->
+                    <!-- Empty fields for adding new ingredients if there are no existing ingredients -->
+                    {% if not ingredients %}
                     <div class="ingredient-item mb-2 d-flex">
                         <input type="text" name="ingredient_name[]" placeholder="Ingredient"
                             class="form-control w-25 me-2" />
@@ -112,6 +113,7 @@
                             class="form-control w-25 me-2" />
                         <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
                     </div>
+                    {% endif %}
                 </div>
                 <button type="button" class="btn btn-primary mt-3" id="add-ingredient">Add More Ingredients</button>
             </div>
@@ -127,7 +129,7 @@
                         <button type="button" class="btn btn-danger remove-instruction">Remove</button>
                     </div>
                     {% endfor %}
-                    <!-- Empty field for adding new instructions -->
+                    <!-- Add empty field for new instructions -->
                     <div class="instruction-item mb-2 d-flex">
                         <textarea class="form-control me-2" name="instruction[]" placeholder="Step"></textarea>
                         <button type="button" class="btn btn-danger remove-instruction">Remove</button>
@@ -135,14 +137,15 @@
                 </div>
                 <button type="button" class="btn btn-primary mt-3" id="add-instruction">Add More Steps</button>
             </div>
-        </div>
 
-        <!-- Submit and Reset Buttons -->
-        <div class="row">
-            <div class="center-align w-100 mb-3 p-1">
-                <button type="submit" class="btn btn-success">Update Recipe <i
-                        class="fas fa-plus-square right"></i></button>
-                <button type="reset" class="btn btn-outline-danger">Reset <i class="fa-solid fa-trash-can"></i></button>
+            <!-- Submit and Reset Buttons -->
+            <div class="row">
+                <div class="center-align w-100 mb-3 p-1">
+                    <button type="submit" class="btn btn-success">Update Recipe <i
+                            class="fas fa-plus-square right"></i></button>
+                    <button type="reset" class="btn btn-outline-danger">Reset <i
+                            class="fa-solid fa-trash-can"></i></button>
+                </div>
             </div>
         </div>
     </form>

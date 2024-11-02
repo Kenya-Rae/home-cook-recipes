@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from sqlalchemy.orm import joinedload  
 
 if os.path.exists("env.py"):
     import env  # noqa
@@ -18,5 +19,8 @@ app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  #Max file size (16MB)
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
+def get_joinedload():
+    return joinedload
 
 from recipes import routes #noqa
