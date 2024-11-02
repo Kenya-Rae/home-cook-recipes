@@ -75,6 +75,11 @@ main {
   font-family: "Playfair Display", serif;
 }
 
+.form-title, label {
+  font-family: "Karla", serif;
+  font-weight: 600;
+}
+
 .title-description{
   position: relative;
   top: 10px;
@@ -103,7 +108,6 @@ background: #000000;
 }
 
 /* Homepage Content */
-
 .lead{
   text-align: center;
 }
@@ -121,6 +125,7 @@ background: #000000;
   display: flex;
   justify-content: space-around;
 }
+
 /* Sign In/Up Page */
 .sign-in{
   border: 1px solid #b2dfdbb4;
@@ -236,30 +241,37 @@ a.addBtn{
   margin-right: 0px;
 }
 
-/* Create Recipe Page */
+/* Create/ Edit Recipe Page */
 .recipeForm{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.times{
-  justify-content: center;
+.uploadTxt{
+  text-decoration: underline;
+  font-weight: 700;
 }
 
-div > span i{
+.select_category {
+  height: 25px;
+}
+
+.timing div {
+  margin-left: 5px;
+}
+
+div > span i /* recipe description */ {
   padding-right: 5px;
 }
 
-#basic-addon4{
-  text-align: center;
+.timing {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
-.categoryTxt{
-  text-align: center;
-  font-weight: 600;
-}
-
+/*  Add Category */
 .addCategory{
   display: flex;
     flex-direction: row;
@@ -274,38 +286,15 @@ div > span i{
   padding-right: 5px;
 }
 
-#category_name {
-  margin-right: 5px;
-  margin-left: 5px;
-}
-
-div span.input-group-text{
-  width: fit-content;
-}
-
-div.input-field.mb-3.w-25.p-1 {
+.categoryTxt{
   text-align: center;
-}
-
-.servingLbl {
-  display: block;
+  font-weight: 600;
 }
 
 /* View Recipe Template */
 .view-desc{
 margin-top: 16px;
 text-align: center;
-}
-
-.viewBtn{
-    text-align: center;
-    border: 1px solid #757575 ;
-    background: #757575 ;
-}
-
-.viewBtn > a {
-  color: white;
-
 }
 
 .view-times {
@@ -320,7 +309,12 @@ text-align: center;
   margin-right: 15px;
 }
 
-.commentForm {
+.view-ingredients, .view-intructions {
+  margin-bottom: 25px;
+}
+
+.comments{
+  margin-top: 100px;
   margin-bottom: 40px;
 }
 

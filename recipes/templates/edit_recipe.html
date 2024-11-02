@@ -24,95 +24,9 @@
 
         <!-- Recipe Name -->
         <div class="input-group mb-3 w-50 p-1">
-            <span class="input-group-text"><i class="fa-solid fa-pen"></i> Recipe Name</span>
+            <span class="input-group-text form-title"><i class="fa-solid fa-pen"></i> Recipe Name</span>
             <input type="text" class="form-control validate" name="recipe_name" minlength="3" maxlength="25"
                 value="{{ recipe.title }}" required>
-        </div>
-
-        <!-- Recipe Category -->
-        <div class="input-field mb-3 w-25 p-1">
-            <label for="category_ids">Category</label>
-            <select name="category_ids" id="category_ids" required multiple>
-                <option value="" disabled>Choose a category:</option>
-                {% for category in categories %}
-                <option value="{{ category.id }}"
-                    {% if category.id in recipe.categories|map(attribute='id')|list %}selected{% endif %}>
-                    {{ category.name }}
-                </option>
-                {% endfor %}
-            </select>
-        </div>
-
-        <!-- Recipe Description -->
-        <div class="input-group mb-3 w-75 p-1">
-            <span class="input-group-text"><i class="fa-solid fa-circle-info"></i> Recipe Description</span>
-            <textarea class="form-control" name="recipe_description" minlength="5"
-                required>{{ recipe.description }}</textarea>
-        </div>
-
-        <!-- Ingredients Section -->
-        <div id="ingredients-section">
-            <h4>Ingredients</h4>
-            <div id="ingredients-list">
-                {% for ingredient in recipe.ingredients %}
-                <div class="ingredient-item mb-2 d-flex">
-                    <input type="text" name="ingredient_name[]" placeholder="Ingredient" value="{{ ingredient.name }}"
-                        required class="form-control w-25 me-2" />
-                    <input type="text" name="ingredient_quantity[]" placeholder="Quantity"
-                        value="{{ ingredient.quantity }}" required class="form-control w-25 me-2" />
-                    <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
-                </div>
-                {% endfor %}
-                <!-- Empty fields for adding new ingredients -->
-                <div class="ingredient-item mb-2 d-flex">
-                    <input type="text" name="ingredient_name[]" placeholder="Ingredient"
-                        class="form-control w-25 me-2" />
-                    <input type="text" name="ingredient_quantity[]" placeholder="Quantity"
-                        class="form-control w-25 me-2" />
-                    <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary mt-3" id="add-ingredient">Add More Ingredients</button>
-        </div>
-
-        <!-- Instructions Section -->
-        <div id="instructions-section" class="mt-4">
-            <h4>Instructions</h4>
-            <div id="instructions-list">
-                {% for instruction in recipe.instructions %}
-                <div class="instruction-item mb-2 d-flex">
-                    <textarea class="form-control me-2" name="instruction[]" placeholder="Step"
-                        required>{{ instruction.content }}</textarea>
-                    <button type="button" class="btn btn-danger remove-instruction">Remove</button>
-                </div>
-                {% endfor %}
-                <!-- Empty field for adding new instructions -->
-                <div class="instruction-item mb-2 d-flex">
-                    <textarea class="form-control me-2" name="instruction[]" placeholder="Step"></textarea>
-                    <button type="button" class="btn btn-danger remove-instruction">Remove</button>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary mt-3" id="add-instruction">Add More Steps</button>
-        </div>
-
-        <!-- Prep Time -->
-        <div class="input-field mb-3 w-25 p-1">
-            <i class="fa-regular fa-clock"></i>
-            <label for="preptime">Prep Time (minutes):</label>
-            <input id="preptime" name="preptime" type="number" value="{{ recipe.prep_time }}" required>
-        </div>
-
-        <!-- Cooking Time -->
-        <div class="input-field mb-3 w-25 p-1">
-            <i class="fa-regular fa-clock"></i>
-            <label for="cooktime">Cook Time (minutes):</label>
-            <input id="cooktime" name="cooktime" type="number" value="{{ recipe.cook_time }}" required>
-        </div>
-
-        <!-- Servings -->
-        <div class="input-field mb-3 w-25 p-1">
-            <label for="servings" class="servingLbl">Servings:</label>
-            <input id="servings" name="servings" type="number" value="{{ recipe.servings }}">
         </div>
 
         <!-- Display Current Recipe Image -->
@@ -130,8 +44,96 @@
         <div class="file-field input-field mb-3">
             <div class="btn">
                 <i class="fa-solid fa-upload"></i>
-                <span>Upload New Recipe Image:</span>
+                <span class="uploadTxt">Upload New Recipe Image:</span>
                 <input type="file" name="recipe_image" class="form-control">
+            </div>
+        </div>
+
+        <!-- Recipe Category -->
+        <div class="input-field mb-3 w-25 p-1">
+            <label for="category_ids">Category</label>
+            <select name="category_ids" class="select_category" id="category_ids" required multiple>
+                <option value="" disabled>Choose a category:</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}"
+                    {% if category.id in recipe.categories|map(attribute='id')|list %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Recipe Description -->
+        <div class="input-group mb-3 w-75 p-1">
+            <span class="input-group-text form-title"><i class="fa-solid fa-circle-info"></i> Recipe Description</span>
+            <textarea class="form-control" name="recipe_description" minlength="5"
+                required>{{ recipe.description }}</textarea>
+        </div>
+
+        <div class="container timing mt-3 mb-3">
+            <!-- Prep Time -->
+            <div class="input-field">
+                <label for="preptime"><i class="fa-regular fa-clock"></i>Prep Time (minutes):</label>
+                <input id="preptime" name="preptime" type="number" value="{{ recipe.prep_time }}" required>
+            </div>
+
+            <!-- Cooking Time -->
+            <div class="input-field">
+                <label for="cooktime"><i class="fa-regular fa-clock"></i>Cook Time (minutes):</label>
+                <input id="cooktime" name="cooktime" type="number" value="{{ recipe.cook_time }}" required>
+            </div>
+
+            <!-- Servings -->
+            <div class="input-field">
+                <label for="servings" class="servingLbl"><i class="fa-solid fa-plus"></i>Servings:</label>
+                <input id="servings" name="servings" type="number" value="{{ recipe.servings }}">
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Ingredients Section -->
+            <div id="ingredients-section">
+                <h4 class="form-title">Ingredients</h4>
+                <div id="ingredients-list">
+                    {% for ingredient in recipe.ingredients %}
+                    <div class="ingredient-item mb-2 d-flex">
+                        <input type="text" name="ingredient_name[]" placeholder="Ingredient"
+                            value="{{ ingredient.name }}" required class="form-control w-25 me-2" />
+                        <input type="text" name="ingredient_quantity[]" placeholder="Quantity"
+                            value="{{ ingredient.quantity }}" required class="form-control w-25 me-2" />
+                        <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
+                    </div>
+                    {% endfor %}
+                    <!-- Empty fields for adding new ingredients -->
+                    <div class="ingredient-item mb-2 d-flex">
+                        <input type="text" name="ingredient_name[]" placeholder="Ingredient"
+                            class="form-control w-25 me-2" />
+                        <input type="text" name="ingredient_quantity[]" placeholder="Quantity"
+                            class="form-control w-25 me-2" />
+                        <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary mt-3" id="add-ingredient">Add More Ingredients</button>
+            </div>
+
+            <!-- Instructions Section -->
+            <div id="instructions-section" class="mt-4">
+                <h4 class="form-title">Instructions</h4>
+                <div id="instructions-list">
+                    {% for instruction in recipe.instructions %}
+                    <div class="instruction-item mb-2 d-flex">
+                        <textarea class="form-control me-2" name="instruction[]" placeholder="Step"
+                            required>{{ instruction.content }}</textarea>
+                        <button type="button" class="btn btn-danger remove-instruction">Remove</button>
+                    </div>
+                    {% endfor %}
+                    <!-- Empty field for adding new instructions -->
+                    <div class="instruction-item mb-2 d-flex">
+                        <textarea class="form-control me-2" name="instruction[]" placeholder="Step"></textarea>
+                        <button type="button" class="btn btn-danger remove-instruction">Remove</button>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary mt-3" id="add-instruction">Add More Steps</button>
             </div>
         </div>
 

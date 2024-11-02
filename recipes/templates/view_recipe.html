@@ -52,42 +52,46 @@
 </div>
 
 <!-- Recipe ingredients -->
-<h3>Ingredients:</h3>
-<ul>
-    {% for ingredient in recipe.ingredients %}
-    <li>{{ ingredient.quantity }} {{ ingredient.ingredient.name }}</li>
-    {% endfor %}
-</ul>
+<div class="view-ingredients">
+    <h3>Ingredients:</h3>
+    <ul>
+        {% for ingredient in recipe.ingredients %}
+        <li>{{ ingredient.quantity }} {{ ingredient.ingredient.name }}</li>
+        {% endfor %}
+    </ul>
+</div>
 
 <!-- Recipe instructions -->
-<h3>Instructions</h3>
-<ol>
-    {% for instruction in recipe.instructions %}
-    <li>{{ instruction.content }}</li>
-    {% endfor %}
-</ol>
+<div class="view-intructions">
+    <h3>Instructions</h3>
+    <ol>
+        {% for instruction in recipe.instructions %}
+        <li>{{ instruction.content }}</li>
+        {% endfor %}
+    </ol>
+</div>
 
 <!-- Comments Section -->
-<h3>Comments:</h3>
-{% if comments %}
-<ul>
-    {% for comment in comments %}
-    <li>{{ comment.content }} - <small>{{ comment.created.strftime('%Y-%m-%d %H:%M') }}</small></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No comments yet.</p>
-{% endif %}
+<div class="comments">
+    <h3>Comments:</h3>
+    {% if comments %}
+    <ul>
+        {% for comment in comments %}
+        <li>{{ comment.content }} - <small>{{ comment.created.strftime('%Y-%m-%d %H:%M') }}</small></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No comments yet.</p>
+    {% endif %}
 
-
-<!-- Comment Form -->
-<h3>Add a Comment:</h3>
-<form class="commentForm" action="{{ url_for('add_comment', recipe_id=recipe.id) }}" method="POST">
-    <div class="form-group">
-        <label for="comment">Your Comment:</label>
-        <textarea name="content" id="newComment" class="form-control" required></textarea>
-    </div>
-    <button type="submit" class="commentBtn btn btn-primary">Submit Comment</button>
-</form>
-
+    <!-- Comment Form -->
+    <h3>Add a Comment:</h3>
+    <form class="commentForm" action="{{ url_for('add_comment', recipe_id=recipe.id) }}" method="POST">
+        <div class="form-group">
+            <label for="comment">Your Comment:</label>
+            <textarea name="content" id="newComment" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="commentBtn btn btn-primary">Submit Comment</button>
+    </form>
+</div>
 {% endblock %}

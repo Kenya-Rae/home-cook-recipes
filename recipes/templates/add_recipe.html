@@ -22,14 +22,23 @@
     <form class="recipeForm" method="POST" action="{{ url_for('add_recipe') }}" enctype="multipart/form-data">
         <!-- Recipe Name -->
         <div class="input-group mb-3 w-50 p-1">
-            <span class="input-group-text"><i class="fa-solid fa-pen"></i> Recipe Name</span>
+            <span class="input-group-text form-title"><i class="fa-solid fa-pen"></i> Recipe Name</span>
             <input type="text" class="form-control validate" name="name" minlength="3" maxlength="25" required>
+        </div>
+
+        <!-- Image Upload -->
+        <div class="file-field input-field mb-3">
+            <div class="btn">
+                <i class="fa-solid fa-upload"></i>
+                <span class="uploadTxt">Upload Recipe Image:</span>
+                <input type="file" name="recipe_image" class="form-control">
+            </div>
         </div>
 
         <!-- Recipe Category -->
         <div class="input-field mb-3 w-25 p-1">
             <label for="category_id">Category</label>
-            <select name="category_id[]" multiple required>
+            <select name="category_id[]" class="select_category" multiple required>
                 <option value="" disabled selected>Choose a category:</option>
                 {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
@@ -39,61 +48,55 @@
 
         <!-- Recipe Description -->
         <div class="input-group mb-3 w-75 p-1">
-            <span class="input-group-text"><i class="fa-solid fa-circle-info"></i> Recipe Description</span>
+            <span class="input-group-text form-title"><i class="fa-solid fa-circle-info"></i> Recipe Description</span>
             <textarea class="form-control" name="description" minlength="5" required></textarea>
         </div>
 
-        <!-- Ingredients Description -->
-        <div id="ingredients-section">
-            <h4>Ingredients</h4>
-            <div id="ingredients-list">
-                <div class="ingredient-item mb-2 d-flex">
-                    <input type="text" name="ingredient_name[]" placeholder="Ingredient" required
-                        class="form-control w-25 me-2" />
-                    <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required
-                        class="form-control w-25 me-2" />
-                </div>
+        <div class="container timing mt-3 mb-3">
+            <!-- Prep Time -->
+            <div class="input-field">
+                <label for="preptime"><i class="fa-regular fa-clock"></i>Prep Time (minutes):</label>
+                <input id="preptime" name="preptime" type="number" required>
             </div>
-            <button type="button" class="btn btn-primary mt-3" id="add-ingredient">Add More Ingredients</button>
-        </div>
 
-        <!-- Instructions Description -->
-        <div id="instructions-section" class="mt-4">
-            <h4>Instructions</h4>
-            <div id="instructions-list">
-                <div class="instruction-item mb-2 d-flex">
-                    <textarea class="form-control me-2" name="instruction[]" placeholder="Step 1" required></textarea>
-                </div>
+            <!-- Cooking Time -->
+            <div class="input-field">
+                <label for="cooktime"><i class="fa-regular fa-clock"></i>Cook Time (minutes):</label>
+                <input id="cooktime" name="cooktime" type="number" required>
             </div>
-            <button type="button" class="btn btn-primary mt-3" id="add-instruction">Add More Steps</button>
+
+            <!-- Servings -->
+            <div class="input-field">
+                <label for="servings" class="servingLbl"><i class="fa-solid fa-plus"></i>Servings:</label>
+                <input id="servings" name="servings" type="number">
+            </div>
         </div>
 
-        <!-- Prep Time -->
-        <div class="input-field mb-3 w-25 p-1">
-            <i class="fa-regular fa-clock"></i>
-            <label for="preptime">Prep Time (minutes):</label>
-            <input id="preptime" name="preptime" type="number" required>
-        </div>
+        <div class="container form-context">
+            <!-- Ingredients Description -->
+            <div id="ingredients-section">
+                <h4 class="form-title">Ingredients</h4>
+                <div id="ingredients-list">
+                    <div class="ingredient-item mb-2 d-flex">
+                        <input type="text" name="ingredient_name[]" placeholder="Ingredient" required
+                            class="form-control w-25 me-2" />
+                        <input type="text" name="ingredient_quantity[]" placeholder="Quantity" required
+                            class="form-control w-25 me-2" />
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary mt-3" id="add-ingredient">Add More Ingredients</button>
+            </div>
 
-        <!-- Cooking Time -->
-        <div class="input-field mb-3 w-25 p-1">
-            <i class="fa-regular fa-clock"></i>
-            <label for="cooktime">Cook Time (minutes):</label>
-            <input id="cooktime" name="cooktime" type="number" required>
-        </div>
-
-        <!-- Servings -->
-        <div class="input-field mb-3 w-25 p-1">
-            <label for="servings" class="servingLbl">Servings:</label>
-            <input id="servings" name="servings" type="number">
-        </div>
-
-        <!-- Image Upload -->
-        <div class="file-field input-field mb-3">
-            <div class="btn">
-                <i class="fa-solid fa-upload"></i>
-                <span>Upload Recipe Image:</span>
-                <input type="file" name="recipe_image" class="form-control">
+            <!-- Instructions Description -->
+            <div id="instructions-section" class="mt-4">
+                <h4 class="form-title">Instructions</h4>
+                <div id="instructions-list">
+                    <div class="instruction-item mb-2 d-flex">
+                        <textarea class="form-control me-2" name="instruction[]" placeholder="Step 1"
+                            required></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary mt-3" id="add-instruction">Add More Steps</button>
             </div>
         </div>
 
