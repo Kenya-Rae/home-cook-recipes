@@ -1,14 +1,14 @@
 from recipes import db
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Models 
 class Users(db.Model):
-    # schema for Users Model
+    # Schema for Users Model
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(260), nullable=False)
+    password = db.Column(db.String(260), nullable=False)  # Stores hashed password
     created = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_admin = db.Column(db.Boolean, default=False)
@@ -18,6 +18,16 @@ class Users(db.Model):
 
     def __repr__(self):
         return f"<User {self.email}, (ID: {self.id})>"
+
+    # Hash and set password
+    def set_password(self, password):
+        """Hashes the password and stores it in the password field."""
+        self.password = generate_password_hash(password)
+
+    # Check password
+    def check_password(self, password):
+        """Checks if the provided password matches the stored hashed password."""
+        return check_password_hash(self.password, password)
 
 
 class Recipes(db.Model):

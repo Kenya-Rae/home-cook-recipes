@@ -3,6 +3,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from recipes import app, db
 from recipes.models import Users, Recipes, Instructions, Ingredients, Category, Comments, RecipeIngredients, RecipeCategories
 from werkzeug.utils import secure_filename
+from flask import current_app
+from itsdangerous import URLSafeTimedSerializer
+from flask_mail import Mail, Message
 import time
 import os
 
@@ -44,7 +47,7 @@ def signup():
 
         email = email.lower()
 
-        #check if user already exists in recipes database
+        # Check if user already exists in recipes database
         existing_user = Users.query.filter_by(email=email).first()
         if existing_user:
             flash("Email Address already exists!", "error")
@@ -58,7 +61,7 @@ def signup():
             password=hashed_password
         )
 
-        ## Putting new user in recipes session
+        # Putting new user in recipes session
         db.session.add(new_user)
         db.session.commit()
 
@@ -66,7 +69,7 @@ def signup():
         session["email"] = new_user.email
         flash("Sign Up Successful!", "success")
 
-        return redirect(url_for('dashboard')) # Take user to their recipes page
+        return redirect(url_for('dashboard'))  # Take user to their recipes page
 
     return render_template("sign_up.html")
 
@@ -94,6 +97,60 @@ def signin():
     
     return render_template("sign_in.html")
 
+# Helper function to create token
+def create_reset_token(user_id):
+    serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+    return serializer.dumps(user_id, salt="password-reset-salt")
+
+# Helper function to verify token
+def verify_reset_token(token, expiration=3600):
+    serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
+    try:
+        user_id = serializer.loads(token, salt="password-reset-salt", max_age=expiration)
+    except:
+        return None
+    return user_id
+
+# Forgot password route
+@app.route("/forgot_password", methods=["GET", "POST"])
+def forgot_password():
+    if request.method == "POST":
+        email = request.form.get("email")
+        user = Users.query.filter_by(email=email).first()
+        if user:
+            token = create_reset_token(user.id)
+            reset_url = url_for("reset_password", token=token, _external=True)
+            send_email(user.email, "Password Reset Request", f"Click the link to reset your password: {reset_url}")
+            flash("An email with password reset instructions has been sent to your email address.", "success")
+        else:
+            flash("Email not found in the system.", "danger")
+        return redirect(url_for("signin"))
+    return render_template("forgot_password.html")
+
+
+@app.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_password(token):
+    user_id = verify_reset_token(token)
+    if not user_id:
+        flash("The reset link is invalid or has expired.", "danger")
+        return redirect(url_for("signin"))
+
+    user = Users.query.get(user_id)
+    if request.method == "POST":
+        new_password = request.form.get("password")
+        user.password = generate_password_hash(new_password)  # Hash the new password
+        db.session.commit()
+        flash("Your password has been reset. You can now log in.", "success")
+        return redirect(url_for("signin"))
+
+    return render_template("reset_password.html", token=token)
+
+
+def send_email(to, subject, body):
+    msg = Message(subject, recipients=[to])
+    msg.body = body
+    mail.send(msg)
+
 
 @app.route("/dashboard")
 def dashboard():
@@ -104,7 +161,7 @@ def dashboard():
     # Getting logged in user
     user = Users.query.filter_by(email=session["email"]).first()
 
-    # check if the user exists
+    # Check if the user exists
     if not user:
         flash('Please sign in.', "error")
         return redirect(url_for('signin'))
@@ -116,7 +173,7 @@ def dashboard():
 
 @app.route("/logout")
 def logout():
-    # removing user from session
+    # Removing user from session
     flash('You have been logged out.', "success")
     session.pop("email")
     return redirect(url_for("signin"))
@@ -204,10 +261,10 @@ def add_recipe():
             db.session.add(new_category)
 
         db.session.commit()
-        flash('Recipe Added!', "success")
+        flash("Recipe added successfully!", "success")
         return redirect(url_for("dashboard"))
 
-    return render_template("add_recipe.html", categories=Category.query.all())
+    return render_template("add_recipe.html")
 
 
 @app.route('/recipe/<int:recipe_id>')
@@ -253,114 +310,50 @@ def add_category():
 
 @app.route("/edit_recipe/<int:recipe_id>", methods=["GET", "POST"])
 def edit_recipe(recipe_id):
-    recipe = Recipes.query.get_or_404(recipe_id)
+    if 'email' not in session:
+        flash('Please sign in to edit a recipe.', "error")
+        return redirect(url_for('signin'))
 
+    recipe = Recipes.query.get(recipe_id)
     if request.method == "POST":
-        # Fetching data from the form
-        title = request.form.get("recipe_name")
-        description = request.form.get("recipe_description")
-        prep_time = request.form.get("preptime")
-        cook_time = request.form.get("cooktime")
-        servings = request.form.get("servings")
-        
-        # Ensure title and description are not None
-        if title is None or description is None:
-            flash("Title and description are required.", "error")
-            return redirect(url_for("edit_recipe", recipe_id=recipe.id))
+        recipe.title = request.form.get("name")
+        recipe.description = request.form.get("description")
+        recipe.prep_time = request.form.get("preptime")
+        recipe.cook_time = request.form.get("cooktime")
+        recipe.servings = request.form.get("servings")
 
-        # Update the recipe's fields
-        recipe.title = title
-        recipe.description = description
-        recipe.prep_time = prep_time
-        recipe.cook_time = cook_time
-        recipe.total_time = int(prep_time) + int(cook_time) if prep_time and cook_time else 0
-        recipe.servings = servings
-
-        # Handle image if a new one is uploaded
+        # Handle image upload
         image_file = request.files.get('recipe_image')
         if image_file:
             image_filename = secure_filename(image_file.filename)
-            image_path = os.path.join('static/images', image_filename)
-            image_file.save(image_path)
-            recipe.image_url = image_filename
+            upload_folder = 'recipes/static/images'
+            if not os.path.exists(upload_folder):
+                os.makedirs(upload_folder)
+            image_file.save(os.path.join(upload_folder, image_filename))
+            recipe.image_url = image_filename  # Update recipe with new image
 
-        # Handle categories
-        category_ids = request.form.getlist('category_ids')  # Fetch selected categories
-        recipe.categories.clear()  # Clear current categories
-
-        # Add new category associations
-        for category_id in category_ids:
-            if category_id:  # Ensure category_id is not empty
-                existing_category = RecipeCategories.query.filter_by(recipe_id=recipe.id, category_id=category_id).first()
-                if not existing_category:
-                    new_category = RecipeCategories(recipe_id=recipe.id, category_id=category_id)
-                    db.session.add(new_category)
-
-        # Handle ingredients
-        ingredient_names = request.form.getlist('ingredient_name[]')
-        ingredient_quantities = request.form.getlist('ingredient_quantity[]')
-
-        # Clear existing ingredients
-        RecipeIngredients.query.filter_by(recipe_id=recipe.id).delete()
-
-        # Add updated ingredients
-        for name, quantity in zip(ingredient_names, ingredient_quantities):
-            if name and quantity:  # Ensure both name and quantity are provided
-                # Check if the ingredient already exists
-                existing_ingredient = Ingredients.query.filter_by(name=name).first()
-                if existing_ingredient:
-                    # Create the association
-                    recipe_ingredient = RecipeIngredients(recipe_id=recipe.id, ingredient_id=existing_ingredient.id, quantity=quantity)
-                    db.session.add(recipe_ingredient)
-                else:
-                    # Create a new ingredient and save it
-                    new_ingredient = Ingredients(name=name, quantity=quantity)
-                    db.session.add(new_ingredient)  # Add the ingredient to the session
-                    db.session.flush()  # Ensure the new ingredient is flushed to get its ID
-                    # Create the association with the newly created ingredient
-                    recipe_ingredient = RecipeIngredients(recipe_id=recipe.id, ingredient_id=new_ingredient.id, quantity=quantity)
-                    db.session.add(recipe_ingredient)
-
-        # Handle instructions
-        instruction_contents = request.form.getlist('instruction[]')
-        
-        # Clear existing instructions
-        recipe.instructions.clear()
-
-        # Add updated instructions with step numbers
-        for index, step in enumerate(instruction_contents):
-            if step:  # Ensure step is provided
-                new_instruction = Instructions(content=step, recipe_id=recipe.id, step_number=index + 1)  # Assigning step_number
-                db.session.add(new_instruction)
-
-        db.session.commit()  # Commit all changes to the database
-        flash('Recipe Updated!', "success")
+        db.session.commit()
+        flash("Recipe updated successfully!", "success")
         return redirect(url_for("dashboard"))
 
-    # Fetch all categories for the dropdown
-    all_categories = Category.query.all()
-
-    # Fetch existing ingredients for the form
-    ingredients = Ingredients.query.join(RecipeIngredients).filter(RecipeIngredients.recipe_id == recipe_id).all()
-    
-    return render_template("edit_recipe.html", recipe=recipe, categories=all_categories, ingredients=ingredients)
+    return render_template("edit_recipe.html", recipe=recipe)
 
 
-@app.route("/delete_recipe/<int:recipe_id>", methods=['GET', 'POST'])
+@app.route("/delete_recipe/<int:recipe_id>", methods=["POST"])
 def delete_recipe(recipe_id):
-    # Find the recipe
-    recipe = Recipes.query.get_or_404(recipe_id)
-    
-    try:
+    if 'email' not in session:
+        flash('Please sign in to delete a recipe.', "error")
+        return redirect(url_for('signin'))
+
+    recipe = Recipes.query.get(recipe_id)
+    if recipe:
         db.session.delete(recipe)
         db.session.commit()
-        flash('Recipe and comments have been deleted successfully.', 'success')
-    except Exception as e:
-        db.session.rollback()  # In case of any error
-        flash(f'Error deleting recipe: {str(e)}', 'danger')
-    
-    return redirect(url_for("dashboard"))
+        flash("Recipe deleted successfully!", "success")
+    else:
+        flash("Recipe not found.", "error")
 
+    return redirect(url_for("dashboard"))
 
 
 @app.route("/gallery")
@@ -466,3 +459,11 @@ def get_recipes(query):
     ).all()
 
     return results
+
+@app.route("/recipe/<int:recipe_id>")
+def recipe_detail(recipe_id):
+    recipe = Recipes.query.get(recipe_id)
+    if recipe is None:
+        flash("Recipe not found.", "error")
+        return redirect(url_for("recipes"))
+    return render_template("recipe_detail.html", recipe=recipe)
