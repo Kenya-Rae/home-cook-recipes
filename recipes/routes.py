@@ -14,9 +14,19 @@ def index():
 
 @app.route("/recipes")
 def recipes():
-    all_recipes = Recipes.query.all()
+    category_id = request.args.get('category')  # Get the selected category
 
-    return render_template("recipes.html", recipes=all_recipes)
+    if category_id:
+        # Filter recipes by the selected category
+        all_recipes = Recipes.query.join(RecipeCategories).filter(RecipeCategories.category_id == category_id).all()
+    else:
+        # Get all recipes if no category is selected
+        all_recipes = Recipes.query.all()
+
+    # Get all categories for the filter dropdown
+    categories = Category.query.all()
+
+    return render_template("recipes.html", recipes=all_recipes, categories=categories)
 
 
 @app.route("/sign_up", methods=["GET", "POST"])
@@ -341,16 +351,16 @@ def delete_recipe(recipe_id):
     # Find the recipe
     recipe = Recipes.query.get_or_404(recipe_id)
     
-    # Delete the recipe
     try:
         db.session.delete(recipe)
         db.session.commit()
-        flash('Recipe has been deleted successfully.', 'success')
+        flash('Recipe and comments have been deleted successfully.', 'success')
     except Exception as e:
-        db.session.rollback()  # in case of any error
+        db.session.rollback()  # In case of any error
         flash(f'Error deleting recipe: {str(e)}', 'danger')
     
     return redirect(url_for("dashboard"))
+
 
 
 @app.route("/gallery")

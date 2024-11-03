@@ -112,7 +112,6 @@ background: #000000;
   text-align: center;
 }
 
-/* Recipe Page */
 .d-block {
   height: 400px;
 }
@@ -121,10 +120,6 @@ background: #000000;
   text-align: center;
 }
 
-.dashbuttons{
-  display: flex;
-  justify-content: space-around;
-}
 
 /* Sign In/Up Page */
 .sign-in{
@@ -187,6 +182,15 @@ border-color: rgb(214, 24, 46);
   font-weight: 700;
 }
 
+/* Recipe Page */
+.card-img-top {
+  height: 270px;
+}
+
+.card-image{
+  object-fit: cover;
+}
+
 /* Dashboard */
 .dashmain-title{
   margin-top: 20px;
@@ -203,6 +207,7 @@ border-color: rgb(214, 24, 46);
 
 .users-recipes{
   margin-top: 20px;
+  margin-left: 20px;
 }
 
 .your_recipes{
@@ -229,6 +234,11 @@ border-color: rgb(214, 24, 46);
 
 a.addBtn{
   color: #01579b;
+}
+
+.dashbuttons{
+  display: flex;
+  justify-content: space-around;
 }
 
 .dashBtns{
@@ -324,13 +334,16 @@ text-align: center;
   flex-wrap: wrap;
   gap: 16px;
 }
+
 .recipe-card {
-  width: 200px;
   text-align: center;
 }
+
 .recipe-image {
-  width: 100%;
-  height: auto;
+  height: 200px; 
+  object-fit: fill;
+  width: 100%; 
+  border-radius: 5px;
 }
 
 /*--------Media Queries------ */
@@ -367,9 +380,6 @@ text-align: center;
     margin-right: 10px;
   }
 }
-
-/* View Recipe */
-
 
 /* Dashboard */
 .your_recipes{

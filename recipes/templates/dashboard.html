@@ -38,7 +38,7 @@
     {% for recipe in recipes %}
     <div class="card users-recipes" style="width: 18rem;">
         <img src="{{ url_for('static', filename='images/' + (recipe.image_url if recipe.image_url else 'default.jpg')) }}"
-            alt="{{ recipe.title }}">
+            alt="{{ recipe.title }}" class="recipe-image">
         <div class="card-body">
             <h5 class="card-title">{{ recipe.title }}</h5>
             <p class="card-text">{{ recipe.description }}</p>

@@ -3,25 +3,40 @@
 <h1 class="main-titles">Recipe Page</h1>
 <button class="backBtn" onclick="history.back()">Go Back</button>
 
+<!-- Category Filter -->
+<div class="mb-3">
+    <form action="{{ url_for('recipes') }}" method="GET">
+        <select name="category" onchange="this.form.submit()" class="form-select">
+            <option value="">Select a category</option>
+            {% for category in categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </form>
+</div>
+
 <div class="row">
     {% for recipe in recipes %}
-    <div style="width: 18rem" ;>
-        <div class="card">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
             <div class="card-image">
                 <img src="{{ url_for('static', filename='images/' + recipe.image_url) }}" alt="{{ recipe.title }}"
-                    class="img-fluid">
+                    class="card-img-top img-fluid ">
             </div>
-            <div class="card-content">
-                <h5>{{ recipe.title }}</h5>
-                <p>{{ recipe.description }}</p>
+            <div class="card-body">
+                <h5 class="card-title">{{ recipe.title }}</h5>
+                <p class="card-text">{{ recipe.description }}</p>
             </div>
-            <div class="card-action viewBtn">
-                <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}">View Recipe</a>
+            <div class="card-footer">
+                <a href="{{ url_for('view_recipe', recipe_id=recipe.id) }}" class="btn btn-primary">View Recipe</a>
             </div>
         </div>
     </div>
     {% endfor %}
 </div>
 
+{% if not recipes %}
+<p>No recipes found for the selected category.</p>
+{% endif %}
 
 {% endblock %}
