@@ -107,25 +107,35 @@ def verify_reset_token(token, expiration=3600):
     serializer = URLSafeTimedSerializer(current_app.config["SECRET_KEY"])
     try:
         user_id = serializer.loads(token, salt="password-reset-salt", max_age=expiration)
-    except:
+    except Exception as e:
+        current_app.logger.error(f'Token verification failed: {e}')
         return None
     return user_id
 
-# Forgot password route
-@app.route("/forgot_password", methods=["GET", "POST"])
+
+@app.route('/forgot_password', methods=['GET', 'POST'])
 def forgot_password():
-    if request.method == "POST":
-        email = request.form.get("email")
+    if request.method == 'POST':
+        data = request.get_json() 
+        email = data.get("email") 
+        
+        # Query the user by email
         user = Users.query.filter_by(email=email).first()
+        
         if user:
             token = create_reset_token(user.id)
-            reset_url = url_for("reset_password", token=token, _external=True)
-            send_email(user.email, "Password Reset Request", f"Click the link to reset your password: {reset_url}")
-            flash("An email with password reset instructions has been sent to your email address.", "success")
+            return {"status": "success", "token": token}, 200
         else:
-            flash("Email not found in the system.", "danger")
-        return redirect(url_for("signin"))
-    return render_template("forgot_password.html")
+            return {"status": "error", "message": "Email not found."}, 404
+    
+    return render_template('forgot_password.html')
+
+
+# If user come across a 405 error, display message and send to sign in
+@app.errorhandler(405)
+def method_not_allowed(error):
+    flash("Method not allowed!", "error")
+    return redirect('/sign_in')
 
 
 @app.route("/reset_password/<token>", methods=["GET", "POST"])
@@ -145,11 +155,13 @@ def reset_password(token):
 
     return render_template("reset_password.html", token=token)
 
-
 def send_email(to, subject, body):
     msg = Message(subject, recipients=[to])
     msg.body = body
-    mail.send(msg)
+    try:
+        mail.send(msg)
+    except Exception as e:
+        current_app.logger.error(f'Error sending email: {e}')
 
 
 @app.route("/dashboard")
@@ -459,6 +471,7 @@ def get_recipes(query):
     ).all()
 
     return results
+
 
 @app.route("/recipe/<int:recipe_id>")
 def recipe_detail(recipe_id):

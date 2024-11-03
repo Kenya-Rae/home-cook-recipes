@@ -14,7 +14,6 @@
 {% endif %}
 {% endwith %}
 
-
 <h1 class="main-titles">Sign In</h1>
 
 <div class="sign-in container">
@@ -22,13 +21,15 @@
     <form id="form" class="form" method="POST" action="{{ url_for('signin') }}">
         <div>
             <i class="fa-solid fa-at"></i>
-            <label for="email"></label>
-            <input type="email" name="email" id="emailInput" placeholder="email@example.com">
+            <label for="emailInput"></label>
+            <input type="email" name="email" id="emailInput" placeholder="email@example.com" required
+                autocomplete="email">
         </div>
         <div>
             <i class="fa-solid fa-key"></i>
-            <label for="password"></label>
-            <input type="password" name="password" id="passwordInput" placeholder="Password">
+            <label for="passwordInput"></label>
+            <input type="password" name="password" id="passwordInput" placeholder="Password" required
+                autocomplete="current-password">
         </div>
         <button type="submit" class="btn signInBtn">Sign in</button>
     </form>

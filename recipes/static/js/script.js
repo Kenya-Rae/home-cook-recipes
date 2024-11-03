@@ -1,49 +1,48 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Form elements
+    console.log("DOM fully loaded and parsed");
+
+    // Form elements for sign up and sign in
     const form = document.getElementById('form');
     const usernameInput = document.getElementById('userInput');
-    const emailInput = document.getElementById('emailInput');
+    const emailInput = document.getElementById('emailInput'); // Email for sign in and sign up
     const passwordInput = document.getElementById('passwordInput');
     const repeatPasswordInput = document.getElementById('repeatPasswordInput');
     const errorMsg = document.getElementById('error-msg');
 
-    // Check if form exists to avoid TypeError
-    if (form) {
-        form.addEventListener('submit', (e) => {
-            let errors = [];
+    // Initialize forgot password form
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm'); // Ensure this ID matches your HTML
+    console.log("Forgot Password Form:", forgotPasswordForm);
 
-            // Check if usernameInput exists (only for sign-up)
-            if (usernameInput) {
-                errors = SignUpFormErrors(
-                    usernameInput.value,
-                    emailInput.value,
-                    passwordInput.value,
-                    repeatPasswordInput.value
-                );
-            } else {
-                // If usernameInput is not present, it's a sign-in page
-                errors = SignInFormErrors(emailInput.value, passwordInput.value);
-            }
+    // Check if forgotPasswordForm exists to avoid TypeError
+    if (forgotPasswordForm) {
+        // Select the email input specifically for the forgot password form
+        const forgotPasswordEmailInput = document.getElementById('email'); // Use a distinct name
 
-            // Handle errors
-            if (errors.length > 0) {
-                e.preventDefault();
-                errorMsg.innerText = errors.join(". \n");
-            }
-        });
+        forgotPasswordForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const emailValue = forgotPasswordEmailInput.value; // Use the forgot password email input
 
-        // Attach input event listeners to handle real-time validation
-        const allInputs = [usernameInput, emailInput, passwordInput, repeatPasswordInput].filter(input => input != null);
-        allInputs.forEach(input => {
-            input.addEventListener('input', () => {
-                // Perform real-time validation
-                validateInput(input);
-                if (input.parentElement.classList.contains('incorrect')) {
-                    input.parentElement.classList.remove('incorrect');
-                    errorMsg.innerHTML = '';
+            try {
+                // Send the email using EmailJS
+                const response = await emailjs.send("service_t8jb8bs", "template_bwta55d", {
+                    to_email: emailValue,
+                });
+
+                // Handle response
+                console.log("EmailJS Response:", response); // Log the response for debugging
+                if (response.status === 200) {
+                    alert("An email with password reset instructions has been sent to your email address.");
+                } else {
+                    errorMsg.innerText = "Email not found in the system.";
+                    console.error("Email not found in the system");
                 }
-            });
+            } catch (error) {
+                console.error("Error sending email:", error);
+                errorMsg.innerText = "There was an error processing your request.";
+            }
         });
+    } else {
+        console.error("Forgot Password form not found");
     }
 
     // Ingredient and instruction functionality
@@ -127,52 +126,52 @@ document.addEventListener('DOMContentLoaded', function () {
             alert("Please fill in all required fields."); // Alert user
         }
     });
+
+    // Form validation functions
+    function SignUpFormErrors(username, email, password, repeatPassword) {
+        let errors = [];
+        if (username === "" || username == null) {
+            errors.push('First name Required');
+        }
+        if (email === "" || email == null) {
+            errors.push('Email Required');
+        }
+        if (password === "" || password == null) {
+            errors.push('Password Required');
+        }
+        if (password.length < 8) {
+            errors.push('Password MUST be 8 characters long.');
+        }
+        if (password !== repeatPassword) {
+            errors.push('Repeated password don’t match');
+        }
+        return errors;
+    }
+
+    function SignInFormErrors(email, password) {
+        let errors = [];
+        if (email === "" || email == null) {
+            errors.push('Email Required');
+        }
+        if (password === "" || password == null) {
+            errors.push('Password Required');
+        }
+        return errors;
+    }
+
+    // New validation helper functions
+    function validateNotEmpty(input) {
+        if (input.value.trim() === "") {
+            input.classList.add("is-invalid"); // Add invalid class
+            return false;
+        } else {
+            input.classList.remove("is-invalid"); // Remove invalid class
+            return true;
+        }
+    }
+
+    function validateInput(input) {
+        // Perform any specific validations here if needed
+        validateNotEmpty(input);
+    }
 });
-
-// Form validation functions
-function SignUpFormErrors(username, email, password, repeatPassword) {
-    let errors = [];
-    if (username === "" || username == null) {
-        errors.push('First name Required');
-    }
-    if (email === "" || email == null) {
-        errors.push('Email Required');
-    }
-    if (password === "" || password == null) {
-        errors.push('Password Required');
-    }
-    if (password.length < 8) {
-        errors.push('Password MUST be 8 characters long.');
-    }
-    if (password !== repeatPassword) {
-        errors.push('Repeated password don’t match');
-    }
-    return errors;
-}
-
-function SignInFormErrors(email, password) {
-    let errors = [];
-    if (email === "" || email == null) {
-        errors.push('Email Required');
-    }
-    if (password === "" || password == null) {
-        errors.push('Password Required');
-    }
-    return errors;
-}
-
-// New validation helper functions
-function validateNotEmpty(input) {
-    if (input.value.trim() === "") {
-        input.classList.add("is-invalid"); // Add invalid class
-        return false;
-    } else {
-        input.classList.remove("is-invalid"); // Remove invalid class
-        return true;
-    }
-}
-
-function validateInput(input) {
-    // Perform any specific validations here if needed
-    validateNotEmpty(input);
-}
