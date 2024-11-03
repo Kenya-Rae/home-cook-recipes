@@ -140,54 +140,54 @@ def add_recipe():
         new_recipe = Recipes(
             title=title,
             description=description,
-            prep_time=prep_time,
-            cook_time=cook_time,
-            total_time=int(prep_time) + int(cook_time),
-            servings=servings,
+            prep_time=int(prep_time) if prep_time.isdigit() else None,
+            cook_time=int(cook_time) if cook_time.isdigit() else None,
+            total_time=(int(prep_time) + int(cook_time)) if prep_time.isdigit() and cook_time.isdigit() else None,
+            servings=int(servings) if servings.isdigit() else None,
             image_url=image_filename or 'default.jpg',
             user_id=user.id
         )
-        
+
         db.session.add(new_recipe)
         db.session.flush()  # Get new_recipe.id
 
-        # Handle ingredients
+        def process_ingredients(names, quantities, recipe_id):
+            for name, quantity in zip(names, quantities):
+                quantity = quantity.strip()  # Remove whitespace
+                if not quantity:  # If quantity is empty or None, set a default value
+                    print(f"Warning: Quantity for ingredient '{name}' is not valid. Defaulting to '0'.")
+                    quantity = "0"  # Set a default value or decide how to handle it
+                
+                # Fetch or create ingredient
+                ingredient = Ingredients.query.filter_by(name=name).first()
+                if not ingredient:
+                    ingredient = Ingredients(name=name, quantity=quantity)  # Create with quantity
+                    db.session.add(ingredient)
+                    db.session.flush()  # Assign ID to the new ingredient
+                else:
+                    # Update ingredient quantity if necessary (or ignore)
+                    print(f"Using existing ingredient: {ingredient.name}")
+
+                # Create RecipeIngredients entry
+                recipe_ingredient = RecipeIngredients(
+                    recipe_id=recipe_id,
+                    ingredient_id=ingredient.id,
+                    quantity=quantity  # Use the provided quantity
+                )
+                db.session.add(recipe_ingredient)
+
+        # Process ingredients
         ingredient_names = request.form.getlist("ingredient_name[]")
         ingredient_quantities = request.form.getlist("ingredient_quantity[]")
+        process_ingredients(ingredient_names, ingredient_quantities, new_recipe.id)
 
-        for name, quantity in zip(ingredient_names, ingredient_quantities):
-            print(f"Ingredient Name: {name}, Quantity: {quantity}")  # Debug output
-
-            if not name:
-                flash('Ingredient name is required.', "error")
-                return redirect(url_for("add_recipe"))
-
-            if not quantity:  # Ensure quantity is provided
-                flash(f'Quantity for ingredient "{name}" is required.', "error")
-                return redirect(url_for("add_recipe"))
-
-            # Check if the ingredient already exists
-            ingredient = Ingredients.query.filter_by(name=name).first()
-            if not ingredient:
-                ingredient = Ingredients(name=name)
-                db.session.add(ingredient)
-                db.session.flush()  # Assigns an ID to the new ingredient
-            
-            # Create the recipe ingredient association
-            recipe_ingredient = RecipeIngredients(
-                recipe_id=new_recipe.id,
-                ingredient_id=ingredient.id,
-                quantity=quantity
-            )
-            db.session.add(recipe_ingredient)
-
-        # Handle instructions
+        # Process instructions
         instructions = request.form.getlist("instruction[]")
         for idx, step in enumerate(instructions, start=1):
             instruction = Instructions(step_number=idx, content=step, recipe_id=new_recipe.id)
             db.session.add(instruction)
 
-        # Handle categories
+        # Process categories
         category_ids = request.form.getlist('category_id[]')
         for category_id in category_ids:
             new_category = RecipeCategories(recipe_id=new_recipe.id, category_id=category_id)
@@ -200,13 +200,13 @@ def add_recipe():
     return render_template("add_recipe.html", categories=Category.query.all())
 
 
-
 @app.route('/recipe/<int:recipe_id>')
 def view_recipe(recipe_id):
     recipe = Recipes.query.get_or_404(recipe_id)  # Get the recipe or 404 if not found
+    ingredients = RecipeIngredients.query.filter_by(recipe_id=recipe.id).all() # Grabbing ingredients for the recipe
     comments = Comments.query.filter_by(recipe_id=recipe.id).order_by(Comments.created.desc()).all()  # Fetch comments for this recipe
     
-    return render_template('view_recipe.html', recipe=recipe, comments=comments)
+    return render_template('view_recipe.html', recipe=recipe, ingredients=ingredients, comments=comments)
 
 
 @app.route("/add_category", methods=["GET", "POST"])
@@ -252,7 +252,7 @@ def edit_recipe(recipe_id):
         prep_time = request.form.get("preptime")
         cook_time = request.form.get("cooktime")
         servings = request.form.get("servings")
-
+        
         # Ensure title and description are not None
         if title is None or description is None:
             flash("Title and description are required.", "error")
@@ -280,13 +280,48 @@ def edit_recipe(recipe_id):
 
         # Add new category associations
         for category_id in category_ids:
-            # Check if the association already exists
-            existing_category = RecipeCategories.query.filter_by(recipe_id=recipe.id, category_id=category_id).first()
-            
-            # If it doesn't exist, create a new one
-            if not existing_category:
-                new_category = RecipeCategories(recipe_id=recipe.id, category_id=category_id)
-                db.session.add(new_category)
+            if category_id:  # Ensure category_id is not empty
+                existing_category = RecipeCategories.query.filter_by(recipe_id=recipe.id, category_id=category_id).first()
+                if not existing_category:
+                    new_category = RecipeCategories(recipe_id=recipe.id, category_id=category_id)
+                    db.session.add(new_category)
+
+        # Handle ingredients
+        ingredient_names = request.form.getlist('ingredient_name[]')
+        ingredient_quantities = request.form.getlist('ingredient_quantity[]')
+
+        # Clear existing ingredients
+        RecipeIngredients.query.filter_by(recipe_id=recipe.id).delete()
+
+        # Add updated ingredients
+        for name, quantity in zip(ingredient_names, ingredient_quantities):
+            if name and quantity:  # Ensure both name and quantity are provided
+                # Check if the ingredient already exists
+                existing_ingredient = Ingredients.query.filter_by(name=name).first()
+                if existing_ingredient:
+                    # Create the association
+                    recipe_ingredient = RecipeIngredients(recipe_id=recipe.id, ingredient_id=existing_ingredient.id, quantity=quantity)
+                    db.session.add(recipe_ingredient)
+                else:
+                    # Create a new ingredient and save it
+                    new_ingredient = Ingredients(name=name, quantity=quantity)
+                    db.session.add(new_ingredient)  # Add the ingredient to the session
+                    db.session.flush()  # Ensure the new ingredient is flushed to get its ID
+                    # Create the association with the newly created ingredient
+                    recipe_ingredient = RecipeIngredients(recipe_id=recipe.id, ingredient_id=new_ingredient.id, quantity=quantity)
+                    db.session.add(recipe_ingredient)
+
+        # Handle instructions
+        instruction_contents = request.form.getlist('instruction[]')
+        
+        # Clear existing instructions
+        recipe.instructions.clear()
+
+        # Add updated instructions with step numbers
+        for index, step in enumerate(instruction_contents):
+            if step:  # Ensure step is provided
+                new_instruction = Instructions(content=step, recipe_id=recipe.id, step_number=index + 1)  # Assigning step_number
+                db.session.add(new_instruction)
 
         db.session.commit()  # Commit all changes to the database
         flash('Recipe Updated!', "success")
@@ -294,7 +329,11 @@ def edit_recipe(recipe_id):
 
     # Fetch all categories for the dropdown
     all_categories = Category.query.all()
-    return render_template("edit_recipe.html", recipe=recipe, categories=all_categories)
+
+    # Fetch existing ingredients for the form
+    ingredients = Ingredients.query.join(RecipeIngredients).filter(RecipeIngredients.recipe_id == recipe_id).all()
+    
+    return render_template("edit_recipe.html", recipe=recipe, categories=all_categories, ingredients=ingredients)
 
 
 @app.route("/delete_recipe/<int:recipe_id>", methods=['GET', 'POST'])

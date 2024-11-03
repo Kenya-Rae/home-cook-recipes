@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const allInputs = [usernameInput, emailInput, passwordInput, repeatPasswordInput].filter(input => input != null);
         allInputs.forEach(input => {
             input.addEventListener('input', () => {
+                // Perform real-time validation
+                validateInput(input);
                 if (input.parentElement.classList.contains('incorrect')) {
                     input.parentElement.classList.remove('incorrect');
                     errorMsg.innerHTML = '';
@@ -107,32 +109,17 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Check all ingredient fields
         document.querySelectorAll("input[name='ingredient_name[]']").forEach(function (input) {
-            if (input.value.trim() === "") {
-                valid = false;
-                input.classList.add("is-invalid"); // Bootstrap invalid class
-            } else {
-                input.classList.remove("is-invalid");
-            }
+            if (!validateNotEmpty(input)) valid = false;
         });
 
         // Check all ingredient quantity fields
         document.querySelectorAll("input[name='ingredient_quantity[]']").forEach(function (input) {
-            if (input.value.trim() === "") {
-                valid = false;
-                input.classList.add("is-invalid");
-            } else {
-                input.classList.remove("is-invalid");
-            }
+            if (!validateNotEmpty(input)) valid = false;
         });
 
         // Check all instruction fields
         document.querySelectorAll("textarea[name='instruction[]']").forEach(function (input) {
-            if (input.value.trim() === "") {
-                valid = false;
-                input.classList.add("is-invalid");
-            } else {
-                input.classList.remove("is-invalid");
-            }
+            if (!validateNotEmpty(input)) valid = false;
         });
 
         if (!valid) {
@@ -172,4 +159,20 @@ function SignInFormErrors(email, password) {
         errors.push('Password Required');
     }
     return errors;
+}
+
+// New validation helper functions
+function validateNotEmpty(input) {
+    if (input.value.trim() === "") {
+        input.classList.add("is-invalid"); // Add invalid class
+        return false;
+    } else {
+        input.classList.remove("is-invalid"); // Remove invalid class
+        return true;
+    }
+}
+
+function validateInput(input) {
+    // Perform any specific validations here if needed
+    validateNotEmpty(input);
 }

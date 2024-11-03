@@ -55,9 +55,13 @@
 <div class="view-ingredients">
     <h3>Ingredients:</h3>
     <ul>
-        {% for ingredient in recipe.ingredients %}
-        <li>{{ ingredient.quantity }} {{ ingredient.ingredient.name }}</li>
+        {% if ingredients %}
+        {% for ingredient in ingredients %}
+        <li>{{ ingredient.quantity }} - {{ ingredient.ingredient.name }}</li>
         {% endfor %}
+        {% else %}
+        <li>No ingredients available.</li> <!-- Display a message if no ingredients are found -->
+        {% endif %}
     </ul>
 </div>
 

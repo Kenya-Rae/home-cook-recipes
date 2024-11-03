@@ -19,7 +19,8 @@
 {% endwith %}
 
 <div class="container card-panel">
-    <form class="recipeForm" method="POST" action="{{ url_for('add_recipe') }}" enctype="multipart/form-data">
+    <form class="recipeForm" method="POST" action="{{ url_for('add_recipe') }}" enctype="multipart/form-data"
+        onsubmit="return validateForm()">
         <!-- Recipe Name -->
         <div class="input-group mb-3 w-50 p-1">
             <span class="input-group-text form-title"><i class="fa-solid fa-pen"></i> Recipe Name</span>
