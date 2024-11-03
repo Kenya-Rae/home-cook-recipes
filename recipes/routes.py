@@ -435,3 +435,24 @@ def promote_user(user_id):
         flash('You do not have the permissions to do this.', "error")
 
     return redirect(url_for('dashboard'))
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    query = request.args.get('query', '')  # Get the search query, default to empty string if not provided
+    if query:
+        results = get_recipes(query)  # Call the get_recipes function to get results
+    else:
+        results = []  # No query means no results
+
+    return render_template('search_results.html', results=results, query=query)  # Give back results in a template
+
+
+def get_recipes(query):
+    # Search for recipes based on title or ingredients
+    results = Recipes.query.filter(
+        (Recipes.title.ilike(f'%{query}%')) |  # For case sensitive 
+        (Recipes.ingredients.any(Ingredients.name.ilike(f'%{query}%')))  # Checking ingredients
+    ).all()
+
+    return results

@@ -51,18 +51,16 @@
                         </li>
                         {% endif %}
                     </ul>
-                    <form class="d-flex search" role="search">
-                        <input class="form-control me-2 searchBox" type="search" placeholder="Search"
-                            aria-label="Search" />
-                        <button class="btn btn-light searchBtn" type="submit" fdprocessedid="2tij5o">
-                            <i class="fa-solid fa-magnifying-glass"></i>Search
+                    <form class="d-flex search" role="search" action="{{ url_for('search') }}" method="GET">
+                        <input class="form-control me-2 searchBox" type="search" name="query" placeholder="Search"
+                            aria-label="Search" required />
+                        <button class="btn btn-light searchBtn" type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i> Search
                         </button>
                     </form>
                 </div>
             </div>
         </nav>
-
-
     </header>
 
     <main class="container">
