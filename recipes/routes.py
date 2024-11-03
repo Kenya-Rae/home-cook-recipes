@@ -86,7 +86,7 @@ def signin():
 
         if user and check_password_hash(user.password, password):
             session["email"] = user.email
-            flash("Login Successful! Welcome!", "successful")
+            flash("Login Successful! Welcome!", "success")
             return redirect(url_for('dashboard'))
         else:
             flash("Invalid email or password", "error")

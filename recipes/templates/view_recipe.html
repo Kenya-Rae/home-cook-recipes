@@ -8,17 +8,17 @@
 
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
-<div class="container">
+<div class="container mt-3">
     {% for category, message in messages %}
-    <div class="alert alert-{{ category }}" role="alert">
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
         {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                aria-hidden="true">&times;</span></button>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     {% endfor %}
 </div>
 {% endif %}
 {% endwith %}
+
 
 <!-- Display the category (or categories) associated with the recipe -->
 <p><strong>Category:</strong>
