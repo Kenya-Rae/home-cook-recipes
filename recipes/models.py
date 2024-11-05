@@ -58,7 +58,7 @@ class Recipes(db.Model):
 
     comments = db.relationship('Comments', back_populates='recipe', cascade='all, delete-orphan', lazy=True)
     ingredients = db.relationship('RecipeIngredients', back_populates='recipe', cascade='all, delete-orphan')
-    categories = db.relationship('RecipeCategories', back_populates='recipe', cascade='all, delete-orphan')
+    categories = db.relationship('RecipeCategories', back_populates='recipe', cascade='all, delete-orphan', lazy=True)
     instructions = db.relationship('Instructions', back_populates='recipe', cascade='all, delete-orphan', passive_deletes=True)
 
     author = db.relationship('Users', back_populates="recipes")

@@ -162,21 +162,6 @@ def reset_password(token):
     return render_template("reset_password.html", token=token)
 
 
-@app.route('/generate-reset-token', methods=['POST'])
-def generate_reset_token():
-    data = request.get_json()
-    email = data.get("email")
-    
-    # Query the user by email
-    user = Users.query.filter_by(email=email).first()
-    
-    if user:
-        token = create_reset_token(user.id)  # Use your existing token creation logic
-        return {"status": "success", "token": token}, 200
-    else:
-        return {"status": "error", "message": "Email not found."}, 404
-
-
 @app.route("/dashboard")
 def dashboard():
     if 'email' not in session:
@@ -211,6 +196,11 @@ def add_recipe():
         return redirect(url_for('signin'))
 
     user = Users.query.filter_by(email=session["email"]).first()
+
+    # Fetch categories from the database to pass to the template
+    categories = Category.query.all()
+    print(categories)
+
     if request.method == "POST":
         title = request.form.get("name")
         description = request.form.get("description")
@@ -289,7 +279,8 @@ def add_recipe():
         flash("Recipe added successfully!", "success")
         return redirect(url_for("dashboard"))
 
-    return render_template("add_recipe.html")
+    # Render the template with categories
+    return render_template("add_recipe.html", categories=categories)
 
 
 @app.route('/recipe/<int:recipe_id>')

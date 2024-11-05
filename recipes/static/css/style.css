@@ -182,6 +182,23 @@ border-color: rgb(214, 24, 46);
   font-weight: 700;
 }
 
+/* Forgotten Password Page */
+#forgotPasswordForm{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.forgotBtn{
+  background: #9ccc65;
+  font-weight: 600;
+  margin-left: 10px;
+}
+.forgotBtn:hover {
+  background: #7cb342;
+}
 /* Recipe Page */
 .card-img-top {
   height: 270px;
@@ -301,6 +318,19 @@ div > span i /* recipe description */ {
   font-weight: 600;
 }
 
+.addCategory > button {
+    background: #9ccc65;
+    font-weight: 600;
+}
+
+.addCategory > button:hover{
+    background: #7cb342;
+}
+
+#category_name{
+  margin-right: 5px;
+  margin-left: 5px;
+}
 /* View Recipe Template */
 .view-desc{
 margin-top: 16px;
@@ -328,6 +358,16 @@ text-align: center;
   margin-bottom: 40px;
 }
 
+.noSearchTxt{
+  font-weight: 800;
+  margin-top: 30px;
+  font-size: x-large;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
 /* Gallery Page */
 .gallery {
   display: flex;
