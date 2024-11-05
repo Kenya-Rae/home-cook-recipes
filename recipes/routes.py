@@ -113,24 +113,6 @@ def verify_reset_token(token, expiration=3600):
     return user_id
 
 
-@app.route('/forgot_password', methods=['GET', 'POST'])
-def forgot_password():
-    if request.method == 'POST':
-        data = request.get_json() 
-        email = data.get("email") 
-        
-        # Query the user by email
-        user = Users.query.filter_by(email=email).first()
-        
-        if user:
-            token = create_reset_token(user.id)
-            return {"status": "success", "token": token}, 200
-        else:
-            return {"status": "error", "message": "Email not found."}, 404
-    
-    return render_template('forgot_password.html')
-
-
 # If user come across a 405 error, display message and send to sign in
 @app.errorhandler(405)
 def method_not_allowed(error):
@@ -138,30 +120,61 @@ def method_not_allowed(error):
     return redirect('/sign_in')
 
 
-@app.route("/reset_password/<token>", methods=["GET", "POST"])
+@app.route('/forgot_password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'POST':
+        data = request.get_json() 
+        email = data.get("email") 
+        
+        user = Users.query.filter_by(email=email).first()
+        
+        if user:
+            token = create_reset_token(user.id)
+            current_app.logger.info(f'Token created for user {user.id}: {token}')  # Log token creation
+            reset_url = f"https://8080-kenyarae-homecookrecipe-3uygnjxl4z4.ws.codeinstitute-ide.net/{token}" 
+            subject = "Password Reset Request"
+            body = f"To reset your password, visit the following link: {reset_url}"
+            send_email(email, subject, body)
+            return {"status": "success"}, 200
+        else:
+            return {"status": "error", "message": "Email not found."}, 404
+    
+    return render_template('forgot_password.html')
+
+
 def reset_password(token):
     user_id = verify_reset_token(token)
     if not user_id:
         flash("The reset link is invalid or has expired.", "danger")
         return redirect(url_for("signin"))
-
+    
+    # Log user ID retrieved from token for debugging
+    current_app.logger.info(f'User ID from token: {user_id}')
+    
     user = Users.query.get(user_id)
     if request.method == "POST":
         new_password = request.form.get("password")
-        user.password = generate_password_hash(new_password)  # Hash the new password
+        user.password = generate_password_hash(new_password)
         db.session.commit()
         flash("Your password has been reset. You can now log in.", "success")
         return redirect(url_for("signin"))
 
     return render_template("reset_password.html", token=token)
 
-def send_email(to, subject, body):
-    msg = Message(subject, recipients=[to])
-    msg.body = body
-    try:
-        mail.send(msg)
-    except Exception as e:
-        current_app.logger.error(f'Error sending email: {e}')
+
+@app.route('/generate-reset-token', methods=['POST'])
+def generate_reset_token():
+    data = request.get_json()
+    email = data.get("email")
+    
+    # Query the user by email
+    user = Users.query.filter_by(email=email).first()
+    
+    if user:
+        token = create_reset_token(user.id)  # Use your existing token creation logic
+        return {"status": "success", "token": token}, 200
+    else:
+        return {"status": "error", "message": "Email not found."}, 404
 
 
 @app.route("/dashboard")

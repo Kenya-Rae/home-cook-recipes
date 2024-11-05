@@ -9,7 +9,8 @@ class Users(db.Model):
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(260), nullable=False)  # Stores hashed password
-    reset_token = db.Column(db.String(64), nullable=True)
+    reset_token = db.Column(db.String(64), nullable=True) # Token to be sent to user.
+    reset_token_expiration = db.Column(db.DateTime, nullable=True) # Invalidate token(url link) after some time
     created = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_admin = db.Column(db.Boolean, default=False)
@@ -20,14 +21,22 @@ class Users(db.Model):
     def __repr__(self):
         return f"<User {self.email}, (ID: {self.id})>"
 
+       # Method to generate a reset token and set its expiration
+    def generate_reset_token(self, expiration_minutes=30):
+        # Generate a secure random token
+        self.reset_token = secrets.token_urlsafe(32)
+        self.reset_token_expiration = datetime.utcnow() + timedelta(minutes=expiration_minutes)
+        db.session.commit()
+        return self.reset_token
+
     # Hash and set password
     def set_password(self, password):
-        """Hashes the password and stores it in the password field."""
+        # Hashes the password and stores it in the password field.
         self.password = generate_password_hash(password)
 
     # Check password
     def check_password(self, password):
-        """Checks if the provided password matches the stored hashed password."""
+        # Checks if the provided password matches the stored hashed password.
         return check_password_hash(self.password, password)
 
 

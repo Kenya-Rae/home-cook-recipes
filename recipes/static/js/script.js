@@ -10,13 +10,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const errorMsg = document.getElementById('error-msg');
 
     // Initialize forgot password form
-    const forgotPasswordForm = document.getElementById('forgotPasswordForm'); // Ensure this ID matches your HTML
+    const forgotPasswordForm = document.getElementById('forgotPasswordForm');
     console.log("Forgot Password Form:", forgotPasswordForm);
 
     // Check if forgotPasswordForm exists to avoid TypeError
     if (forgotPasswordForm) {
         // Select the email input specifically for the forgot password form
-        const forgotPasswordEmailInput = document.getElementById('email'); // Use a distinct name
+        const forgotPasswordEmailInput = document.getElementById('email');
 
         forgotPasswordForm.addEventListener('submit', async function (e) {
             e.preventDefault();
