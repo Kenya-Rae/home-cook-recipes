@@ -330,7 +330,12 @@ def edit_recipe(recipe_id):
         flash('Please sign in to edit a recipe.', "error")
         return redirect(url_for('signin'))
 
+    # Fetch the recipe to be edited
     recipe = Recipes.query.get(recipe_id)
+    
+    # Fetch categories to populate the dropdown in the template
+    categories = Category.query.all()
+
     if request.method == "POST":
         recipe.title = request.form.get("name")
         recipe.description = request.form.get("description")
@@ -352,7 +357,8 @@ def edit_recipe(recipe_id):
         flash("Recipe updated successfully!", "success")
         return redirect(url_for("dashboard"))
 
-    return render_template("edit_recipe.html", recipe=recipe)
+    # Pass categories to the template
+    return render_template("edit_recipe.html", recipe=recipe, categories=categories)
 
 
 @app.route("/delete_recipe/<int:recipe_id>", methods=["POST"])

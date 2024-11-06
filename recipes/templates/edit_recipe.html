@@ -38,7 +38,7 @@
         <!-- Recipe Category -->
         <div class="input-field mb-3 w-25 p-1">
             <label for="category_ids">Category</label>
-            <select name="category_ids" class="select_category" id="category_ids" required multiple>
+            <select name="category_ids[]" class="select_category" id="category_ids" required multiple>
                 <option value="" disabled>Choose a category:</option>
                 {% for category in categories %}
                 <option value="{{ category.id }}"

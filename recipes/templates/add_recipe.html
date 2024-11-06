@@ -23,7 +23,7 @@
         </div>
 
         <!-- Recipe Category -->
-        <div class="input-field mb-3 w-25 p-1">
+        <div class="input-field mb-3 w-25 p-1 catBox">
             <label for="category_id">Category</label>
             <select name="category_id[]" class="select_category" multiple required>
                 <option value="" disabled selected>Choose a category:</option>
@@ -36,7 +36,7 @@
         <!-- Recipe Description -->
         <div class="input-group mb-3 w-75 p-1">
             <span class="input-group-text form-title"><i class="fa-solid fa-circle-info"></i> Recipe Description</span>
-            <textarea class="form-control" name="description" minlength="5" required></textarea>
+            <textarea class="form-control descBox" name="description" minlength="5" required></textarea>
         </div>
 
         <div class="container timing mt-3 mb-3">
@@ -54,7 +54,7 @@
 
             <!-- Servings -->
             <div class="input-field">
-                <label for="servings" class="servingLbl"><i class="fa-solid fa-plus"></i>Servings:</label>
+                <label for="servings" class="servingLbl"><i class="fa-solid fa-plus"></i>How many Servings:</label>
                 <input id="servings" name="servings" type="number">
             </div>
         </div>

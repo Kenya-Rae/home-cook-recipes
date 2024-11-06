@@ -233,6 +233,7 @@ border-color: rgb(214, 24, 46);
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
+  margin-bottom: 15px;
 }
 
 .add-recipe-btn, .addCatBtn{
@@ -292,16 +293,10 @@ div > span i /* recipe description */ {
   padding-right: 5px;
 }
 
-.timing {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
 /*  Add Category */
 .addCategory{
   display: flex;
-    flex-direction: row;
+  flex-direction: column;
     flex-wrap: nowrap;
     align-content: center;
     justify-content: center;
@@ -321,6 +316,7 @@ div > span i /* recipe description */ {
 .addCategory > button {
     background: #9ccc65;
     font-weight: 600;
+    margin-top: 10px;
 }
 
 .addCategory > button:hover{
@@ -388,7 +384,7 @@ text-align: center;
 
 /*--------Media Queries------ */
 /*-- Extra Small devices (portrait phones, 576px and less--*/
-@media only screen and (max-width: 375px){
+@media (min-width: 576px){
   .footer-copyright > a {
     padding-right: 0px;
     margin-left: 20px;
@@ -429,3 +425,26 @@ text-align: center;
   justify-content: center;
   align-items: center;
 }
+
+/* Add Recipe Page */
+div.input-field{
+  padding-top: 5px;
+}
+
+.timing{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.catBox{
+  margin-right: 50px;
+}
+
+.descBox{
+  height: 80px;
+  width: 70px;
+}
+
