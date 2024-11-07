@@ -86,24 +86,20 @@ As the site owner I want:
 
 ### Fonts
 
--
--
+- Google Fonts was used to give the headers the Playfair Display and the sub headings Karla. These two were chosen as the constrast between the two were amacable. I didn't want to choose a font that was too formal for the site as this intended for sharing and finding recipes.
 
 ### Icons
 
--
--
+- Font Awesome and Favicon were both used within this project.
+- Font Awesome Icons were used for mostly form attributes and the search button. All icons, I've used are easily identifable and match according to the text its belongs with.
+- I used Favicon to give my website a recognisable ID.
 
 ### Colours
 
--
--
+- Within this project, I used materlise to get the hex colours for my site. I had choosen to go with minimal colours. This choice was due to how the website would be constructed, if there where multiple colours within this it could be too busy for the user. As the recipes and the page content will fullfill the visual side of the site. The only elements I intended to use colour on were buttons, navagation bar and footer. 
 
 ### Images
-
-### Video Files
-
--
+- Some images are from my personal gallery, though the a few where taken from google under the creative commons licenses. As this is a recipe site that allows users to add and share their own recipes. No other images where included in this project other than those assigned to a recipe.
 
 ### Wireframes
 
@@ -121,9 +117,15 @@ Wireframes were created using [Balsamiq](https://balsamiq.com/).
 ## Features
 
 - Navigation bar that alllows users to access different parts of the sites.
--
--
--
+- Dropdown bar for quick search of categories within the recipes page
+- Search box, allows users to find what they are looking for within the site.
+- Sign up, login and logout feature to allow a user to sign up and have access adding to the database with their own recipes. They can logout of the session when they are finished using the site.
+- Add recipes, users can add recipes to the site. Adding photo of the dish, instructions, ingredients and method. As well as asigning a category. This allows the user to use the create function in CRUD.
+- Dashboard, for users to view their recipes they created on the site.
+- View recipe route thats inbuilt to allow the read function of CRUD.
+- Edit and delete recipes, this allows a user to use the update and delte functions within CRUD.
+- Comments allow anyone that visits the site to comment on a recipe.
+- Admin. Though currently I, the site owner is the admin of this project. This allows me (or future admin) to add categories to the site, this give a little more control of what is implemented on the site. Rather than allowing anyone that is signed up to have this access.
 
 ### Loaded page:
 
@@ -150,9 +152,12 @@ When you first load on the page you are met with the homepage.
 
 ### Gallery Page:
 
-### CRUD Functionality:
+<details>
+<summary>Recipe Page</summary>
+<IMG src="assets/images/"  alt=""/>
+</details>
 
-If you match the sequence correctly an alert will display before the next round.
+### CRUD Functionality:
 
 <details>
 <summary>Create</summary>
@@ -175,6 +180,10 @@ If you match the sequence correctly an alert will display before the next round.
 </details>
 
 ## Future Features
+- Overall I would like to add more security to the site. For example, within the comments section. I would like to add a function to only allow signed up user to comment on a site. OR allow annoymous comments but filter out some words to protect vistors on the site.
+- In continuation from my first point, adding a permissions page for admin users such as myself to allow others to become admins themselves. Possibly adding more roles to the site instead of the standard user and admin. 
+- Finer details can be added to i.e dropboxes or recipes to be placed in alphabetical order, rather than when it was created. As well as this tune up the overall postionings and responsiveness.
+- Within the homepage, I would love to include a display of cards which shows what the site offers without giving the whole site away.
 
 ## Accessibility
 
@@ -194,6 +203,8 @@ If you match the sequence correctly an alert will display before the next round.
 | Login Form         | Allow user to login to recipe site.       |        |
 | Comments           | Allow user input within the recipe page.  |        |
 | Edit and Delete    | Edit or Delte recipes that users created. |        |
+| Upload Images      | Add image of dish to recipe that a user created. |        |
+| View recipes       | Recipes can be viewed in dashboard and recipes page. |        |
 
 ### For this project I have had friends and family, test amongst various devices. Such as;
 
@@ -265,7 +276,7 @@ W3c was used to validate HTML, CSS and JavaScript code.
 
 ### Current Bugs
 
--
+- Due to the time of this submition, some things have to be left. The forgot password function is functional in the sense of users recieve the email. Though the token was expired. I had tried debugging and shuffling my code and had changed the EmailJs template to reflect html instead, the hyperlink does not work. As I dont have enough time to debug and fully resolve this, I've added it here. 
 
 <br>
   <details>
@@ -289,6 +300,8 @@ W3c was used to validate HTML, CSS and JavaScript code.
 - Unable to add recipes due to no categories being added to the database/no admin user at the time to create these. Creating admin role as well as added categories manually.
 - Unable to add categories due to no admin role access. All code for admin was implemented correctly. Though I hadnt acccessed the make_me_admin route to actually make changes.
 - Add more buttons hadnt done anything within create recipe page, as I had not structured my scipt.js effectively.
+- Search query error, when using the search box. This was due to the route not querying the database variables.
+
 
 ## Deployments
 
@@ -343,19 +356,27 @@ To fork this project from Gitpod, please follow the steps below;
 - [Balsamiq](https://balsamiq.com/) - For creating wireframes.
 - [GitHub](https://github.com/) - To store my repository and deploy site.
 - [Gitpod](https://www.gitpod.io/) - Used to write code for this project.
+- [Heroku]() - To deploy my application.
+- [Flask]() - For developing this web application using python.
+- [Sqlalchemy](https://docs.sqlalchemy.org/en/13/intro.html#installation) - Used for creating the database.
+- [EmailJs](https://www.emailjs.com/docs/) - Used in my forgot password route/function.
 - [HTML Validation](https://validator.w3.org/) - To validate my HTML Code.
 - [CSS Validation](https://jigsaw.w3.org/css-validator/) - To validate my CSS code.
+- [JS Validation]() - To validate my script.
+
 
 ### Code
 
 - [Coding2go](https://www.youtube.com/watch?v=bVl5_UdcAy0&t=201s) - Used this walkthrough for form validation.
+- [Bootstrap Navagation Bar](https://getbootstrap.com/docs/4.1/components/navs/) - Navagation bar was used.
+- [Bootstrap Forms](https://getbootstrap.com/docs/4.1/components/forms/) - For the forms and classes.
+- [Bootstrap Buttons](https://getbootstrap.com/docs/4.1/components/buttons/) - Buttons were used and classes
+- [Forgotten Password - Slack](https://stackoverflow.com/questions/1102781/best-way-for-a-forgot-password-implementation) - No code was taken from here but this was a good read that had lead into further researching.
 
 ### Acknowledgments
 
-- []() -
-- []() -
-- []() -
-- []() -
--
+- Friends and Family that tested and supported through this project
+- [Mitko](https://code-institute-room.slack.com/team/U03R20N303G) - My mentor, helped through my first session and gave me advice on how to move around this project.
+- [Owen](https://code-institute-room.slack.com/team/U079BDNL2LV) - Would like to acknowlgde Owen for the suggestive words and personal experience he shared with his project. This was a nice eye opener to what I had coming forward.
 
 [Back to top](#title)

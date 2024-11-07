@@ -20,6 +20,14 @@ def currentApp_function():
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
 
+if os.environ.get("DEVELOPMENT") == "True":
+     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DB_URL")
+else:
+     uri = os.environ.get("DATABASE_URL")
+     if uri.startswith("postgres://"):
+         uri = uri.replace("postgres://", "postgresql://", 1)
+     app.config["SQLALCHEMY_DATABASE_URI"] = uri
+
 # Flask-Mail configuration
 app.config['MAIL_SERVER'] = 'smtp.example.com'  # Replace with your SMTP server
 app.config['MAIL_PORT'] = 587 
