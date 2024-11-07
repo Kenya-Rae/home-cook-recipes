@@ -184,6 +184,7 @@ When you first load on the page you are met with the homepage.
 - In continuation from my first point, adding a permissions page for admin users such as myself to allow others to become admins themselves. Possibly adding more roles to the site instead of the standard user and admin. 
 - Finer details can be added to i.e dropboxes or recipes to be placed in alphabetical order, rather than when it was created. As well as this tune up the overall postionings and responsiveness.
 - Within the homepage, I would love to include a display of cards which shows what the site offers without giving the whole site away.
+- Delete category function. As I had forgotten to add this when creating it. Unfortunately don't have enough time to add this in.
 
 ## Accessibility
 
@@ -208,11 +209,9 @@ When you first load on the page you are met with the homepage.
 
 ### For this project I have had friends and family, test amongst various devices. Such as;
 
--
--
--
--
--
+- Ipad
+- iPhone
+- HP Pavillion 17 Laptop
 
 ### Lighthouse - Developer Chrome Tools
 
@@ -277,6 +276,8 @@ W3c was used to validate HTML, CSS and JavaScript code.
 ### Current Bugs
 
 - Due to the time of this submition, some things have to be left. The forgot password function is functional in the sense of users recieve the email. Though the token was expired. I had tried debugging and shuffling my code and had changed the EmailJs template to reflect html instead, the hyperlink does not work. As I dont have enough time to debug and fully resolve this, I've added it here. 
+- Card panel images or panel itself is protruding above the rest of the panels. Not sure why, had a look through dev tools and could find a solution currently for this.
+- Edit function, seems to not fully work. I.e Categories are not updated. Unfortunately due to the time of submission I don't have time to look in to this further.
 
 <br>
   <details>
