@@ -333,10 +333,18 @@ def edit_recipe(recipe_id):
 
     # Fetch the recipe to be edited
     recipe = Recipes.query.get(recipe_id)
-    
+
+    if not recipe:
+        flash("Recipe not found.", "error")
+        return redirect(url_for('dashboard'))
+
+    # Fetch the ingredients related to this recipe
+    ingredients = RecipeIngredients.query.filter_by(recipe_id=recipe.id).all()
+
     # Fetch categories to populate the dropdown in the template
     categories = Category.query.all()
 
+    # Handle the POST request to update the recipe
     if request.method == "POST":
         # Update recipe fields
         recipe.title = request.form.get("recipe_name")
@@ -356,17 +364,15 @@ def edit_recipe(recipe_id):
             recipe.image_url = image_filename  # Update recipe with new image
 
         # Handle ingredients update
-        # First clear existing ingredients
-        for ingredient in recipe.ingredients:
-            db.session.delete(ingredient)
+        # First, clear existing ingredients
+        db.session.query(RecipeIngredients).filter_by(recipe_id=recipe.id).delete()
 
-        # Now add updated ingredients
+        # Now add the updated ingredients
         ingredient_names = request.form.getlist('ingredient_name[]')  # Get the ingredient names
         ingredient_quantities = request.form.getlist('ingredient_quantity[]')  # Get the ingredient quantities
         
         for name, quantity in zip(ingredient_names, ingredient_quantities):
             if name and quantity:
-                # Find ingredient_id from Ingredients model (you may need to adjust how you get this)
                 ingredient = Ingredients.query.filter_by(name=name).first()
                 if ingredient:  # Only add if the ingredient exists in the Ingredients table
                     recipe_ingredient = RecipeIngredients(
@@ -394,11 +400,25 @@ def edit_recipe(recipe_id):
                 )
                 db.session.add(instruction)
 
+        # Handle categories update (optional, if needed)
+        category_ids = request.form.getlist('category_ids')  # Get selected category ids
+        existing_category_ids = [category.category_id for category in recipe.categories]
+
+        # Remove old categories and add new ones
+        for category_id in existing_category_ids:
+            if category_id not in category_ids:
+                db.session.query(RecipeCategories).filter_by(recipe_id=recipe.id, category_id=category_id).delete()
+
+        for category_id in category_ids:
+            if category_id not in existing_category_ids:
+                new_category = RecipeCategories(recipe_id=recipe.id, category_id=category_id)
+                db.session.add(new_category)
+
         db.session.commit()
         flash("Recipe updated successfully!", "success")
         return redirect(url_for("dashboard"))
 
-    return render_template("edit_recipe.html", recipe=recipe, categories=categories)
+    return render_template("edit_recipe.html", recipe=recipe, categories=categories, ingredients=ingredients)
 
 
 @app.route("/delete_recipe/<int:recipe_id>", methods=["POST"])

@@ -84,7 +84,7 @@
                     {% for ingredient in ingredients %}
                     <div class="ingredient-item mb-2 d-flex">
                         <input type="text" name="ingredient_name[]" placeholder="Ingredient"
-                            value="{{ ingredient.name }}" required class="form-control w-25 me-2" />
+                            value="{{ ingredient.ingredient.name }}" required class="form-control w-25 me-2" />
                         <input type="text" name="ingredient_quantity[]" placeholder="Quantity"
                             value="{{ ingredient.quantity }}" required class="form-control w-25 me-2" />
                         <button type="button" class="btn btn-danger remove-ingredient">Remove</button>

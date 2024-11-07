@@ -58,6 +58,23 @@ document.addEventListener('DOMContentLoaded', function () {
         console.error("Add Instruction Button or Instructions List not found");
     }
 
+    // Setup for removing ingredients and instructions dynamically
+    const removeIngredientButtons = document.querySelectorAll('.remove-ingredient');
+    removeIngredientButtons.forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.target.closest('.ingredient-item').remove();
+            console.log("Ingredient removed"); // Debug log
+        });
+    });
+
+    const removeInstructionButtons = document.querySelectorAll('.remove-instruction');
+    removeInstructionButtons.forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.target.closest('.instruction-item').remove();
+            console.log("Instruction removed"); // Debug log
+        });
+    });
+
     // Form submission validation
     const form = document.querySelector('.recipeForm');
     if (form) {
