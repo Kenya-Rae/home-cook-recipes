@@ -380,11 +380,17 @@ def edit_recipe(recipe_id):
         for instruction in recipe.instructions:
             db.session.delete(instruction)
 
-        # Add updated instructions
+        # Add updated instructions with step_number
         instructions = request.form.getlist('instruction[]')  # Get the instruction steps
-        for step in instructions:
-            if step:
-                instruction = Instructions(content=step, recipe_id=recipe.id)
+        max_step_number = db.session.query(func.max(Instructions.step_number)).filter_by(recipe_id=recipe.id).scalar() or 0
+        
+        for i, step in enumerate(instructions, start=max_step_number + 1):
+            if step:  # Only add non-empty steps
+                instruction = Instructions(
+                    step_number=i,  # Automatically assign step number
+                    content=step,
+                    recipe_id=recipe.id
+                )
                 db.session.add(instruction)
 
         db.session.commit()
