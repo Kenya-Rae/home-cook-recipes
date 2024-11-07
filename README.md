@@ -278,6 +278,7 @@ W3c was used to validate HTML, CSS. JShint was used for JavaScript code. Due to 
 - Due to the time of this submition, some things have to be left. The forgot password function is functional in the sense of users recieve the email. Though the token was expired. I had tried debugging and shuffling my code and had changed the EmailJs template to reflect html instead, the hyperlink does not work. As I dont have enough time to debug and fully resolve this, I've added it here. 
 - Card panel images or panel itself is protruding above the rest of the panels. Not sure why, had a look through dev tools and could find a solution currently for this.
 - Edit function, seems to not fully work. I.e Categories and instructions are not updated. Unfortunately due to the time of submission I don't have time to look in to this further.
+- Favicon icons are not display on browser tab. The .ico file is within the root and the links are wired up correctly.
 
 <br>
   <details>
