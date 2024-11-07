@@ -6,6 +6,7 @@ from werkzeug.utils import secure_filename
 from flask import current_app
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Mail, Message
+from sqlalchemy import func
 import time
 import os
 
