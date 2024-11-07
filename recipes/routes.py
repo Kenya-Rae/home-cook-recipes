@@ -332,67 +332,66 @@ def edit_recipe(recipe_id):
 
     # Fetch the recipe to be edited
     recipe = Recipes.query.get(recipe_id)
-    if not recipe:
-        flash("Recipe not found.", "error")
-        return redirect(url_for("dashboard"))
-
+    
     # Fetch categories to populate the dropdown in the template
     categories = Category.query.all()
 
     if request.method == "POST":
-        # Updated field names to match template form
+        # Update recipe fields
         recipe.title = request.form.get("recipe_name")
         recipe.description = request.form.get("recipe_description")
         recipe.prep_time = request.form.get("preptime")
         recipe.cook_time = request.form.get("cooktime")
         recipe.servings = request.form.get("servings")
 
-        # Handle image upload if a new file is provided
+        # Handle image upload
         image_file = request.files.get('recipe_image')
-        if image_file and image_file.filename:
+        if image_file:
             image_filename = secure_filename(image_file.filename)
             upload_folder = 'recipes/static/images'
             if not os.path.exists(upload_folder):
                 os.makedirs(upload_folder)
             image_file.save(os.path.join(upload_folder, image_filename))
-            recipe.image_url = image_filename  # Only update with new image if uploaded
+            recipe.image_url = image_filename  # Update recipe with new image
 
-        # Debug print statements to verify data being saved
-        print("Updated title:", recipe.title)
-        print("Updated description:", recipe.description)
-        print("Updated prep_time:", recipe.prep_time)
-        print("Updated cook_time:", recipe.cook_time)
-        print("Updated servings:", recipe.servings)
-        print("Updated image_url:", recipe.image_url)
+        # Handle ingredients update
+        # First clear existing ingredients
+        for ingredient in recipe.ingredients:
+            db.session.delete(ingredient)
 
-        # Update ingredients
-        ingredient_names = request.form.getlist("ingredient_name[]")
-        ingredient_quantities = request.form.getlist("ingredient_quantity[]")
+        # Now add updated ingredients
+        ingredient_names = request.form.getlist('ingredient_name[]')  # Get the ingredient names
+        ingredient_quantities = request.form.getlist('ingredient_quantity[]')  # Get the ingredient quantities
         
-        # Clear current ingredients and add updated ones
-        recipe.ingredients.clear()
         for name, quantity in zip(ingredient_names, ingredient_quantities):
-            if name and quantity:  # Ensure both name and quantity are provided
-                ingredient = RecipeIngredients(name=name, quantity=quantity, recipe_id=recipe.id)
-                db.session.add(ingredient)
+            if name and quantity:
+                # Find ingredient_id from Ingredients model (you may need to adjust how you get this)
+                ingredient = Ingredients.query.filter_by(name=name).first()
+                if ingredient:  # Only add if the ingredient exists in the Ingredients table
+                    recipe_ingredient = RecipeIngredients(
+                        recipe_id=recipe.id,
+                        ingredient_id=ingredient.id,
+                        quantity=quantity
+                    )
+                    db.session.add(recipe_ingredient)
 
-        # Update instructions
-        instruction_contents = request.form.getlist("instruction[]")
-        
-        # Clear current instructions and add updated ones
-        recipe.instructions.clear()
-        for content in instruction_contents:
-            if content:  # Ensure content is provided for each instruction
-                instruction = Instructions(content=content, recipe_id=recipe.id)
+        # Handle instructions update
+        # Clear existing instructions
+        for instruction in recipe.instructions:
+            db.session.delete(instruction)
+
+        # Add updated instructions
+        instructions = request.form.getlist('instruction[]')  # Get the instruction steps
+        for step in instructions:
+            if step:
+                instruction = Instructions(content=step, recipe_id=recipe.id)
                 db.session.add(instruction)
 
-        # Commit all changes to database
         db.session.commit()
         flash("Recipe updated successfully!", "success")
         return redirect(url_for("dashboard"))
 
-    # Pass categories and ingredients to the template
-    return render_template("edit_recipe.html", recipe=recipe, categories=categories, ingredients=recipe.ingredients)
+    return render_template("edit_recipe.html", recipe=recipe, categories=categories)
 
 
 @app.route("/delete_recipe/<int:recipe_id>", methods=["POST"])
