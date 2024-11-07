@@ -337,8 +337,9 @@ def edit_recipe(recipe_id):
     categories = Category.query.all()
 
     if request.method == "POST":
-        recipe.title = request.form.get("name")
-        recipe.description = request.form.get("description")
+        # Updated field names to match template form
+        recipe.title = request.form.get("recipe_name")
+        recipe.description = request.form.get("recipe_description")
         recipe.prep_time = request.form.get("preptime")
         recipe.cook_time = request.form.get("cooktime")
         recipe.servings = request.form.get("servings")
