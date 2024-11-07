@@ -1,9 +1,9 @@
 <h1 allign="center" id="title"> For Home Cooks </h1>
 
-![for Home Cooks]()
+![For Home Cooks](/readme/wireframes/am-responsive.png)
 
-[Live Project can be viewed here.]()
-![Logo]()
+[Live Project can be viewed here.](https://for-homecooks-87025479063a.herokuapp.com/)
+![Logo](/readme/favicon/favicon.ico)
 
 For Home Cooks is a recipe application for homecooks who are looking to widen their recipe catelogue.
 
@@ -185,6 +185,7 @@ When you first load on the page you are met with the homepage.
 - Finer details can be added to i.e dropboxes or recipes to be placed in alphabetical order, rather than when it was created. As well as this tune up the overall postionings and responsiveness.
 - Within the homepage, I would love to include a display of cards which shows what the site offers without giving the whole site away.
 - Delete category function. As I had forgotten to add this when creating it. Unfortunately don't have enough time to add this in.
+- Images seem to display and then not display could be an access error within the file path.
 
 ## Accessibility
 
@@ -197,15 +198,15 @@ When you first load on the page you are met with the homepage.
 
 | What to test       | Expected Results                          | Passed |
 | ------------------ | ----------------------------------------- | ------ |
-| Navigation Menu    | Navigate site and send to correct pages   |        |
+| Navigation Menu    | Navigate site and send to correct pages   |&#x2714;|
 | Search for recipe  | Display recipe when searched for          |        |
-| Add recipe to site | User can add recipe to the site           |        |
+| Add recipe to site | User can add recipe to the site           |&#x2714;|
 | Sign Up Form       | Allow user to sign up to recipe site.     |        |
 | Login Form         | Allow user to login to recipe site.       |        |
 | Comments           | Allow user input within the recipe page.  |        |
 | Edit and Delete    | Edit or Delte recipes that users created. |        |
-| Upload Images      | Add image of dish to recipe that a user created. |        |
-| View recipes       | Recipes can be viewed in dashboard and recipes page. |        |
+| Upload Images      | Add image of dish to recipe that a user created. |&#x2714;|
+| View recipes       | Recipes can be viewed in dashboard and recipes page. |&#x2714;|
 
 ### For this project I have had friends and family, test amongst various devices. Such as;
 
@@ -232,11 +233,6 @@ When you first load on the page you are met with the homepage.
 <IMG src="assets/images/lighthouse/"  alt="Lighthouse Accessibility Score"/>
 </details>
 <br>
-
-<details>
-<summary>Lighthouse Overview - After changes</summary>
-<IMG src="assets/images/lighthouse/"  alt="Lighthouse Overview Score - After changes"/>
-</details>
 
 ## Validators
 
@@ -277,7 +273,7 @@ W3c was used to validate HTML, CSS and JavaScript code.
 
 - Due to the time of this submition, some things have to be left. The forgot password function is functional in the sense of users recieve the email. Though the token was expired. I had tried debugging and shuffling my code and had changed the EmailJs template to reflect html instead, the hyperlink does not work. As I dont have enough time to debug and fully resolve this, I've added it here. 
 - Card panel images or panel itself is protruding above the rest of the panels. Not sure why, had a look through dev tools and could find a solution currently for this.
-- Edit function, seems to not fully work. I.e Categories are not updated. Unfortunately due to the time of submission I don't have time to look in to this further.
+- Edit function, seems to not fully work. I.e Categories and instructions are not updated. Unfortunately due to the time of submission I don't have time to look in to this further.
 
 <br>
   <details>
@@ -327,7 +323,7 @@ To clone this project to Gitpod use the following steps;
 1. Open the browser, search GitHub and log in. If you do not have an account, sign up [here](https://github.com/login).
 2. Open a new tab, search Gitpod and log in. If you don't have an account, you can sign in with GitHub.
 3. Open a new workspace.
-4. Go back to the GitHub tab and locate [For Home Cooks]().
+4. Go back to the GitHub tab and locate [For Home Cooks](https://for-homecooks-87025479063a.herokuapp.com/).
 5. Click the green "<> Code" button.
 6. Under the HTTPS tab, copy the URL for the repository.
 7. Go back to your Gitpod Workspace and open the terminal.
@@ -340,7 +336,7 @@ To clone this project to Gitpod use the following steps;
 To fork this project from Gitpod, please follow the steps below;
 
 1. Open the browser, search GitHub and log in. If you do not have an account, sign up [here](https://github.com/login).
-2. Locate the GitHub tab and locate the project you want to fork. [For Home Cooks]()
+2. Locate the GitHub tab and locate the project you want to fork. [For Home Cooks](https://for-homecooks-87025479063a.herokuapp.com/)
 3. At the top right-hand side of the page, you will see a "Fork" button. Click on the button and wait a few moments. You should see the new forked repository under your own GitHub account.
 4. By default the folk is named as their upstream repositories, you can rename the repositories by typing a name in the "Repository name" field.
 5. You can also add a description to your fork and/or copy the default branch only.
@@ -349,6 +345,30 @@ To fork this project from Gitpod, please follow the steps below;
 8. Go to the workspace you have created earlier.
 9. To change the current directory to the location where you want the cloned directory.
 10. Type "git clone" and paste the URL you copied from GitHub. Press "Enter" and your local clone will be created.
+
+### How to Deploy to Heroku. 
+
+To deploy to Heroku, follow the steps below;
+
+1. Within your project coding environment. Open the terminal and generate a requirements file via typing " pip freeze --local > requirements.txt "
+2. In the root directory create a file called Procfile, ensure that a capital "P" is used to ensure Heroku reads this. Then within this file add " web: python run.py.
+4. Use a database or object storage instead of writing to your local filesystem.
+5. In Heroku, create a new app. 
+6. Add a app name. Complete language-specific setup.
+7. Select "Create App".
+8. Explore the Heroku platform.
+9. Within the settings, click "Reveal Config Vars". Use the variable within the env.py. Ensure that DEBUG, DEVELOPMENT and DB_URL is not included. As well as no strings in qoutes when adding the values.
+10. Locate to the Deploy tab and navigate towards the "Deployment method" section, select “Connect to GitHub”.
+11. Search for your repository and click Connect.
+12. You can click "Enable Automatic Deploys" in case of any further changes to the project. This will push over when you make the push to GitHub.
+13. If you are using the Manual deploy section and click Deploy Branch. This will start the build process.
+14. Once this is completed. Navigate to the top of the page to the “More” button and select “Run console”.
+15. Type python3 into the console and click Run.
+16. Then type "from recipes import db". This will pull the database through
+17. Type "db.create_all()" this will create all the models. You can exit the terminal by typing "exit()" and hitting enter, and close the console.
+<br> <strong>Note: If any changes are made to models you will need to manually make the migrations within Heroku.</strong>
+18. The app should running now, click the “Open app” button.
+<br> <strong>Note: The deployed app will load, but as the new database is empty you will need to add in some data.</strong>
 
 ## Credits
 
@@ -363,7 +383,7 @@ To fork this project from Gitpod, please follow the steps below;
 - [EmailJs](https://www.emailjs.com/docs/) - Used in my forgot password route/function.
 - [HTML Validation](https://validator.w3.org/) - To validate my HTML Code.
 - [CSS Validation](https://jigsaw.w3.org/css-validator/) - To validate my CSS code.
-- [JS Validation]() - To validate my script.
+- [JS Validation](https://jshint.com/) - To validate my script.
 
 
 ### Code

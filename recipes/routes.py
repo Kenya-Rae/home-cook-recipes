@@ -132,7 +132,7 @@ def forgot_password():
         if user:
             token = create_reset_token(user.id)
             current_app.logger.info(f'Token created for user {user.id}: {token}')  # Log token creation
-            reset_url = f"https://8080-kenyarae-homecookrecipe-3uygnjxl4z4.ws.codeinstitute-ide.net/{token}" 
+            reset_url = f"https://for-homecooks-87025479063a.herokuapp.com/{token}" 
             subject = "Password Reset Request"
             body = f"To reset your password, visit the following link: {reset_url}"
             send_email(email, subject, body)
