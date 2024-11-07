@@ -17,13 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 <button type="button" class="btn btn-danger remove-ingredient">Remove</button>
             `;
             ingredientsList.appendChild(newIngredient);
-            console.log("New ingredient added:", newIngredient); // Debug log
         });
 
         ingredientsList.addEventListener('click', function (e) {
             if (e.target && e.target.classList.contains('remove-ingredient')) {
                 e.target.parentElement.remove();
-                console.log("Ingredient removed"); // Debug log
             }
         });
     } else {
@@ -45,13 +43,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 <button type="button" class="btn btn-danger remove-instruction">Remove</button>
             `;
             instructionsList.appendChild(newInstruction);
-            console.log("New instruction added:", newInstruction); // Debug log
         });
 
         instructionsList.addEventListener('click', function (e) {
             if (e.target && e.target.classList.contains('remove-instruction')) {
                 e.target.parentElement.remove();
-                console.log("Instruction removed"); // Debug log
             }
         });
     } else {
@@ -63,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function () {
     removeIngredientButtons.forEach(function (button) {
         button.addEventListener('click', function (e) {
             e.target.closest('.ingredient-item').remove();
-            console.log("Ingredient removed"); // Debug log
         });
     });
 
@@ -71,7 +66,6 @@ document.addEventListener('DOMContentLoaded', function () {
     removeInstructionButtons.forEach(function (button) {
         button.addEventListener('click', function (e) {
             e.target.closest('.instruction-item').remove();
-            console.log("Instruction removed"); // Debug log
         });
     });
 

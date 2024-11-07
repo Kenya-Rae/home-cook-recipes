@@ -239,7 +239,7 @@ def add_recipe():
                 quantity = quantity.strip()  # Remove whitespace
                 if not quantity:  # If quantity is empty or None, set a default value
                     print(f"Warning: Quantity for ingredient '{name}' is not valid. Defaulting to '0'.")
-                    quantity = "0"  # Set a default value or decide how to handle it
+                    quantity = "0"  # Set a default value.
                 
                 # Fetch or create ingredient
                 ingredient = Ingredients.query.filter_by(name=name).first()
@@ -449,7 +449,7 @@ def add_comment(recipe_id):
     content = request.form.get('content')
 
     if content:
-        new_comment = Comments(content=content, recipe_id=recipe_id)  # Make sure to add user_id if needed
+        new_comment = Comments(content=content, recipe_id=recipe_id)
 
         try:
             db.session.add(new_comment)
@@ -463,36 +463,6 @@ def add_comment(recipe_id):
         flash('Comment cannot be empty.', 'danger')
 
     return redirect(url_for('view_recipe', recipe_id=recipe_id))
-
-
-@app.route("/make_me_admin")
-def make_me_admin():
-    # Check if the user is logged in
-    if 'email' not in session:
-        flash('Please sign in.', "error")
-        return redirect(url_for('signin'))
-
-    # Fetch the logged-in user
-    current_user = Users.query.filter_by(email=session["email"]).first()
-
-    # Make me an admin initially
-    owner_email = 'kenyarae99@gmail.com'
-
-    if current_user:
-        # Ensure that only the site owner (me) can promote to admin
-        if current_user.email == owner_email:
-            if not current_user.is_admin:
-                current_user.is_admin = True
-                db.session.commit()
-                flash(f'{current_user.email} has been made an admin.', "success")
-            else:
-                flash(f'{current_user.email} is already an admin.', "info")
-        else:
-            flash(f'Only the site owner can make themselves an admin.', "error")
-    else:
-        flash('User not found.', "error")
-
-    return redirect(url_for('dashboard'))
 
 
 @app.route("/promote_user/<int:user_id>")

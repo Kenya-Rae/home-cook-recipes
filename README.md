@@ -49,7 +49,7 @@ The main audience for this site is anyone aged 8+ with parental guidance.
 
 #### User Goals:
 
-- Find and share recipes
+- Easily find and share recipes.
 - Enjoy cooked goods.
 
 #### Developers goals:
@@ -133,50 +133,50 @@ When you first load on the page you are met with the homepage.
 
 <details>
 <summary>User Interface</summary>
-<IMG src="assets/images/"  alt="User Interface"/>
+<IMG src="readme/user-interface.png"  alt="User Interface"/>
 </details>
 
 ### Navigation:
 
 <details>
 <summary>Navigation</summary>
-<IMG src="assets/images/"  alt="Navigation"/>
+<IMG src="readme/nav.png"  alt="Navigation"/>
 </details>
 
 ### Recipe Page:
 
 <details>
 <summary>Recipe Page</summary>
-<IMG src="assets/images/"  alt=""/>
+<IMG src="readme/recipe page.png"  alt="All recipes"/>
 </details>
 
 ### Gallery Page:
 
 <details>
-<summary>Recipe Page</summary>
-<IMG src="assets/images/"  alt=""/>
+<summary>Gallery Page</summary>
+<IMG src="readme/gallery.png"  alt="Photo gallery of dishes users have made"/>
 </details>
 
 ### CRUD Functionality:
 
 <details>
 <summary>Create</summary>
-<IMG src="assets/images/"  alt="Create functionality"/>
+<IMG src="readme/crud-create.png"  alt="Create functionality"/>
 </details>
 
 <details>
 <summary>Read</summary>
-<IMG src="assets/images/"  alt="Read functionality"/>
+<IMG src="readme/crud-read.png"  alt="Read functionality"/>
 </details>
 
 <details>
 <summary>Update</summary>
-<IMG src="assets/images/"  alt="Update functionality"/>
+<IMG src="readme/crud-update.png"  alt="Update functionality"/>
 </details>
 
 <details>
 <summary>Delete</summary>
-<IMG src="assets/images/"  alt="Delete functionality"/>
+<IMG src="readme/crud-delete.png"  alt="Delete functionality"/>
 </details>
 
 ## Future Features
@@ -189,8 +189,8 @@ When you first load on the page you are met with the homepage.
 
 ## Accessibility
 
--
--
+- Limited colours to reduce the contrasts.
+- Added name tags to elements, included alt tags to images. 
 
 ## Testing
 
@@ -199,55 +199,59 @@ When you first load on the page you are met with the homepage.
 | What to test       | Expected Results                          | Passed |
 | ------------------ | ----------------------------------------- | ------ |
 | Navigation Menu    | Navigate site and send to correct pages   |&#x2714;|
-| Search for recipe  | Display recipe when searched for          |        |
+| Search for recipe  | Display recipe when searched for          |&#x2714;|
 | Add recipe to site | User can add recipe to the site           |&#x2714;|
-| Sign Up Form       | Allow user to sign up to recipe site.     |        |
-| Login Form         | Allow user to login to recipe site.       |        |
-| Comments           | Allow user input within the recipe page.  |        |
+| Sign Up Form       | Allow user to sign up to recipe site.     |&#x2714;|
+| Login Form         | Allow user to login to recipe site.       |&#x2714;|
+| Comments           | Allow user input within the recipe page.  |&#x2714;|
 | Edit and Delete    | Edit or Delte recipes that users created. |        |
 | Upload Images      | Add image of dish to recipe that a user created. |&#x2714;|
 | View recipes       | Recipes can be viewed in dashboard and recipes page. |&#x2714;|
 
 ### For this project I have had friends and family, test amongst various devices. Such as;
 
-- Ipad
-- iPhone
+- Ipad 10th
+- iPhone 11 Pro
 - HP Pavillion 17 Laptop
+
+All the feedback given was consistent with my future features and current bugs. For example, the tweaking of css styles on some pages to ensure consistency. Though overall the feedback given was generally positive and a good experience on the site. The two external testers I had used for this project, aged from 30-60. The main take back that the testers wanted me to note was the ease of viewing and looking around the site. As it was "It was straight to the point, easy to use. Instead of the usual blog with the recipe". Which concludes my user and developer goals which was making a site that allows users to find and share recipes. As for users to find and share recipes.
+
+One of the testers had signed up and managed to login successfully. They also fedback that they were able to add a recipe and it was straightforward.
 
 ### Lighthouse - Developer Chrome Tools
 
 <details>
 <summary>Lighthouse Overview</summary>
-<IMG src="assets/images/lighthouse/"  alt="Lighthouse Overview Score"/>
+<IMG src="readme/validation/"  alt="Lighthouse Overview Score"/>
 </details>
 <br>
 
 <details>
 <summary>Lighthouse Acessibility</summary>
-<IMG src="assets/images/lighthouse/"  alt="Lighthouse Accessibility Score"/>
+<IMG src="readme/validation/"  alt="Lighthouse Accessibility Score"/>
 </details>
 <br>
 
 <details>
 <summary>Lighthouse Diagnostics</summary>
-<IMG src="assets/images/lighthouse/"  alt="Lighthouse Accessibility Score"/>
+<IMG src="readme/validation/"  alt="Lighthouse Accessibility Score"/>
 </details>
 <br>
 
 ## Validators
 
-W3c was used to validate HTML, CSS and JavaScript code.
+W3c was used to validate HTML, CSS. JShint was used for JavaScript code. Due to the time of submission, I'm unable to pick apart the erorrs. Though, some I beleive may be unavoidable within this project.
 
 ### HTML Validator:
 
 <details>
 <summary>HTML Validator Overview Part 1</summary>
-<IMG src="assets/images/validators/"  alt="HTML Validator Overview Part 1"/>
+<IMG src="readme/validation/htmls-val.png"  alt="HTML Validator Overview Part 1"/>
 </details>
 <br>
 <details>
 <summary>HTML Validator </summary>
-<IMG src="assets/images/validators/"  alt="HTML Validator"/>
+<IMG src="readme/validation/htmls-val-2.png"  alt="HTML Validator"/>
 </details>
 
 <br>
@@ -257,14 +261,14 @@ W3c was used to validate HTML, CSS and JavaScript code.
 <br>
 <details>
 <summary>CSS Validator </summary>
-<IMG src="assets/images/validators/"  alt="CSS Validator "/>
+<IMG src="readme/validation/css-val.png"  alt="CSS Validator "/>
 </details>
 
 ### JavaScript Validator:
 
 <details>
 <summary>JavaScript Validator</summary>
-<IMG src="assets/images/validators/"  alt="JavaScript Validator Results"/>
+<IMG src="readme/validation/script-val.png"  alt="JavaScript Validator Results"/>
 </details>
 
 ## Bugs
@@ -278,13 +282,13 @@ W3c was used to validate HTML, CSS and JavaScript code.
 <br>
   <details>
   <summary>Console Message</summary>
-  <IMG src="assets/images/console/"  alt="Console message"/>
+  <IMG src="readme/validation/"  alt="Console message"/>
 
 </details>
 <br>
 <details>
 <summary>Console Message - After Change</summary>
-<IMG src="assets/images/console/"  alt="Console message - after changes"/>
+<IMG src="readme/validation/"  alt="Console message - after changes"/>
 
 </details>
 
@@ -377,8 +381,8 @@ To deploy to Heroku, follow the steps below;
 - [Balsamiq](https://balsamiq.com/) - For creating wireframes.
 - [GitHub](https://github.com/) - To store my repository and deploy site.
 - [Gitpod](https://www.gitpod.io/) - Used to write code for this project.
-- [Heroku]() - To deploy my application.
-- [Flask]() - For developing this web application using python.
+- [Heroku](https://www.heroku.com/) - To deploy my application.
+- [Flask](https://flask.palletsprojects.com/en/stable/) - For developing this web application using python.
 - [Sqlalchemy](https://docs.sqlalchemy.org/en/13/intro.html#installation) - Used for creating the database.
 - [EmailJs](https://www.emailjs.com/docs/) - Used in my forgot password route/function.
 - [HTML Validation](https://validator.w3.org/) - To validate my HTML Code.
@@ -393,6 +397,7 @@ To deploy to Heroku, follow the steps below;
 - [Bootstrap Forms](https://getbootstrap.com/docs/4.1/components/forms/) - For the forms and classes.
 - [Bootstrap Buttons](https://getbootstrap.com/docs/4.1/components/buttons/) - Buttons were used and classes
 - [Forgotten Password - Slack](https://stackoverflow.com/questions/1102781/best-way-for-a-forgot-password-implementation) - No code was taken from here but this was a good read that had lead into further researching.
+- [Go back button](https://www.w3schools.com/jsref/met_his_back.asp) - For the go back button function.
 
 ### Acknowledgments
 
