@@ -56,15 +56,15 @@ The main audience for this site is anyone aged 8+ with parental guidance.
 
 - Create an appealing, functional site.
 - Demonstrate the use of full-stack development.
-- Make site that allows users to find and share recipes.
+- Make a site that allows users to find and share recipes.
 
 #### User Stories
 
 As a user I want:
 
-- Search for recipes.
+- To search for recipes.
 - To understand the instructions given.
-- Share recipes.
+- To share recipes.
 - Consistent functionalities.
 
 As the site owner I want:
@@ -86,7 +86,7 @@ As the site owner I want:
 
 ### Fonts
 
-- Google Fonts was used to give the headers the Playfair Display and the sub headings Karla. These two were chosen as the constrast between the two were amacable. I didn't want to choose a font that was too formal for the site as this intended for sharing and finding recipes.
+- Google Fonts was used to give the headers the Playfair Display and the sub headings Karla. These two were chosen as the constrast between the two were amacable. I didn't want to choose a font that was too formal for the site as this is intended for sharing and finding recipes.
 
 ### Icons
 
@@ -99,8 +99,8 @@ As the site owner I want:
 - Within this project, I used materlise to get the hex colours for my site. I had choosen to go with minimal colours. This choice was due to how the website would be constructed, if there where multiple colours within this it could be too busy for the user. As the recipes and the page content will fullfill the visual side of the site. The only elements I intended to use colour on were buttons, navagation bar and footer. 
 
 ### Images
-- Some images are from my personal gallery, though the a few where taken from google under the creative commons licenses. As this is a recipe site that allows users to add and share their own recipes. No other images where included in this project other than those assigned to a recipe.
-
+- Some images are from my personal gallery, though a few where taken from google under the creative commons licenses. As this is a recipe site that allows users to add and share their own recipes. No other images where included in this project other than those assigned to a recipe.
+-
 ### Wireframes
 
 Wireframes were created using [Balsamiq](https://balsamiq.com/).
@@ -222,19 +222,13 @@ One of the testers had signed up and managed to login successfully. They also fe
 
 <details>
 <summary>Lighthouse Overview</summary>
-<IMG src="readme/validation/"  alt="Lighthouse Overview Score"/>
+<IMG src="readme/validation/lighthouse-overview.png"  alt="Lighthouse Overview Score"/>
 </details>
 <br>
 
 <details>
 <summary>Lighthouse Acessibility</summary>
-<IMG src="readme/validation/"  alt="Lighthouse Accessibility Score"/>
-</details>
-<br>
-
-<details>
-<summary>Lighthouse Diagnostics</summary>
-<IMG src="readme/validation/"  alt="Lighthouse Accessibility Score"/>
+<IMG src="readme/validation/lighthouse-access.png"  alt="Lighthouse Accessibility Score"/>
 </details>
 <br>
 
@@ -282,14 +276,8 @@ W3c was used to validate HTML, CSS. JShint was used for JavaScript code. Due to 
 
 <br>
   <details>
-  <summary>Console Message</summary>
-  <IMG src="readme/validation/"  alt="Console message"/>
-
-</details>
-<br>
-<details>
-<summary>Console Message - After Change</summary>
-<IMG src="readme/validation/"  alt="Console message - after changes"/>
+  <summary>Console Message: Unfortunately due to the time of submission I don't have time to look in these further and make changes</summary>
+  <IMG src="readme/validation/console.png"  alt="Console message"/>
 
 </details>
 
@@ -300,7 +288,7 @@ W3c was used to validate HTML, CSS. JShint was used for JavaScript code. Due to 
 - Sign in/sign up form was refreshing the page instead of redirecting users to the correct URL links. This was due to some typo errors within my routes. Aswell as the incorrect use of url_for.
 - Flask flash messages, was not displaying amongst pages. Due to the my template literals loops were not implemented correctly.
 - Unable to add recipes due to no categories being added to the database/no admin user at the time to create these. Creating admin role as well as added categories manually.
-- Unable to add categories due to no admin role access. All code for admin was implemented correctly. Though I hadnt acccessed the make_me_admin route to actually make changes.
+- Unable to add categories due to no admin role access. All code for admin was implemented correctly. Though I hadnt accessed the make_me_admin route to actually make changes.
 - Add more buttons hadnt done anything within create recipe page, as I had not structured my scipt.js effectively.
 - Search query error, when using the search box. This was due to the route not querying the database variables.
 
